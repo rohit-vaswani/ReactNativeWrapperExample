@@ -1,0 +1,122 @@
+[
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable_splashscreen.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable/splashscreen.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable-hdpi_white_separator.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable-hdpi/white_separator.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_splashscreen_image.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable-xxxhdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/layout_fragment_item.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/layout/fragment_item.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable-hdpi_splashscreen_image.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable-hdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable-xhdpi_splashscreen_image.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable-xhdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/layout_chat_fragment_layout.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/layout/chat_fragment_layout.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/layout_timeline_fragment_layout.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/layout/timeline_fragment_layout.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/layout_bottom_sheet.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/layout/bottom_sheet.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable-mdpi_splashscreen_image.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable-mdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable-xxhdpi_splashscreen_image.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable-xxhdpi/splashscreen_image.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/drawable_chat_bubble_background.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/drawable/chat_bubble_background.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/layout_fragment_fullscreen.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/layout/fragment_fullscreen.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/changdeojadhav/reactExample/LivelikeReactNativeWrapper/ReactNativeWrapperExample/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"
+    }
+]

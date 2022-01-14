@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable-hdpi/white_separator.xml" value="0.13489583333333333" />
+        <entry key="app/src/main/res/drawable/chat_bubble_background.xml" value="0.20092592592592592" />
+        <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/chat_fragment_layout.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/timeline_fragment_layout.xml" value="0.11875" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.20092592592592592" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>

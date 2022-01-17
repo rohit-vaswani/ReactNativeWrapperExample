@@ -1,6 +1,0 @@
-module Pods_ReactLivelike {
-  umbrella header "Pods-ReactLivelike-umbrella.h"
-
-  export *
-  module * { export * }
-}

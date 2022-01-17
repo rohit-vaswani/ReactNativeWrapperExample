@@ -27,7 +27,6 @@
       },
       "package": "com.livelike.demo",
       "versionCode": 1,
-      "googleMobileAdsAppId": "ca-app-pub-3940256099942544/3419835294"
     },
     "web": {
       "favicon": "./assets/favicon.png"

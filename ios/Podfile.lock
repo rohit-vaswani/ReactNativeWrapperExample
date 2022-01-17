@@ -1,6 +1,10 @@
 PODS:
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
+  - EngagementSDK (2.31):
+    - lottie-ios (~> 3.0)
+    - Mixpanel-swift (~> 2.7)
+    - PubNub (~> 4.12.0)
   - EXApplication (4.0.1):
     - ExpoModulesCore
   - EXConstants (13.0.0):
@@ -11,16 +15,87 @@ PODS:
     - ExpoModulesCore
   - EXFont (10.0.4):
     - ExpoModulesCore
+  - EXJSONUtils (0.2.0)
   - EXKeepAwake (10.0.1):
     - ExpoModulesCore
+  - EXManifests (0.2.2):
+    - EXJSONUtils
   - Expo (44.0.4):
     - ExpoModulesCore
+  - expo-dev-client (0.8.0):
+    - EXManifests
+    - expo-dev-launcher
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - EXUpdatesInterface
+  - expo-dev-launcher (0.10.0):
+    - EXManifests
+    - expo-dev-launcher/Main (= 0.10.0)
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - EXUpdatesInterface
+    - React-Core
+  - expo-dev-launcher/Main (0.10.0):
+    - EXManifests
+    - expo-dev-launcher/Unsafe
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - EXUpdatesInterface
+    - React-Core
+  - expo-dev-launcher/Unsafe (0.10.0):
+    - EXManifests
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - EXUpdatesInterface
+    - React-Core
+  - expo-dev-menu (0.9.0):
+    - expo-dev-menu/Main (= 0.9.0)
+  - expo-dev-menu-interface (0.5.0)
+  - expo-dev-menu/GestureHandler (0.9.0)
+  - expo-dev-menu/Main (0.9.0):
+    - expo-dev-menu-interface
+    - expo-dev-menu/Vendored
+    - React-Core
+  - expo-dev-menu/Reanimated (0.9.0):
+    - DoubleConversion
+    - FBLazyVector
+    - FBReactNativeSpec
+    - glog
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-Core/DevSupport
+    - React-Core/RCTWebSocket
+    - React-CoreModules
+    - React-cxxreact
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-RCTActionSheet
+    - React-RCTAnimation
+    - React-RCTBlob
+    - React-RCTImage
+    - React-RCTLinking
+    - React-RCTNetwork
+    - React-RCTSettings
+    - React-RCTText
+    - React-RCTVibration
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-menu/SafeAreaView (0.9.0)
+  - expo-dev-menu/Vendored (0.9.0):
+    - expo-dev-menu/GestureHandler
+    - expo-dev-menu/Reanimated
+    - expo-dev-menu/SafeAreaView
   - ExpoModulesCore (0.6.4):
     - React-Core
     - ReactCommon/turbomodule/core
   - EXSplashScreen (0.14.1):
     - ExpoModulesCore
     - React-Core
+  - EXUpdatesInterface (0.5.0)
   - FBLazyVector (0.64.3)
   - FBReactNativeSpec (0.64.3):
     - RCT-Folly (= 2020.01.13.00)
@@ -30,6 +105,13 @@ PODS:
     - React-jsi (= 0.64.3)
     - ReactCommon/turbomodule/core (= 0.64.3)
   - glog (0.3.5)
+  - lottie-ios (3.2.3)
+  - Mixpanel-swift (2.10.3):
+    - Mixpanel-swift/Complete (= 2.10.3)
+  - Mixpanel-swift/Complete (2.10.3)
+  - PubNub (4.12.0):
+    - PubNub/Core (= 4.12.0)
+  - PubNub/Core (4.12.0)
   - RCT-Folly (2020.01.13.00):
     - boost-for-react-native
     - DoubleConversion
@@ -291,15 +373,23 @@ PODS:
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EngagementSDK
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
+  - EXJSONUtils (from `../node_modules/expo-json-utils/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
+  - EXManifests (from `../node_modules/expo-manifests/ios`)
   - Expo (from `../node_modules/expo/ios`)
+  - expo-dev-client (from `../node_modules/expo-dev-client/ios`)
+  - expo-dev-launcher (from `../node_modules/expo-dev-launcher`)
+  - expo-dev-menu (from `../node_modules/expo-dev-menu`)
+  - expo-dev-menu-interface (from `../node_modules/expo-dev-menu-interface/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
+  - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -333,6 +423,10 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - EngagementSDK
+    - lottie-ios
+    - Mixpanel-swift
+    - PubNub
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -347,14 +441,28 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
     :path: "../node_modules/expo-font/ios"
+  EXJSONUtils:
+    :path: "../node_modules/expo-json-utils/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
+  EXManifests:
+    :path: "../node_modules/expo-manifests/ios"
   Expo:
     :path: "../node_modules/expo/ios"
+  expo-dev-client:
+    :path: "../node_modules/expo-dev-client/ios"
+  expo-dev-launcher:
+    :path: "../node_modules/expo-dev-launcher"
+  expo-dev-menu:
+    :path: "../node_modules/expo-dev-menu"
+  expo-dev-menu-interface:
+    :path: "../node_modules/expo-dev-menu-interface/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core/ios"
   EXSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
+  EXUpdatesInterface:
+    :path: "../node_modules/expo-updates-interface/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -413,18 +521,29 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
-  EXApplication: 2b8f4d665e050ecddffcfb1ce258b7216b6b7777
-  EXConstants: 1514e671cb9ef1279696a44db86e2085dfa5e6ad
-  EXErrorRecovery: 9e481432a9ba7220832340911028892b49682a89
-  EXFileSystem: 35453fcb2f311ac6c67a2c77527fd4ac8dabe526
-  EXFont: e0a7f501df6e833398dfd4b075a022370e215236
-  EXKeepAwake: e190d9ee4550bcf5f8a46bdb199735f542795ebb
-  Expo: 9aa950487d0c5c41c55fdbb6acd969282efe2085
-  ExpoModulesCore: 3a7259bd137b8de6a164952d8a872034f430211b
-  EXSplashScreen: 6f02bcc84bf6bdc19dcb7ae934b7015a3aaef008
+  EngagementSDK: b8e777b15bdb3a8d692e5f46346cae95bd023b6d
+  EXApplication: bdc8dc27713235565da1029a34385229f31b8e08
+  EXConstants: 5d18484e38e8eacef7695a82214b6ac90133dedf
+  EXErrorRecovery: deea88a01d38f8b1c1181b4e1d179b0ba0e4bb5b
+  EXFileSystem: 7d1309ba6b38b82ef7fc9e80174de3f9184ac8b4
+  EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
+  EXJSONUtils: f515cf71710855d7ba5bfc6752af3b9a6f6aad01
+  EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
+  EXManifests: 50e42e01335df4e54109dee7be5a91bfd37347db
+  Expo: d9b8b5e49c200471fc473a652a84fe30dee73027
+  expo-dev-client: c0116deee06925cb80157dc1773c8e9e2cc8a3e2
+  expo-dev-launcher: 72ba55279ff01fce311caed10e2af94c7ea1ad30
+  expo-dev-menu: d3238be7583556106751192000cb32789ac53987
+  expo-dev-menu-interface: 8562bfafa19d01531694ab492fc93f598f8c8d7b
+  ExpoModulesCore: 64abda7af7cf659d2fa092934e29c6f4ea7e849f
+  EXSplashScreen: 7872675b95bb07c25f922b3d3dfae70c76fb5a00
+  EXUpdatesInterface: f459b515151bd73fff7a35366eace34a6c6a0d3f
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: ac018ee8b53528181a5fc6de96f8ad033875fe6f
+  FBReactNativeSpec: c6f56ee58155f21ebf4fdeba6e7cf86ae0cf7e70
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  Mixpanel-swift: 3220daad7d82ff50cf9b8c3e31efed5bad426978
+  PubNub: 44e2eb39746e7231b98b978a8e3b9726b11dca9c
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
   RCTTypeSafety: 8dab4933124ed39bb0c1d88d74d61b1eb950f28f
@@ -450,6 +569,6 @@ SPEC CHECKSUMS:
   ReactCommon: 8fea6422328e2fc093e25c9fac67adbcf0f04fb4
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: d2e0b2d33b10aeb2cb466c79c354d3cb416e95ad
+PODFILE CHECKSUM: eb45835295dad5216a551e431f98bc123cf66ef0
 
 COCOAPODS: 1.11.0.beta.2

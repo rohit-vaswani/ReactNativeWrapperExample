@@ -16,7 +16,7 @@ class MyPackage : ReactPackage {
 
     override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
         return Arrays.asList<ViewManager<*, *>>(
-            MyViewManager(reactContext)
+            LiveLikeAndroidViewManager(reactContext)
         )
     }
 }

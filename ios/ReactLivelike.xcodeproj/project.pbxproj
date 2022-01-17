@@ -7,14 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		094FFD20A6C328DC7EDEAB84 /* Pods_ReactLivelike.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CB9F36BAEC825ACCCA3D9 /* Pods_ReactLivelike.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		67EFA680A578416488EBD343 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5ACE5AEF52413EA4CB8DE6 /* noop-file.swift */; };
-		96905EF65AED1B983A6B3ABC /* libPods-ReactLivelike.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ReactLivelike.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		DF40EE3A2794301F001317C4 /* LiveLikeiOSViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF40EE392794301F001317C4 /* LiveLikeiOSViewManager.swift */; };
+		DF40EE3E27943306001317C4 /* LiveLikeiOSViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF40EE3D27943306001317C4 /* LiveLikeiOSViewManager.m */; };
+		DF40EEA627948836001317C4 /* SeparatedVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF40EEA527948836001317C4 /* SeparatedVideoViewController.swift */; };
+		DFD8E91427955A6200C51F1D /* TabBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91327955A6200C51F1D /* TabBarTableViewController.swift */; };
+		DFD8E91627955A7E00C51F1D /* DateFormatter+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91527955A7E00C51F1D /* DateFormatter+Formatters.swift */; };
+		DFD8E91927955B4B00C51F1D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91727955B4B00C51F1D /* ChatViewController.swift */; };
+		DFD8E91A27955B4B00C51F1D /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91827955B4B00C51F1D /* TimelineViewController.swift */; };
+		DFD8E91C2795711D00C51F1D /* LiveLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91B2795711D00C51F1D /* LiveLikeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,12 +34,20 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ReactLivelike/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactLivelike/main.m; sourceTree = "<group>"; };
 		1B3C94D9901043259927F552 /* ReactLivelike-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "ReactLivelike-Bridging-Header.h"; path = "ReactLivelike/ReactLivelike-Bridging-Header.h"; sourceTree = "<group>"; };
+		249CB9F36BAEC825ACCCA3D9 /* Pods_ReactLivelike.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactLivelike.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A5ACE5AEF52413EA4CB8DE6 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "ReactLivelike/noop-file.swift"; sourceTree = "<group>"; };
-		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ReactLivelike.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactLivelike.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C2E3173556A471DD304B334 /* Pods-ReactLivelike.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactLivelike.debug.xcconfig"; path = "Target Support Files/Pods-ReactLivelike/Pods-ReactLivelike.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-ReactLivelike.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactLivelike.release.xcconfig"; path = "Target Support Files/Pods-ReactLivelike/Pods-ReactLivelike.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = ReactLivelike/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		DF40EE392794301F001317C4 /* LiveLikeiOSViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveLikeiOSViewManager.swift; sourceTree = "<group>"; };
+		DF40EE3D27943306001317C4 /* LiveLikeiOSViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveLikeiOSViewManager.m; sourceTree = "<group>"; };
+		DF40EEA527948836001317C4 /* SeparatedVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatedVideoViewController.swift; sourceTree = "<group>"; };
+		DFD8E91327955A6200C51F1D /* TabBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarTableViewController.swift; path = ../../../../../SDKDemo/SDKDemo/TabBarTableViewController.swift; sourceTree = "<group>"; };
+		DFD8E91527955A7E00C51F1D /* DateFormatter+Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DateFormatter+Formatters.swift"; path = "../../../../../SDKDemo/SDKDemo/DateFormatter+Formatters.swift"; sourceTree = "<group>"; };
+		DFD8E91727955B4B00C51F1D /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = ../../../../../SDKDemo/SDKDemo/ChatViewController.swift; sourceTree = "<group>"; };
+		DFD8E91827955B4B00C51F1D /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewController.swift; path = ../../../../../SDKDemo/SDKDemo/TimelineViewController.swift; sourceTree = "<group>"; };
+		DFD8E91B2795711D00C51F1D /* LiveLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveLikeView.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ReactLivelike/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96905EF65AED1B983A6B3ABC /* libPods-ReactLivelike.a in Frameworks */,
+				094FFD20A6C328DC7EDEAB84 /* Pods_ReactLivelike.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +67,7 @@
 		13B07FAE1A68108700A75B9A /* ReactLivelike */ = {
 			isa = PBXGroup;
 			children = (
+				DF40EE3827942FEB001317C4 /* Livelike */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -69,7 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ReactLivelike.a */,
+				249CB9F36BAEC825ACCCA3D9 /* Pods_ReactLivelike.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -138,6 +155,21 @@
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
+		DF40EE3827942FEB001317C4 /* Livelike */ = {
+			isa = PBXGroup;
+			children = (
+				DFD8E91727955B4B00C51F1D /* ChatViewController.swift */,
+				DFD8E91827955B4B00C51F1D /* TimelineViewController.swift */,
+				DFD8E91527955A7E00C51F1D /* DateFormatter+Formatters.swift */,
+				DFD8E91327955A6200C51F1D /* TabBarTableViewController.swift */,
+				DF40EEA527948836001317C4 /* SeparatedVideoViewController.swift */,
+				DF40EE392794301F001317C4 /* LiveLikeiOSViewManager.swift */,
+				DF40EE3D27943306001317C4 /* LiveLikeiOSViewManager.m */,
+				DFD8E91B2795711D00C51F1D /* LiveLikeView.swift */,
+			);
+			path = Livelike;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -152,6 +184,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
+				889FC18675F980BDD39D97AC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -251,16 +284,86 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ReactLivelike/Pods-ReactLivelike-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-launcher/EXDevLauncher.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-menu/EXDevMenu.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevLauncher.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevMenu.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactLivelike/Pods-ReactLivelike-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		889FC18675F980BDD39D97AC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ReactLivelike/Pods-ReactLivelike-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
+				"${BUILT_PRODUCTS_DIR}/EngagementSDK/EngagementSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/FBReactNativeSpec/FBReactNativeSpec.framework",
+				"${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework",
+				"${BUILT_PRODUCTS_DIR}/PubNub/PubNub.framework",
+				"${BUILT_PRODUCTS_DIR}/RCT-Folly/folly.framework",
+				"${BUILT_PRODUCTS_DIR}/RCTTypeSafety/RCTTypeSafety.framework",
+				"${BUILT_PRODUCTS_DIR}/React-Core/React.framework",
+				"${BUILT_PRODUCTS_DIR}/React-CoreModules/CoreModules.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTAnimation/RCTAnimation.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTBlob/RCTBlob.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTImage/RCTImage.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTLinking/RCTLinking.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTNetwork/RCTNetwork.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTSettings/RCTSettings.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTText/RCTText.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTVibration/RCTVibration.framework",
+				"${BUILT_PRODUCTS_DIR}/React-cxxreact/cxxreact.framework",
+				"${BUILT_PRODUCTS_DIR}/React-jsi/jsi.framework",
+				"${BUILT_PRODUCTS_DIR}/React-jsiexecutor/jsireact.framework",
+				"${BUILT_PRODUCTS_DIR}/React-jsinspector/jsinspector.framework",
+				"${BUILT_PRODUCTS_DIR}/React-perflogger/reactperflogger.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactCommon/ReactCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
+				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EngagementSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBReactNativeSpec.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PubNub.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTTypeSafety.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreModules.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTAnimation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTBlob.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTLinking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTNetwork.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTSettings.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTText.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTVibration.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/cxxreact.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/jsi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/jsireact.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/jsinspector.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/reactperflogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ReactLivelike/Pods-ReactLivelike-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -290,9 +393,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				DFD8E91A27955B4B00C51F1D /* TimelineViewController.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
 				67EFA680A578416488EBD343 /* noop-file.swift in Sources */,
+				DF40EEA627948836001317C4 /* SeparatedVideoViewController.swift in Sources */,
+				DFD8E91427955A6200C51F1D /* TabBarTableViewController.swift in Sources */,
+				DFD8E91627955A7E00C51F1D /* DateFormatter+Formatters.swift in Sources */,
+				DF40EE3A2794301F001317C4 /* LiveLikeiOSViewManager.swift in Sources */,
+				DFD8E91C2795711D00C51F1D /* LiveLikeView.swift in Sources */,
+				DFD8E91927955B4B00C51F1D /* ChatViewController.swift in Sources */,
+				DF40EE3E27943306001317C4 /* LiveLikeiOSViewManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

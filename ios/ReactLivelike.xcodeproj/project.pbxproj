@@ -18,11 +18,11 @@
 		DF40EE3A2794301F001317C4 /* LiveLikeiOSViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF40EE392794301F001317C4 /* LiveLikeiOSViewManager.swift */; };
 		DF40EE3E27943306001317C4 /* LiveLikeiOSViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF40EE3D27943306001317C4 /* LiveLikeiOSViewManager.m */; };
 		DF40EEA627948836001317C4 /* SeparatedVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF40EEA527948836001317C4 /* SeparatedVideoViewController.swift */; };
-		DFD8E91427955A6200C51F1D /* TabBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91327955A6200C51F1D /* TabBarTableViewController.swift */; };
-		DFD8E91627955A7E00C51F1D /* DateFormatter+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91527955A7E00C51F1D /* DateFormatter+Formatters.swift */; };
-		DFD8E91927955B4B00C51F1D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91727955B4B00C51F1D /* ChatViewController.swift */; };
-		DFD8E91A27955B4B00C51F1D /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91827955B4B00C51F1D /* TimelineViewController.swift */; };
 		DFD8E91C2795711D00C51F1D /* LiveLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91B2795711D00C51F1D /* LiveLikeView.swift */; };
+		DFD8E9212796DC4900C51F1D /* DateFormatter+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91D2796DC4900C51F1D /* DateFormatter+Formatters.swift */; };
+		DFD8E9222796DC4900C51F1D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91E2796DC4900C51F1D /* ChatViewController.swift */; };
+		DFD8E9232796DC4900C51F1D /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E91F2796DC4900C51F1D /* TimelineViewController.swift */; };
+		DFD8E9242796DC4900C51F1D /* TabBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8E9202796DC4900C51F1D /* TabBarTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,11 +43,11 @@
 		DF40EE392794301F001317C4 /* LiveLikeiOSViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveLikeiOSViewManager.swift; sourceTree = "<group>"; };
 		DF40EE3D27943306001317C4 /* LiveLikeiOSViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveLikeiOSViewManager.m; sourceTree = "<group>"; };
 		DF40EEA527948836001317C4 /* SeparatedVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatedVideoViewController.swift; sourceTree = "<group>"; };
-		DFD8E91327955A6200C51F1D /* TabBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarTableViewController.swift; path = ../../../../../SDKDemo/SDKDemo/TabBarTableViewController.swift; sourceTree = "<group>"; };
-		DFD8E91527955A7E00C51F1D /* DateFormatter+Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DateFormatter+Formatters.swift"; path = "../../../../../SDKDemo/SDKDemo/DateFormatter+Formatters.swift"; sourceTree = "<group>"; };
-		DFD8E91727955B4B00C51F1D /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = ../../../../../SDKDemo/SDKDemo/ChatViewController.swift; sourceTree = "<group>"; };
-		DFD8E91827955B4B00C51F1D /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewController.swift; path = ../../../../../SDKDemo/SDKDemo/TimelineViewController.swift; sourceTree = "<group>"; };
 		DFD8E91B2795711D00C51F1D /* LiveLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveLikeView.swift; sourceTree = "<group>"; };
+		DFD8E91D2796DC4900C51F1D /* DateFormatter+Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Formatters.swift"; sourceTree = "<group>"; };
+		DFD8E91E2796DC4900C51F1D /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		DFD8E91F2796DC4900C51F1D /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		DFD8E9202796DC4900C51F1D /* TabBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarTableViewController.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ReactLivelike/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,10 +158,10 @@
 		DF40EE3827942FEB001317C4 /* Livelike */ = {
 			isa = PBXGroup;
 			children = (
-				DFD8E91727955B4B00C51F1D /* ChatViewController.swift */,
-				DFD8E91827955B4B00C51F1D /* TimelineViewController.swift */,
-				DFD8E91527955A7E00C51F1D /* DateFormatter+Formatters.swift */,
-				DFD8E91327955A6200C51F1D /* TabBarTableViewController.swift */,
+				DFD8E9202796DC4900C51F1D /* TabBarTableViewController.swift */,
+				DFD8E91E2796DC4900C51F1D /* ChatViewController.swift */,
+				DFD8E91D2796DC4900C51F1D /* DateFormatter+Formatters.swift */,
+				DFD8E91F2796DC4900C51F1D /* TimelineViewController.swift */,
 				DF40EEA527948836001317C4 /* SeparatedVideoViewController.swift */,
 				DF40EE392794301F001317C4 /* LiveLikeiOSViewManager.swift */,
 				DF40EE3D27943306001317C4 /* LiveLikeiOSViewManager.m */,
@@ -393,17 +393,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				DFD8E91A27955B4B00C51F1D /* TimelineViewController.swift in Sources */,
+				DFD8E9212796DC4900C51F1D /* DateFormatter+Formatters.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
 				67EFA680A578416488EBD343 /* noop-file.swift in Sources */,
 				DF40EEA627948836001317C4 /* SeparatedVideoViewController.swift in Sources */,
-				DFD8E91427955A6200C51F1D /* TabBarTableViewController.swift in Sources */,
-				DFD8E91627955A7E00C51F1D /* DateFormatter+Formatters.swift in Sources */,
 				DF40EE3A2794301F001317C4 /* LiveLikeiOSViewManager.swift in Sources */,
+				DFD8E9222796DC4900C51F1D /* ChatViewController.swift in Sources */,
 				DFD8E91C2795711D00C51F1D /* LiveLikeView.swift in Sources */,
-				DFD8E91927955B4B00C51F1D /* ChatViewController.swift in Sources */,
+				DFD8E9242796DC4900C51F1D /* TabBarTableViewController.swift in Sources */,
 				DF40EE3E27943306001317C4 /* LiveLikeiOSViewManager.m in Sources */,
+				DFD8E9232796DC4900C51F1D /* TimelineViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

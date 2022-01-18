@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { UIManager, findNodeHandle } from 'react-native';
 import { PixelRatio} from "react-native";
-import { MyViewManager } from './my-view-manager';
+import { LiveLikeAndroidViewManager } from './android-view-manager';
 
 const createFragment = (viewId) =>
   UIManager.dispatchViewManagerCommand(
     viewId,
     // we are calling the 'create' command
-    UIManager.MyViewManager.Commands.create.toString(),
+    UIManager.LiveLikeAndroidViewManager.Commands.create.toString(),
     [viewId]
   );
 
@@ -20,7 +20,7 @@ export const LiveLikeAndroidView = () => {
   }, []);
 
   return (
-    <MyViewManager
+    <LiveLikeAndroidViewManager
       style={{
         // converts dpi to px, provide desired height
         height: PixelRatio.getPixelSizeForLayoutSize(750),

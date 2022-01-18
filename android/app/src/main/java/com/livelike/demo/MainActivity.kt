@@ -19,7 +19,7 @@ class MainActivity : ReactActivity() {
         // coloring the background, status bar, and navigation bar.
         // This is required for expo-splash-screen.
         setTheme(R.style.AppTheme)
-        Toast.makeText(applicationContext,"Whoaaaaa",LENGTH_LONG).show()
+        pageViewModel.initEnagementSDK(applicationContext = applicationContext)
         super.onCreate(null)
     }
 

@@ -46,8 +46,6 @@ class ChatFragment : BaseFragment() {
     }
 
     private fun initChatSession(chat_view: ChatView) {
-
-        context?.let { pageViewModel.initEnagementSDK(applicationContext = it) }
         pageViewModel.chatFrag= this
         val chatSession = pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
             override fun getTimecode(): EpochTime {

@@ -73,8 +73,8 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     fun createFragment(root: FrameLayout, reactNativeViewId: Int) {
         val parentView = root.findViewById<View>(reactNativeViewId) as ViewGroup
         setupLayout(parentView)
-        //val myFragment = WidgetTimeLineFragment()
-        val myFragment = ChatFragment()
+        val myFragment = WidgetTimeLineFragment()
+        //val myFragment = ChatFragment()
         val activity = reactContext.currentActivity as FragmentActivity?
         activity!!.supportFragmentManager
             .beginTransaction()

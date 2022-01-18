@@ -522,24 +522,24 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EngagementSDK: b8e777b15bdb3a8d692e5f46346cae95bd023b6d
-  EXApplication: bdc8dc27713235565da1029a34385229f31b8e08
-  EXConstants: 5d18484e38e8eacef7695a82214b6ac90133dedf
-  EXErrorRecovery: deea88a01d38f8b1c1181b4e1d179b0ba0e4bb5b
-  EXFileSystem: 7d1309ba6b38b82ef7fc9e80174de3f9184ac8b4
-  EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
-  EXJSONUtils: f515cf71710855d7ba5bfc6752af3b9a6f6aad01
-  EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
-  EXManifests: 50e42e01335df4e54109dee7be5a91bfd37347db
-  Expo: d9b8b5e49c200471fc473a652a84fe30dee73027
-  expo-dev-client: c0116deee06925cb80157dc1773c8e9e2cc8a3e2
-  expo-dev-launcher: 72ba55279ff01fce311caed10e2af94c7ea1ad30
-  expo-dev-menu: d3238be7583556106751192000cb32789ac53987
-  expo-dev-menu-interface: 8562bfafa19d01531694ab492fc93f598f8c8d7b
-  ExpoModulesCore: 64abda7af7cf659d2fa092934e29c6f4ea7e849f
-  EXSplashScreen: 7872675b95bb07c25f922b3d3dfae70c76fb5a00
-  EXUpdatesInterface: f459b515151bd73fff7a35366eace34a6c6a0d3f
+  EXApplication: 2b8f4d665e050ecddffcfb1ce258b7216b6b7777
+  EXConstants: 1514e671cb9ef1279696a44db86e2085dfa5e6ad
+  EXErrorRecovery: 9e481432a9ba7220832340911028892b49682a89
+  EXFileSystem: 35453fcb2f311ac6c67a2c77527fd4ac8dabe526
+  EXFont: e0a7f501df6e833398dfd4b075a022370e215236
+  EXJSONUtils: bafb27ed20417c018d942f334d969102e67be7e5
+  EXKeepAwake: e190d9ee4550bcf5f8a46bdb199735f542795ebb
+  EXManifests: 15831e369de4e989f9cfe8c3321303f26745e41d
+  Expo: 9aa950487d0c5c41c55fdbb6acd969282efe2085
+  expo-dev-client: dd9cc286e51cfd59498648cdade55ff3c8c40bbd
+  expo-dev-launcher: d43aed60521accda6a983253b8af5a66d33826b9
+  expo-dev-menu: 42067f4774136376cfe9c299e16dbe6452e46006
+  expo-dev-menu-interface: 69653a5d471d25c212be7f675df2adb2d1ec3dad
+  ExpoModulesCore: 3a7259bd137b8de6a164952d8a872034f430211b
+  EXSplashScreen: 6f02bcc84bf6bdc19dcb7ae934b7015a3aaef008
+  EXUpdatesInterface: 410cb5349b567b6b15b31eb806b564908d6ec7ad
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: c6f56ee58155f21ebf4fdeba6e7cf86ae0cf7e70
+  FBReactNativeSpec: db5b99eb5a948485f072c430cdb662409796ea01
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   Mixpanel-swift: 3220daad7d82ff50cf9b8c3e31efed5bad426978

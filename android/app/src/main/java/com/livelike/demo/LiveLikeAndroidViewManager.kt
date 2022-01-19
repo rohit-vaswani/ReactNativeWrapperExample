@@ -1,4 +1,5 @@
 package com.livelike.demo
+import android.util.Log
 import android.view.Choreographer
 import android.view.View
 import android.view.ViewGroup
@@ -6,12 +7,10 @@ import android.widget.FrameLayout
 import androidx.fragment.app.FragmentActivity
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
-import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactPropGroup
 import com.livelike.demo.ui.main.ChatFragment
-import com.livelike.demo.ui.main.WidgetTimeLineFragment
 
 
 // replace with your package
@@ -19,9 +18,16 @@ import com.livelike.demo.ui.main.WidgetTimeLineFragment
 
 class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     ViewGroupManager<FrameLayout?>() {
-    val COMMAND_CREATE = 1
     private var propWidth = 0
     private var propHeight = 0
+    private val programId = "3ebd6f09-2f16-4171-b94a-c9335154d672" // channelId // roomId
+    // chang userID: 64b501fe-b084-46c2-8639-c7f2d69c8a11
+    // Loyal HAWK userID: 8f52892d-3530-490d-b838-1594d296e7c9
+    // Royal Legend userID: 4a2bbc1e-be12-40a9-83a9-514473a34c94 [Current User ID]*
+    // Leaderboard ID: 86ef1ca9-5ebf-4f8f-8a4b-a4a34697bc47 (Loyal Hawk?)
+    private val isChatVisible = false
+    private lateinit var chatFragment: ChatFragment
+
     override fun getName(): String {
         return REACT_CLASS
     }
@@ -37,7 +43,12 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
      * Map the "create" command to an integer
      */
     override fun getCommandsMap(): Map<String, Int>? {
-        return MapBuilder.of("create", COMMAND_CREATE)
+        val hashMap = hashMapOf<String, Int>()
+        hashMap.apply {
+            put("create", COMMAND_CREATE)
+            put("sendMessage", COMMAND_SEND_MESSAGE)
+        }
+        return hashMap
     }
 
     /**
@@ -50,9 +61,9 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     ) {
         super.receiveCommand(root, commandId, args)
         val reactNativeViewId = args!!.getInt(0)
-        val commandIdInt = commandId.toInt()
-        when (commandIdInt) {
+        when (commandId.toInt()) {
             COMMAND_CREATE -> createFragment(root, reactNativeViewId)
+            COMMAND_SEND_MESSAGE -> sendChatMessage(args)
             else -> {}
         }
     }
@@ -73,13 +84,22 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     fun createFragment(root: FrameLayout, reactNativeViewId: Int) {
         val parentView = root.findViewById<View>(reactNativeViewId) as ViewGroup
         setupLayout(parentView)
-//         val myFragment = WidgetTimeLineFragment()
-        val myFragment = ChatFragment()
+        chatFragment = ChatFragment.newInstance(programId, isChatVisible)
+        // val myFragment = WidgetTimeLineFragment()
         val activity = reactContext.currentActivity as FragmentActivity?
         activity!!.supportFragmentManager
             .beginTransaction()
-            .replace(reactNativeViewId, myFragment, reactNativeViewId.toString())
+            .replace(reactNativeViewId, chatFragment, reactNativeViewId.toString())
             .commit()
+    }
+
+    private fun sendChatMessage(args: ReadableArray?) {
+
+        val message = args?.getString(1).toString()
+        Log.i("MESSAGE arg", message)
+        chatFragment.sendChatMessage(message)
+
+
     }
 
     fun setupLayout(view: View) {
@@ -108,5 +128,7 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
 
     companion object {
         const val REACT_CLASS = "LiveLikeAndroidViewManager"
+        const val COMMAND_CREATE = 0
+        const val COMMAND_SEND_MESSAGE = 1
     }
 }

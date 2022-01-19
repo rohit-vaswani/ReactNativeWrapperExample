@@ -5,13 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.livelike.demo.R
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.EpochTime
+import com.livelike.engagementsdk.MessageListener
 import com.livelike.engagementsdk.chat.ChatView
+import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
+import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
 
 /**
  * A placeholder fragment containing a simple view.
@@ -20,24 +24,21 @@ class ChatFragment : BaseFragment() {
 
     private lateinit var pageViewModel: PageViewModel
     private var programId = ""
-    private var isChatInputVisible = true
-    var chat_view : ChatView? = null
+    private var isChatInputVisible = false
+    var chatView: ChatView? = null
+    private lateinit var chatSession: LiveLikeChatSession
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(requireActivity()).get(PageViewModel::class.java)
-        setProgramId(arguments?.getString(ARG_SECTION_NUMBER) ?: "3ebd6f09-2f16-4171-b94a-c9335154d672")
-        //setProgramId("3ebd6f09-2f16-4171-b94a-c9335154d672")
-        isChatInputVisible = true//arguments?.getBoolean(ARG_CHAT_INPUT_VISIBILITY) ?: false
+        programId = arguments?.getString(ARG_PROGRAM_ID) ?: ""
+        isChatInputVisible = arguments?.getBoolean(ARG_CHAT_INPUT_VISIBILITY) ?: false
     }
 
-    private fun setProgramId(programId: String) {
-        this.programId = programId
-
-    }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.chat_fragment_layout, container, false)
         val chatView: ChatView = root.findViewById(R.id.chat_view)
@@ -45,32 +46,86 @@ class ChatFragment : BaseFragment() {
         return root
     }
 
-    private fun initChatSession(chat_view: ChatView) {
-        pageViewModel.chatFrag= this
-        val chatSession = pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
-            override fun getTimecode(): EpochTime {
-                return EpochTime(0)
-            }
+    private fun createChatSession(): LiveLikeChatSession? {
+        chatSession =
+            pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
+                override fun getTimecode(): EpochTime {
+                    return EpochTime(0)
+                }
 
-        }, errorDelegate = object : ErrorDelegate() {
-            override fun onError(error: String) {
-                Log.e("TEST", error)
-            }
-        })
-
-        if (chatSession != null) {
-            chatSession.connectToChatRoom(this.programId, callback = object : LiveLikeCallback<Unit>() {
-                override fun onResponse(result: Unit?, error: String?) {
-                    if (error != null) {
-                        Log.e("TEST", error)
-                    }
+            }, errorDelegate = object : ErrorDelegate() {
+                override fun onError(error: String) {
+                    Log.e("TEST", error)
                 }
             })
-            chat_view.allowMediaFromKeyboard = true
-            chat_view.isChatInputVisible = true
-            chat_view.setSession(chatSession)
+
+        return chatSession
+    }
+
+    fun sendChatMessage(message: String) {
+        chatSession.sendChatMessage(
+            message,
+            "",
+            0,
+            0,
+            liveLikeCallback = object : LiveLikeCallback<LiveLikeChatMessage>() {
+                override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
+                    if (error != null) {
+//                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+                    } else {
+                        //use ChatMessage model class
+                    }
+                }
+            }
+        )
+    }
+
+    private fun registerMessageListener(chatSession: LiveLikeChatSession) {
+        chatSession.setMessageListener(object : MessageListener {
+
+            override fun onNewMessage(message: LiveLikeChatMessage) {
+                Log.i("NEW MESSAGE", message.id.toString())
+
+            }
+
+            override fun onHistoryMessage(
+                messages: List<LiveLikeChatMessage>
+            ) {
+                messages.map {
+                    it.id
+                    Log.i("HISTORY MESSAGE", it.id.toString())
+                }
+            }
+
+
+            override fun onDeleteMessage(messageId: String) {
+
+            }
+
+        })
+    }
+
+    private fun connectToChatRoom(chatSession: LiveLikeChatSession) {
+        chatSession.connectToChatRoom(this.programId, callback = object : LiveLikeCallback<Unit>() {
+            override fun onResponse(result: Unit?, error: String?) {
+                if (error != null) {
+                    Log.e("TEST", error)
+                }
+            }
+        })
+    }
+
+    private fun initChatSession(chatView: ChatView) {
+        pageViewModel.chatFrag = this
+        createChatSession()
+        if (chatSession != null) {
+            connectToChatRoom(chatSession)
+            registerMessageListener(chatSession)
+            chatView.allowMediaFromKeyboard = true
+            chatView.isChatInputVisible = true
+            chatView.setSession(chatSession)
             //chat_view.clearSession()
-            this.chat_view = chat_view
+            this.chatView = chatView
             //chatSession.close()
         }
     }
@@ -81,7 +136,7 @@ class ChatFragment : BaseFragment() {
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private const val ARG_SECTION_NUMBER = "section_number"
+        private const val ARG_PROGRAM_ID = "program_id"
         private const val ARG_CHAT_INPUT_VISIBILITY = "chat_input_visibility"
 
         /**
@@ -89,11 +144,11 @@ class ChatFragment : BaseFragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: String, isChatInputVisible: Boolean): ChatFragment {
+        fun newInstance(programId: String, isChatInputVisible: Boolean): ChatFragment {
             return ChatFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_SECTION_NUMBER, sectionNumber)
-                    putBoolean(ARG_CHAT_INPUT_VISIBILITY,isChatInputVisible)
+                    putString(ARG_PROGRAM_ID, programId)
+                    putBoolean(ARG_CHAT_INPUT_VISIBILITY, isChatInputVisible)
                 }
             }
         }

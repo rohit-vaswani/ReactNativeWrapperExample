@@ -31,7 +31,7 @@ class WidgetTimeLineFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(requireActivity()).get(PageViewModel::class.java)
-        pageViewModel.initEnagementSDK(applicationContext = requireContext())
+        pageViewModel.initEngagementSDK(applicationContext = requireContext())
         val sharedPreferences = context?.getSharedPreferences(MainActivity.ID_SHARED_PREFS, Context.MODE_PRIVATE)
         pageViewModel.createContentSession(sharedPreferences?.getString(MainActivity.PROGRAM_ID_KEY,"2a69e084-721a-4ba4-b692-e42846ab3a7a"))
     }

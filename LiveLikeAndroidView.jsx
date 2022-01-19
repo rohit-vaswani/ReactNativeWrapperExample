@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { UIManager, findNodeHandle } from 'react-native';
 import { PixelRatio} from "react-native";
 import { LiveLikeAndroidViewManager } from './android-view-manager';
+import {Dimensions} from "react-native-web"
 
 const createFragment = (viewId) =>
   UIManager.dispatchViewManagerCommand(
@@ -25,7 +26,7 @@ export const LiveLikeAndroidView = () => {
         // converts dpi to px, provide desired height
         height: PixelRatio.getPixelSizeForLayoutSize(750),
         // converts dpi to px, provide desired width
-        width: PixelRatio.getPixelSizeForLayoutSize(400)
+        width: PixelRatio.getPixelSizeForLayoutSize(420)
       }}
       ref={ref}
     />

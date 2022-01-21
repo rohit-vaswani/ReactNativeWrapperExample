@@ -47,8 +47,7 @@ class ChatFragment : BaseFragment() {
     }
 
     private fun createChatSession(): LiveLikeChatSession? {
-        chatSession =
-            pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
+        chatSession = pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
                 override fun getTimecode(): EpochTime {
                     return EpochTime(0)
                 }

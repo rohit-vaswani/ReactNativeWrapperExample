@@ -13,7 +13,11 @@ import com.facebook.react.uimanager.annotations.ReactPropGroup
 import com.livelike.demo.ui.main.ChatFragment
 
 
-// replace with your package
+/*
+    replace with your package
+    Write a Wrapper for ChatView and convert Fragment Logic/lifecycle into View lifecycle.
+    Along with View, expose a Module whose singleton instance will be created on RN SIDE AND initialized.
+ */
 
 
 class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :

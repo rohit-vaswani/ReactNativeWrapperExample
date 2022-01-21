@@ -5,12 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.livelike.demo.R
+import com.livelike.engagementsdk.ChatRoomListener
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.EpochTime
 import com.livelike.engagementsdk.MessageListener
+import com.livelike.engagementsdk.chat.ChatRoomInfo
 import com.livelike.engagementsdk.chat.ChatView
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
@@ -47,7 +48,8 @@ class ChatFragment : BaseFragment() {
     }
 
     private fun createChatSession(): LiveLikeChatSession? {
-        chatSession = pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
+        chatSession =
+            pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
                 override fun getTimecode(): EpochTime {
                     return EpochTime(0)
                 }
@@ -114,14 +116,51 @@ class ChatFragment : BaseFragment() {
         })
     }
 
+    private fun registerOnChatRoomUpdate() {
+
+
+        chatSession.setChatRoomListener(object : ChatRoomListener {
+
+            override fun onChatRoomUpdate(chatRoom: ChatRoomInfo) {
+
+                Log.i("chatRoom.contentFilter", chatRoom.contentFilter.toString())
+
+            }
+
+
+        })
+
+    }
+
+    private fun updateData(result: ChatRoomInfo?) {
+
+//        result?.let {
+//
+//            txt_chat_room_title.text =
+//
+//                "Title: ${it.title}\nVisibility: ${it.visibility?.name}\nContent Filter: ${it.contentFilter}\nCustom Data: ${it.customData}"
+//
+//            txt_chat_room_id.text = it.id
+//
+//            txt_chat_room_members_count.text = ""
+//
+//            txt_chat_room_visibility.text = it.visibility?.name
+//
+//            chat_view.isChatInputVisible = (it.contentFilter == "producer").not()
+//
+//        }
+
+    }
+
     private fun initChatSession(chatView: ChatView) {
         pageViewModel.chatFrag = this
         createChatSession()
         if (chatSession != null) {
+            registerOnChatRoomUpdate()
             connectToChatRoom(chatSession)
             registerMessageListener(chatSession)
             chatView.allowMediaFromKeyboard = true
-            chatView.isChatInputVisible = true
+            chatView.isChatInputVisible = false
             chatView.setSession(chatSession)
             //chat_view.clearSession()
             this.chatView = chatView

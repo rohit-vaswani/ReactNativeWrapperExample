@@ -42,9 +42,9 @@ export const LiveLikeAndroidView = () => {
         <LiveLikeAndroidViewManager
             style={{
                 // converts dpi to px, provide desired height
-                height: PixelRatio.getPixelSizeForLayoutSize(750),
+                height: PixelRatio.getPixelSizeForLayoutSize(600),
                 // converts dpi to px, provide desired width
-                width: PixelRatio.getPixelSizeForLayoutSize(420)
+                width: PixelRatio.getPixelSizeForLayoutSize(380)
             }}
             ref={ref}
         />

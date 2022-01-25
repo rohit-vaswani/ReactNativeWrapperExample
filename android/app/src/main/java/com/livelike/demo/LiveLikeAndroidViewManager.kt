@@ -24,7 +24,13 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     ViewGroupManager<FrameLayout?>() {
     private var propWidth = 0
     private var propHeight = 0
-    private val programId = "3ebd6f09-2f16-4171-b94a-c9335154d672" // channelId // roomId
+
+    private val programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"  // Live
+    private val chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d" // "fbfd021c-a4ea-4088-9a07-568f7c947e33"
+
+    // private val userId = "18e7491f-d0e0-4019-a573-cf6090f988ed"
+    // private val accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ5NWRkMjJkLWRiMTEtNGUzNi04OTQ3LWU4ODJkMmQwY2VlZCIsImNsaWVudF9pZCI6Ik9QYmEwOG1ycjhnTFoyVU1RM3VXTUJPTGlHaGZvdmdJZVFBRWZxZ0kiLCJhY2Nlc3NfdG9rZW4iOiJ1RnFDVkR0T0NWaXBIbFExRlhpSEJXWllZNjJ0TTQ4QWVQdldFUjFHNU1ReWVGcWVLZVpITVEiLCJpc19wcm9kdWNlciI6dHJ1ZSwiaXNzIjoiYmxhc3QiLCJpYXQiOjE2NDI3NjI0NTZ9.bXTb-5CRexuY8H08t7_qO23CQ7FKC4XOCO4-nipqhRo"
+//    private val programId = "3ebd6f09-2f16-4171-b94a-c9335154d672" // channelId // roomId
     // chang userID: 64b501fe-b084-46c2-8639-c7f2d69c8a11
     // Loyal HAWK userID: 8f52892d-3530-490d-b838-1594d296e7c9
     // Royal Legend userID: 4a2bbc1e-be12-40a9-83a9-514473a34c94 [Current User ID]*
@@ -88,7 +94,7 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     fun createFragment(root: FrameLayout, reactNativeViewId: Int) {
         val parentView = root.findViewById<View>(reactNativeViewId) as ViewGroup
         setupLayout(parentView)
-        chatFragment = ChatFragment.newInstance(programId, isChatVisible)
+        chatFragment = ChatFragment.newInstance(programId, chatRoomId, isChatVisible)
         // val myFragment = WidgetTimeLineFragment()
         val activity = reactContext.currentActivity as FragmentActivity?
         activity!!.supportFragmentManager

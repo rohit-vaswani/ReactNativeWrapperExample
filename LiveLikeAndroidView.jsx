@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {findNodeHandle, PixelRatio, UIManager} from 'react-native';
 import {LiveLikeAndroidViewManager} from './android-view-manager';
+import {Dimensions} from "react-native-web"
 
 
 const createFragment = (viewId) => {
@@ -44,9 +45,29 @@ export const LiveLikeAndroidView = () => {
                 // converts dpi to px, provide desired height
                 height: PixelRatio.getPixelSizeForLayoutSize(600),
                 // converts dpi to px, provide desired width
-                width: PixelRatio.getPixelSizeForLayoutSize(380)
+                width: PixelRatio.getPixelSizeForLayoutSize(370) // 420
             }}
             ref={ref}
         />
     );
 };
+
+
+/*
+
+    <View style={{
+        position: 'absolute',
+        borderWidth: 1,
+        borderColor: 'red',
+        bottom: 0,
+        left: 0
+    }}>
+        <Button
+            title={'Widget'}
+            onPress={() => {
+                console.log('test')
+            }}
+        />
+    </View>
+
+ */

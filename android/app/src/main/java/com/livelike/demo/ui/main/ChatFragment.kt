@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.livelike.demo.R
-import com.livelike.engagementsdk.ChatRoomListener
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.EpochTime
 import com.livelike.engagementsdk.MessageListener
-import com.livelike.engagementsdk.chat.ChatRoomInfo
 import com.livelike.engagementsdk.chat.ChatView
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
@@ -25,6 +23,7 @@ class ChatFragment : BaseFragment() {
 
     private lateinit var pageViewModel: PageViewModel
     private var programId = ""
+    private var chatRoomId = ""
     private var isChatInputVisible = false
     var chatView: ChatView? = null
     private lateinit var chatSession: LiveLikeChatSession
@@ -33,6 +32,7 @@ class ChatFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(requireActivity()).get(PageViewModel::class.java)
         programId = arguments?.getString(ARG_PROGRAM_ID) ?: ""
+        chatRoomId = arguments?.getString(ARG_CHAT_ROOM_ID) ?: ""
         isChatInputVisible = arguments?.getBoolean(ARG_CHAT_INPUT_VISIBILITY) ?: false
     }
 
@@ -48,8 +48,7 @@ class ChatFragment : BaseFragment() {
     }
 
     private fun createChatSession(): LiveLikeChatSession? {
-        chatSession =
-            pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
+        chatSession = pageViewModel.engagementSDK.createChatSession(object : EngagementSDK.TimecodeGetter {
                 override fun getTimecode(): EpochTime {
                     return EpochTime(0)
                 }
@@ -86,8 +85,8 @@ class ChatFragment : BaseFragment() {
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
                 Log.i("NEW MESSAGE", message.id.toString())
-
             }
+
 
             override fun onHistoryMessage(
                 messages: List<LiveLikeChatMessage>
@@ -98,16 +97,16 @@ class ChatFragment : BaseFragment() {
                 }
             }
 
-
             override fun onDeleteMessage(messageId: String) {
 
             }
 
         })
+
     }
 
     private fun connectToChatRoom(chatSession: LiveLikeChatSession) {
-        chatSession.connectToChatRoom(this.programId, callback = object : LiveLikeCallback<Unit>() {
+        chatSession.connectToChatRoom(this.chatRoomId, callback = object : LiveLikeCallback<Unit>() {
             override fun onResponse(result: Unit?, error: String?) {
                 if (error != null) {
                     Log.e("TEST", error)
@@ -116,51 +115,16 @@ class ChatFragment : BaseFragment() {
         })
     }
 
-    private fun registerOnChatRoomUpdate() {
-
-
-        chatSession.setChatRoomListener(object : ChatRoomListener {
-
-            override fun onChatRoomUpdate(chatRoom: ChatRoomInfo) {
-
-                Log.i("chatRoom.contentFilter", chatRoom.contentFilter.toString())
-
-            }
-
-
-        })
-
-    }
-
-    private fun updateData(result: ChatRoomInfo?) {
-
-//        result?.let {
-//
-//            txt_chat_room_title.text =
-//
-//                "Title: ${it.title}\nVisibility: ${it.visibility?.name}\nContent Filter: ${it.contentFilter}\nCustom Data: ${it.customData}"
-//
-//            txt_chat_room_id.text = it.id
-//
-//            txt_chat_room_members_count.text = ""
-//
-//            txt_chat_room_visibility.text = it.visibility?.name
-//
-//            chat_view.isChatInputVisible = (it.contentFilter == "producer").not()
-//
-//        }
-
-    }
 
     private fun initChatSession(chatView: ChatView) {
         pageViewModel.chatFrag = this
         createChatSession()
+
         if (chatSession != null) {
-            registerOnChatRoomUpdate()
             connectToChatRoom(chatSession)
             registerMessageListener(chatSession)
             chatView.allowMediaFromKeyboard = true
-            chatView.isChatInputVisible = false
+            chatView.isChatInputVisible = true
             chatView.setSession(chatSession)
             //chat_view.clearSession()
             this.chatView = chatView
@@ -176,19 +140,62 @@ class ChatFragment : BaseFragment() {
          */
         private const val ARG_PROGRAM_ID = "program_id"
         private const val ARG_CHAT_INPUT_VISIBILITY = "chat_input_visibility"
+        private const val ARG_CHAT_ROOM_ID = "chat_room_id"
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
         @JvmStatic
-        fun newInstance(programId: String, isChatInputVisible: Boolean): ChatFragment {
+        fun newInstance(
+            programId: String,
+            chatRoomId: String,
+            isChatInputVisible: Boolean
+        ): ChatFragment {
             return ChatFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PROGRAM_ID, programId)
                     putBoolean(ARG_CHAT_INPUT_VISIBILITY, isChatInputVisible)
+                    putString(ARG_CHAT_ROOM_ID, chatRoomId)
                 }
             }
         }
     }
 }
+
+
+/*
+    Trial code
+
+
+        pageViewModel.engagementSDK.updateChatNickname("TEST 123")
+        chatSession.shouldDisplayAvatar = true
+        chatSession.avatarUrl = "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-CHC@2x.png"
+        pageViewModel.engagementSDK.updateChatNickname("TEST 123")
+        chatView.isChatInputVisible = true
+
+        private fun createContentSession() {
+            val contentSession = pageViewModel.engagementSDK.createContentSession(this.programId, object : ErrorDelegate() {
+                override fun onError(error: String) {
+                    Log.i("Check this", error)
+                }
+            })
+            contentSession.chatSession.avatarUrl = "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-CHC@2x.png"
+
+        }
+
+        private fun configureAvatar() {
+            chatSession.avatarUrl = "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-CHC@2x.png"
+            chatSession.avatarUrl = null
+        }
+
+            private fun registerOnChatRoomUpdate() {
+        chatSession.setChatRoomListener(object : ChatRoomListener {
+            override fun onChatRoomUpdate(chatRoom: ChatRoomInfo) {
+                Log.i("chatRoom.contentFilter", chatRoom.contentFilter.toString())
+            }
+        })
+    }
+
+
+ */

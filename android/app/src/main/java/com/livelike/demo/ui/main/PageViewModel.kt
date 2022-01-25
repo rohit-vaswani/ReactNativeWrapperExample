@@ -25,6 +25,8 @@ class PageViewModel : ViewModel() {
     lateinit var contentSession: LiveLikeContentSession
     val widgetJsonData: MutableLiveData<String> = MutableLiveData()
     val currentUserLeaderBoard: MutableLiveData<LeaderBoardEntry> = MutableLiveData()
+    val clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI" // Fancode
+//    val clientId = "mOBYul18quffrBDuq2IACKtVuLbUzXIPye5S3bq5"
 
     fun createContentSession(programId: String?) {
         contentSession = programId?.let { engagementSDK.createContentSession(it) }!!
@@ -41,7 +43,6 @@ class PageViewModel : ViewModel() {
             MainActivity.ID_SHARED_PREFS,
             Context.MODE_PRIVATE
         )
-        val clientId = "mOBYul18quffrBDuq2IACKtVuLbUzXIPye5S3bq5"
         engagementSDK = clientId?.let {
             EngagementSDK(
                 it,
@@ -68,7 +69,8 @@ class PageViewModel : ViewModel() {
                             applicationContext.packageName,
                             Context.MODE_PRIVATE
                         ).edit().putString(
-                            PREF_USER_ACCESS_TOKEN, accessToken
+                            PREF_USER_ACCESS_TOKEN,
+                            accessToken
                         ).apply()
                     }
                 })
@@ -141,8 +143,7 @@ class PageViewModel : ViewModel() {
         /*const val LIVELIKE_CLIENT_ID: String = "ufMEjCqZXZDijB3wzOqurOSWKxazZLPDkdnJVdyb"
         const val CONTENT_PROGRAM_ID: String = "4682af13-6793-45f3-bf55-dac529e0af57"*/
 
-        const val LEADERBOARD_ID: String =
-            "8f52892d-3530-490d-b838-1594d296e7c9" // OLD:  "86ef1ca9-5ebf-4f8f-8a4b-a4a34697bc47"
+        const val LEADERBOARD_ID: String = "8f52892d-3530-490d-b838-1594d296e7c9" // OLD:  "86ef1ca9-5ebf-4f8f-8a4b-a4a34697bc47"
         /*const val LEADERBOARD_ID: String = "dd00dda1-8493-40c8-9f6f-108c58796fe0"*/
 
         const val PREF_USER_ACCESS_TOKEN = "user_access_token"

@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/chat_bubble_background.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/chat_fragment_layout.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fc_chat_view.xml" value="0.25729166666666664" />
         <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/timeline_fragment_layout.xml" value="0.11875" />

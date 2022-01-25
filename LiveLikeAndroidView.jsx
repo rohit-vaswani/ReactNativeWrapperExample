@@ -45,7 +45,7 @@ export const LiveLikeAndroidView = () => {
                 // converts dpi to px, provide desired height
                 height: PixelRatio.getPixelSizeForLayoutSize(600),
                 // converts dpi to px, provide desired width
-                width: PixelRatio.getPixelSizeForLayoutSize(370) // 420
+                width: PixelRatio.getPixelSizeForLayoutSize(360) // 420
             }}
             ref={ref}
         />

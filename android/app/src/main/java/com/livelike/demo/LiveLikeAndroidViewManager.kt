@@ -1,16 +1,15 @@
 package com.livelike.demo
-import android.util.Log
 import android.view.Choreographer
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.fragment.app.FragmentActivity
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactPropGroup
-import com.livelike.demo.ui.main.ChatFragment
+import com.livelike.demo.ui.main.FCChatView
 
 
 /*
@@ -20,23 +19,17 @@ import com.livelike.demo.ui.main.ChatFragment
  */
 
 
-class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
-    ViewGroupManager<FrameLayout?>() {
+class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) : ViewGroupManager<FrameLayout?>() {
     private var propWidth = 0
     private var propHeight = 0
 
-    private val programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"  // Live
-    private val chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d" // "fbfd021c-a4ea-4088-9a07-568f7c947e33"
 
-    // private val userId = "18e7491f-d0e0-4019-a573-cf6090f988ed"
-    // private val accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ5NWRkMjJkLWRiMTEtNGUzNi04OTQ3LWU4ODJkMmQwY2VlZCIsImNsaWVudF9pZCI6Ik9QYmEwOG1ycjhnTFoyVU1RM3VXTUJPTGlHaGZvdmdJZVFBRWZxZ0kiLCJhY2Nlc3NfdG9rZW4iOiJ1RnFDVkR0T0NWaXBIbFExRlhpSEJXWllZNjJ0TTQ4QWVQdldFUjFHNU1ReWVGcWVLZVpITVEiLCJpc19wcm9kdWNlciI6dHJ1ZSwiaXNzIjoiYmxhc3QiLCJpYXQiOjE2NDI3NjI0NTZ9.bXTb-5CRexuY8H08t7_qO23CQ7FKC4XOCO4-nipqhRo"
-//    private val programId = "3ebd6f09-2f16-4171-b94a-c9335154d672" // channelId // roomId
-    // chang userID: 64b501fe-b084-46c2-8639-c7f2d69c8a11
-    // Loyal HAWK userID: 8f52892d-3530-490d-b838-1594d296e7c9
-    // Royal Legend userID: 4a2bbc1e-be12-40a9-83a9-514473a34c94 [Current User ID]*
-    // Leaderboard ID: 86ef1ca9-5ebf-4f8f-8a4b-a4a34697bc47 (Loyal Hawk?)
-    private val isChatVisible = false
-    private lateinit var chatFragment: ChatFragment
+    // TODO: Remove the hard-coding
+    private val programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
+    private val chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
+    private val clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
+
+    private lateinit var chatViewConstraintLayout: FCChatView
 
     override fun getName(): String {
         return REACT_CLASS
@@ -56,7 +49,6 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
         val hashMap = hashMapOf<String, Int>()
         hashMap.apply {
             put("create", COMMAND_CREATE)
-            put("sendMessage", COMMAND_SEND_MESSAGE)
         }
         return hashMap
     }
@@ -72,8 +64,7 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
         super.receiveCommand(root, commandId, args)
         val reactNativeViewId = args!!.getInt(0)
         when (commandId.toInt()) {
-            COMMAND_CREATE -> createFragment(root, reactNativeViewId)
-            COMMAND_SEND_MESSAGE -> sendChatMessage(args)
+            COMMAND_CREATE -> addChatView(root, reactNativeViewId)
             else -> {}
         }
     }
@@ -91,33 +82,21 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     /**
      * Replace your React Native view with a custom fragment
      */
-    fun createFragment(root: FrameLayout, reactNativeViewId: Int) {
+    private fun addChatView(root: FrameLayout, reactNativeViewId: Int) {
         val parentView = root.findViewById<View>(reactNativeViewId) as ViewGroup
-        setupLayout(parentView)
-        chatFragment = ChatFragment.newInstance(programId, chatRoomId, isChatVisible)
-        // val myFragment = WidgetTimeLineFragment()
-        val activity = reactContext.currentActivity as FragmentActivity?
-        activity!!.supportFragmentManager
-            .beginTransaction()
-            .replace(reactNativeViewId, chatFragment, reactNativeViewId.toString())
-            .commit()
+        addChatFrame(parentView)
     }
 
-    private fun sendChatMessage(args: ReadableArray?) {
 
-        val message = args?.getString(1).toString()
-        Log.i("MESSAGE arg", message)
-        chatFragment.sendChatMessage(message)
-
-
-    }
-
-    fun setupLayout(view: View) {
+    private fun addChatFrame(parentView: ViewGroup) {
         Choreographer.getInstance().postFrameCallback(object : Choreographer.FrameCallback {
             override fun doFrame(frameTimeNanos: Long) {
-                manuallyLayoutChildren(view)
-                view.viewTreeObserver.dispatchOnGlobalLayout()
+                manuallyLayoutChildren(parentView)
+                parentView.viewTreeObserver.dispatchOnGlobalLayout()
                 Choreographer.getInstance().postFrameCallback(this)
+                val view: FCChatView = LayoutInflater.from(reactContext.currentActivity).inflate(R.layout.fc_chat_view, parentView, false) as FCChatView
+                parentView.addView(view)
+                view.initialize(clientId, programId, chatRoomId)
             }
         })
     }
@@ -139,6 +118,20 @@ class LiveLikeAndroidViewManager(var reactContext: ReactApplicationContext) :
     companion object {
         const val REACT_CLASS = "LiveLikeAndroidViewManager"
         const val COMMAND_CREATE = 0
-        const val COMMAND_SEND_MESSAGE = 1
     }
 }
+
+
+/*
+
+
+        val activity = reactContext.currentActivity as FragmentActivity?
+        chatFragment = ChatView.newInstance(programId, chatRoomId, isChatVisible)
+         val myFragment = WidgetTimeLineFragment()
+        activity!!.supportFragmentManager
+            .beginTransaction()
+            .replace(reactNativeViewId, chatFragment, reactNativeViewId.toString())
+            .commit()
+
+
+ */

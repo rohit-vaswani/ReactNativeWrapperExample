@@ -20,7 +20,7 @@ import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 
 class PageViewModel : ViewModel() {
 
-    var chatFrag: ChatFragment? = null
+//    var chatFrag: ChatFragment? = null
     lateinit var engagementSDK: EngagementSDK
     lateinit var contentSession: LiveLikeContentSession
     val widgetJsonData: MutableLiveData<String> = MutableLiveData()

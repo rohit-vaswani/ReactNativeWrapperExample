@@ -1,28 +1,45 @@
 import React, {useEffect, useRef} from 'react';
-import {findNodeHandle, PixelRatio, UIManager} from 'react-native';
-import {LiveLikeAndroidViewManager} from './android-view-manager';
-import {Dimensions} from "react-native-web"
+import {NativeModules, requireNativeComponent} from 'react-native';
+import {PixelRatio} from "react-native"
+
+export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
+const {LiveLikeModule} = NativeModules
 
 
-const createFragment = (viewId) => {
-    UIManager.dispatchViewManagerCommand(
-        viewId,
-        // we are calling the 'create' command
-        UIManager.LiveLikeAndroidViewManager.Commands.create.toString(),
-        [viewId]
-    );
-}
+const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
+const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
+const chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
+
+
+// const {LiveLikeModule} = NativeModules
+
+
+// const createFragment = (viewId) => {
+//     UIManager.dispatchViewManagerCommand(
+//         viewId,
+//         // we are calling the 'create' command
+//         UIManager.LiveLikeWidgetView.Commands.create.toString(),
+//         [viewId]
+//     );
+// }
 
 // const sendMessage = (viewId, message) => {
 //     UIManager.dispatchViewManagerCommand(
 //         viewId,
 //         // we are calling the 'sendMessage' command
-//         UIManager.LiveLikeAndroidViewManager.Commands.sendMessage.toString(),
+//         UIManager.LiveLikeWidgetView.Commands.sendMessage.toString(),
 //         [viewId, message]
 //     );
 // }
 
 export const LiveLikeAndroidView = () => {
+
+
+    useEffect(() => {
+        LiveLikeModule.initializeSDK(clientId)
+    }, [])
+
+
     const ref = useRef(null);
 
     // TODO: Send Message
@@ -33,20 +50,23 @@ export const LiveLikeAndroidView = () => {
     //         sendMessage(viewId, newMessage)
     //     }, 3000)
     // }, [])
-
-    useEffect(() => {
-        const viewId = findNodeHandle(ref.current);
-        createFragment(viewId);
-    }, []);
+    //
+    // useEffect(() => {
+    //     const viewId = findNodeHandle(ref.current);
+    //     createFragment(viewId);
+    // }, []);
 
     return (
-        <LiveLikeAndroidViewManager
+        <LiveLikeWidgetView
             style={{
                 // converts dpi to px, provide desired height
                 height: PixelRatio.getPixelSizeForLayoutSize(600),
                 // converts dpi to px, provide desired width
                 width: PixelRatio.getPixelSizeForLayoutSize(360) // 420
             }}
+            programId={programId}
+            clientId={clientId}
+            chatRoomId={chatRoomId}
             ref={ref}
         />
     );

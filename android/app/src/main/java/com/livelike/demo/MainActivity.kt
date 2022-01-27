@@ -12,11 +12,11 @@ class MainActivity : ReactActivity() {
 
     private val pageViewModel: PageViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Set the theme to AppTheme BEFORE onCreate to support 
+        // Set the theme to AppTheme BEFORE onCreate to support
         // coloring the background, status bar, and navigation bar.
         // This is required for expo-splash-screen.
-        setTheme(R.style.AppTheme)
-        pageViewModel.initEngagementSDK(applicationContext = applicationContext)
+        // setTheme(R.style.AppTheme)
+        // pageViewModel.initEngagementSDK(applicationContext = applicationContext)
         super.onCreate(null)
     }
 

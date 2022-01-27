@@ -4,14 +4,14 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/red"
     >
 
     <com.livelike.engagementsdk.chat.ChatView
         android:id="@+id/chat_view"
         style="@style/CustomChatTheme"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:displayUserProfile="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

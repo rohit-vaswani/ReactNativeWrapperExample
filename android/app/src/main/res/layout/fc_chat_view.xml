@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.livelike.demo.ui.main.FCChatView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red"
-    >
+    android:orientation="vertical">
 
-    <com.livelike.engagementsdk.chat.ChatView
+    <com.livelike.engagementsdk.chat.ChatView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/chat_view"
-        style="@style/CustomChatTheme"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:displayUserProfile="true"
@@ -18,4 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</com.livelike.demo.ui.main.FCChatView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

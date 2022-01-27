@@ -5,6 +5,7 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
+import com.livelike.demo.widget.LiveLikeChatViewManager
 import java.util.*
 
 // replace with your package
@@ -15,6 +16,6 @@ class RNLiveLikePackage(val application: Application) : ReactPackage {
     }
 
     override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-        return Arrays.asList<ViewManager<*, *>>(LiveLikeWidgetViewManager(reactContext))
+        return Arrays.asList<ViewManager<*, *>>(LiveLikeChatViewManager(reactContext))
     }
 }

@@ -3,15 +3,27 @@ package com.livelike.demo.widget
 import android.util.Log
 import android.view.Choreographer
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ThemedReactContext
 import com.livelike.demo.R
+import com.livelike.demo.databinding.FcChatViewBinding
+import com.livelike.demo.ui.main.VideoView
 import com.livelike.engagementsdk.LiveLikeContentSession
+import com.livelike.engagementsdk.MessageListener
 import com.livelike.engagementsdk.chat.ChatView
+import com.livelike.engagementsdk.chat.ChatViewDelegate
+import com.livelike.engagementsdk.chat.ChatViewThemeAttributes
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
+import com.livelike.engagementsdk.publicapis.ChatMessageType
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
+import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
+import org.json.JSONObject
 
 
 class LiveLikeChatWidgetView(
@@ -21,7 +33,8 @@ class LiveLikeChatWidgetView(
 
     lateinit var contentSession: LiveLikeContentSession
     private var renderWidget = true
-    var chatView: ChatView;
+    lateinit var chatView: ChatView;
+    private var chatViewBinding: FcChatViewBinding? = null
     var fallback: Choreographer.FrameCallback;
     var chatSession: LiveLikeChatSession? = null
     var chatRoomId = ""
@@ -38,10 +51,14 @@ class LiveLikeChatWidgetView(
             }
         }
         Choreographer.getInstance().postFrameCallback(fallback)
-        val parentView =
-            LayoutInflater.from(context).inflate(R.layout.fc_chat_view, null) as ConstraintLayout;
-        chatView = parentView.findViewById(R.id.chat_view);
-        addView(parentView)
+        val inflater: LayoutInflater = LayoutInflater.from(context)
+        chatViewBinding = FcChatViewBinding.bind(inflater.inflate(R.layout.fc_chat_view, null))
+
+        chatViewBinding?.let {
+            chatView = it.chatView
+            addView(it.root)
+        }
+
 
     }
 
@@ -84,6 +101,9 @@ class LiveLikeChatWidgetView(
         this.chatRoomId = chatRoomId
         connectToChatRoom(chatRoomId)
         setUserAvatar()
+        registerMessageListener()
+        registerVideoMessageHandler()
+        registerInputListener()
 
         if (chatSession != null) {
             chatView.allowMediaFromKeyboard = true
@@ -91,6 +111,7 @@ class LiveLikeChatWidgetView(
             chatView.setSession(chatSession)
         }
     }
+
 
     fun setAvatar(avatarUrl: String) {
         this.userAvatarUrl = avatarUrl
@@ -119,6 +140,90 @@ class LiveLikeChatWidgetView(
     }
 
 
+    private fun registerVideoMessageHandler() {
+
+        chatView.chatViewDelegate = object : ChatViewDelegate {
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: ChatMessageType
+            ): RecyclerView.ViewHolder {
+                // TODO Should we return the default view holder for normal message
+                return MyCustomMsgViewHolder(VideoView(parent.context))
+            }
+
+            override fun onBindViewHolder(
+                holder: RecyclerView.ViewHolder,
+                liveLikeChatMessage: LiveLikeChatMessage,
+                chatViewThemeAttributes: ChatViewThemeAttributes,
+                showChatAvatar: Boolean
+            ) {
+                // Do not do anything
+                chatViewThemeAttributes.chatBubbleBackgroundRes?.let {
+                    val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
+                    val url = jsonObject.get("custom_message").toString()
+                    (holder as MyCustomMsgViewHolder).videoUrl = url
+                }
+            }
+        }
+
+    }
+
+    // TOOD: Change the name
+    class MyCustomMsgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var videoUrl: String? = null
+            set(value) {
+                field = value
+                (itemView as VideoView).videoUrl = value
+            }
+    }
+
+
+//    Test Area
+
+    private fun registerInputListener() {
+
+
+        val url = "http://techslides.com/demos/sample-videos/small.mp4"
+
+        chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
+//            val url = chatViewBinding?.urlInput?.text
+            url?.let {
+                chatSession?.sendCustomChatMessage("{" +
+                        "\"custom_message\": \"" + url + "\"" +
+                        "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
+                    override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
+                        result?.let {
+                            println("ExoPlayerActivity.onResponse> ${it.id}")
+                        }
+                        error?.let {
+                            //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    private fun registerMessageListener() {
+
+        chatSession?.setMessageListener(object : MessageListener {
+            override fun onDeleteMessage(messageId: String) {
+                Log.i("Delete Message", messageId)
+            }
+
+            override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
+                Log.i("History Message", messages.toString())
+            }
+
+            override fun onNewMessage(message: LiveLikeChatMessage) {
+                Log.i("New Message", message.toString())
+            }
+        })
+
+    }
+
+
+
 }
 
 /*
@@ -137,5 +242,10 @@ class LiveLikeChatWidgetView(
         app:layout_constraintTop_toTopOf="parent"
 
         />
+
+
+        //        val parentView = LayoutInflater.from(context).inflate(R.layout.fc_chat_view, null) as ConstraintLayout;
+//        chatView = parentView.findViewById(R.id.chat_view);
+//        addView(parentView)
 
  */

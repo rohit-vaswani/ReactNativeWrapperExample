@@ -7,17 +7,17 @@
         <item name="chatBubbleBackground">@drawable/chat_bubble_background
         </item><!-- to update the background of chat bubble,it can be drawable/color -->
 
-        <item name="usernameColor">#66ffffff
+        <item name="usernameColor">#121212
         </item><!-- update the color of username in chat message -->
-        <item name="otherUsernameColor">#66ffffff
+        <item name="otherUsernameColor">#F5B041
         </item><!-- update the color of different username in chat message -->
-        <item name="messageColor">#ffffff</item><!-- update color of message in chat message -->
-        <item name="chatInputViewBackground">#1E2028
+        <item name="messageColor">#121212</item><!-- update color of message in chat message -->
+        <item name="chatInputViewBackground">#FFFFFF
         </item><!-- update the background of ChatInput, it can be drawable/color -->
 
-        <item name="chatDisplayBackground">#1E2028
+        <item name="chatDisplayBackground">#FFFFFF
         </item><!-- update the background of Chat List, it can be drawable/color  -->
-        <item name="chatViewBackground">#1E2028
+        <item name="chatViewBackground">#FFFFFF
         </item><!-- update the background of full ChatFull View, it can be drawable/color -->
         <item name="chatInputTextColor">#FFFFFF</item><!-- update the color of textInput -->
         <item name="chatInputTextSize">15sp</item><!-- update the textsize of textInput -->
@@ -30,8 +30,8 @@
         <item name="chatMarginRight">0dp</item>
         <!--update the margin for chat box -->
         <!-- update the position of ChatReactionView -->
-        <item name="chatReactionXPosition">120dp</item>
-        <item name="chatReactionYPosition">25dp</item>
+        <item name="chatReactionXPosition">0dp</item>
+        <item name="chatReactionYPosition">0dp</item>
         <!-- update the position of ChatReactionView -->
         <item name="chatReactionElevation">6dp
         </item><!-- update the elevation of chat reaction (CardView) -->
@@ -66,7 +66,7 @@
         <item name="chatSendButtonPaddingBottom">0dp</item>
         <!-- update the padding of send button -->
         <!--<item name="userPicDrawable">@drawable/ic_user_pic</item>&lt;!&ndash; placeholder for user display image in chat message &ndash;&gt;-->
-        <!--<item name="chatSendDrawable">@drawable/ic_send</item>-->
+        <item name="chatSendDrawable">@drawable/ic_chat_send</item>
         <!-- update the padding of the chat bubble -->
         <item name="chatBubblePaddingLeft">8dp</item>
         <item name="chatBubblePaddingRight">8dp</item>
@@ -95,11 +95,11 @@
         </item><!--enable/diable reaction hint in chat message box -->
         <item name="reaction_icon">@drawable/ic_chat_reaction_turner
         </item><!--update the reaction hint icon in chat message box -->
-        <item name="showStickerSend">true
+        <item name="showStickerSend">false
         </item><!--show/hide the sticker keyboard icon in chat input box -->
         <item name="showMessageTime">false
         </item><!--show/hide message time in the chat message box -->
-        <item name="sendIconTintColor">#0078ff
+        <item name="sendIconTintColor">#2b2b2b
         </item><!--update the color of icon in the send message button -->
         <item name="stickerIconTintColor">#0078ff
         </item><!-- update the color of the icon of the sticker keyboard -->

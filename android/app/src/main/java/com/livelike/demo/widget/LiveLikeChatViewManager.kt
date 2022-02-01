@@ -87,7 +87,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     // Helper Functions
     private fun setNickName(nickName: String?) {
 
-        if(nickName == "" || nickName == null) {
+        if (nickName == "" || nickName == null) {
             return
         }
 
@@ -111,9 +111,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    fun isChatConfigurable(): Boolean {
+    private fun isChatConfigurable(): Boolean {
         return this.chatRoomId != "" && this.chatSession != null
     }
-
 
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
@@ -20,9 +21,11 @@ import com.livelike.engagementsdk.chat.ChatView
 import com.livelike.engagementsdk.chat.ChatViewDelegate
 import com.livelike.engagementsdk.chat.ChatViewThemeAttributes
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
+import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.ChatMessageType
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
+import okhttp3.internal.notifyAll
 import org.json.JSONObject
 
 
@@ -74,6 +77,7 @@ class LiveLikeChatWidgetView(
         contentSession.close()
         chatView.clearSession()
         chatSession?.close()
+
     }
 
     fun updateContentSession(contentSession: LiveLikeContentSession) {
@@ -217,6 +221,14 @@ class LiveLikeChatWidgetView(
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
                 Log.i("New Message", message.toString())
+            }
+
+            override fun onPinMessage(message: PinMessageInfo) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onUnPinMessage(pinMessageId: String) {
+                TODO("Not yet implemented")
             }
         })
 

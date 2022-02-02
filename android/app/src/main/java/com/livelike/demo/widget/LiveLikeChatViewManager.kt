@@ -1,5 +1,6 @@
 package com.livelike.demo.widget
 
+import android.widget.Toast
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
@@ -9,7 +10,11 @@ import com.livelike.demo.LiveLikeManager
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.EpochTime
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
+import com.livelike.engagementsdk.chat.data.remote.LiveLikeOrdering
+import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
+import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
+import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import java.util.*
 
 class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
@@ -68,6 +73,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     private fun onConfiguration(chatView: LiveLikeChatWidgetView) {
         if (isChatConfigurable()) {
             chatView.configureChatView(chatSession, this.chatRoomId)
+            this.registerPinnedMessageHandler()
         }
     }
 
@@ -108,6 +114,33 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
 
             }
         })
+    }
+
+
+    private fun registerPinnedMessageHandler(){
+
+
+//        LiveLikeManager.engagementSDK.chat()?.getPinMessageInfoList(
+//            chatRoomId!!,
+//            LiveLikeOrdering.ASC,
+//            LiveLikePagination.FIRST,
+//            object : LiveLikeCallback<List<PinMessageInfo>>() {
+//                override fun onResponse(result: List<PinMessageInfo>?, error:
+//                String?) {
+//                    result?.let {
+//                        pinnedList.addAll(it.toSet())
+//                        chatView
+//                    }
+//                    error?.let {
+//                        Toast.makeText(
+//                            context,
+//                            it,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            })
+
     }
 
 

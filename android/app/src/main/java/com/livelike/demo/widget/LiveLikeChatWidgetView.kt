@@ -184,7 +184,8 @@ class LiveLikeChatWidgetView(
 
 
                         // Handle Chat background
-                        val layoutParam = it.chatBackground.layoutParams as LinearLayout.LayoutParams
+                        val layoutParam =
+                            it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
                         it.chatBubbleBackground.setBackgroundResource(R.drawable.ic_chat_message_bubble_rounded_rectangle)
                         layoutParam.setMargins(
                             chatMarginLeft,
@@ -202,7 +203,8 @@ class LiveLikeChatWidgetView(
                             chatBubblePaddingRight,
                             chatBubblePaddingBottom
                         )
-                        val layoutParam1: LinearLayout.LayoutParams = it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
+                        val layoutParam1: LinearLayout.LayoutParams =
+                            it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
                         layoutParam1.setMargins(
                             chatBubbleMarginLeft,
                             chatBubbleMarginTop,
@@ -263,89 +265,81 @@ class LiveLikeChatWidgetView(
                         (holder as MyCustomMsgViewHolder).videoUrl = url
                     }
                 }
-
-
-//                // Do not do anything
-//                chatViewThemeAttributes.chatBubbleBackgroundRes?.let {
-//                    val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
-//                    val url = jsonObject.get("custom_message").toString()
-//                    (holder as MyCustomMsgViewHolder).videoUrl = url
-//                }
-                }
             }
-
         }
 
-        // TOOD: Change the name
-        class MyCustomMsgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            var videoUrl: String? = null
-                set(value) {
-                    field = value
-                    (itemView as VideoView).videoUrl = value
-                }
-        }
+    }
+
+    // TOOD: Change the name
+    class MyCustomMsgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var videoUrl: String? = null
+            set(value) {
+                field = value
+                (itemView as VideoView).videoUrl = value
+            }
+    }
 
 
 //    Test Area
 
-        private fun registerInputListener() {
+    private fun registerInputListener() {
 
 
-            val url = "http://techslides.com/demos/sample-videos/small.mp4"
+        val url = "http://techslides.com/demos/sample-videos/small.mp4"
 
-            chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
+        chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
 //            val url = chatViewBinding?.urlInput?.text
-                url?.let {
-                    chatSession?.sendCustomChatMessage("{" +
-                            "\"custom_message\": \"" + url + "\"" +
-                            "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
-                        override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
-                            result?.let {
-                                println("ExoPlayerActivity.onResponse> ${it.id}")
-                            }
-                            error?.let {
-                                //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
-                            }
+            url?.let {
+                chatSession?.sendCustomChatMessage("{" +
+                        "\"custom_message\": \"" + url + "\"" +
+                        "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
+                    override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
+                        result?.let {
+                            println("ExoPlayerActivity.onResponse> ${it.id}")
                         }
-                    })
-                }
+                        error?.let {
+                            //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
             }
         }
+    }
 
-        private fun registerMessageListener() {
+    private fun registerMessageListener() {
 
-            chatSession?.setMessageListener(object : MessageListener {
-                override fun onDeleteMessage(messageId: String) {
-                    Log.i("Delete Message", messageId)
-                }
+        chatSession?.setMessageListener(object : MessageListener {
+            override fun onDeleteMessage(messageId: String) {
+                Log.i("Delete Message", messageId)
+            }
 
-                override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
-                    Log.i("History Message", messages.toString())
-                }
+            override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
+                Log.i("History Message", messages.toString())
+            }
 
-                override fun onNewMessage(message: LiveLikeChatMessage) {
-                    Log.i("New Message", message.toString())
-                }
+            override fun onNewMessage(message: LiveLikeChatMessage) {
+                Log.i("New Message", message.toString())
+            }
 
-                override fun onPinMessage(message: PinMessageInfo) {
-                    TODO("Not yet implemented")
-                }
+            override fun onPinMessage(message: PinMessageInfo) {
+                TODO("Not yet implemented")
+            }
 
-                override fun onUnPinMessage(pinMessageId: String) {
-                    TODO("Not yet implemented")
-                }
-            })
-
-        }
-
-
-        fun dpToPx(dp: Int): Int {
-            val scale = Resources.getSystem().displayMetrics.density
-            return (dp * scale + 0.5f).toInt()
-        }
-
+            override fun onUnPinMessage(pinMessageId: String) {
+                TODO("Not yet implemented")
+            }
+        })
 
     }
+
+
+    fun dpToPx(dp: Int): Int {
+        val scale = Resources.getSystem().displayMetrics.density
+        return (dp * scale + 0.5f).toInt()
+    }
+
+
+}
 
 /*
 

@@ -17,16 +17,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ThemedReactContext
+import com.livelike.demo.LiveLikeManager
 import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
 import com.livelike.demo.ui.main.VideoView
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.MessageListener
-import com.livelike.engagementsdk.chat.ChatView
-import com.livelike.engagementsdk.chat.ChatViewDelegate
-import com.livelike.engagementsdk.chat.ChatViewThemeAttributes
-import com.livelike.engagementsdk.chat.LiveLikeChatSession
+import com.livelike.engagementsdk.chat.*
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.ChatMessageType
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
@@ -83,7 +81,6 @@ class LiveLikeChatWidgetView(
         contentSession.close()
         chatView.clearSession()
         chatSession?.close()
-
     }
 
     fun updateContentSession(contentSession: LiveLikeContentSession) {
@@ -115,6 +112,8 @@ class LiveLikeChatWidgetView(
         registerVideoMessageHandler()
         registerInputListener()
 
+        Log.i("Room name", chatSession?.getCurrentChatRoom.toString())
+
         if (chatSession != null) {
             chatView.allowMediaFromKeyboard = true
             chatView.isChatInputVisible = true
@@ -142,6 +141,16 @@ class LiveLikeChatWidgetView(
             chatRoomId,
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
+
+
+                    LiveLikeManager.engagementSDK.chat().getChatRoom(chatRoomId, object :
+                        LiveLikeCallback<ChatRoomInfo>() {
+                        override fun onResponse(result: ChatRoomInfo?, error: String?) {
+                            Log.i("Chat room details", result.toString())
+                        }
+                    })
+
+
                     if (error != null) {
                         Log.e("TEST", error)
                     }

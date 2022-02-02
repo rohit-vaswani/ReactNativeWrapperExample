@@ -184,7 +184,7 @@ class LiveLikeChatWidgetView(
 
 
                         // Handle Chat background
-                        val layoutParam = it.chatBackground!!.layoutParams as ConstraintLayout.LayoutParams
+                        val layoutParam = it.chatBackground.layoutParams as LinearLayout.LayoutParams
                         it.chatBubbleBackground.setBackgroundResource(R.drawable.ic_chat_message_bubble_rounded_rectangle)
                         layoutParam.setMargins(
                             chatMarginLeft,

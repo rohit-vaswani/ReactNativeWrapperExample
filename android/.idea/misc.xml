@@ -20,6 +20,7 @@
         <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/video_alert_bottom_rounded_corner_with_background.xml" value="0.30833333333333335" />
         <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/layout/chat_user_profile_bar.xml" value="0.31979166666666664" />
         <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/layout/video_widget.xml" value="0.31145833333333334" />
+        <entry key="../../../../../Library/Android/sdk/platforms/android-30/data/res/drawable/btn_star.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/drawable-hdpi/white_separator.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/drawable/chat_bubble_background.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/drawable/ic_chat_message_bubble_rounded_rectangle.xml" value="0.3359375" />
@@ -37,6 +38,7 @@
         <entry key="app/src/main/res/layout/fc_widget_view.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/pin_message_item.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/timeline_fragment_layout.xml" value="0.11875" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.20092592592592592" />
       </map>

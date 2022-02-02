@@ -73,7 +73,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     private fun onConfiguration(chatView: LiveLikeChatWidgetView) {
         if (isChatConfigurable()) {
             chatView.configureChatView(chatSession, this.chatRoomId)
-            this.registerPinnedMessageHandler()
+            this.registerPinnedMessageHandler(chatView)
         }
     }
 
@@ -117,29 +117,21 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    private fun registerPinnedMessageHandler(){
+    private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView){
 
 
-//        LiveLikeManager.engagementSDK.chat()?.getPinMessageInfoList(
-//            chatRoomId!!,
-//            LiveLikeOrdering.ASC,
-//            LiveLikePagination.FIRST,
-//            object : LiveLikeCallback<List<PinMessageInfo>>() {
-//                override fun onResponse(result: List<PinMessageInfo>?, error:
-//                String?) {
-//                    result?.let {
-//                        pinnedList.addAll(it.toSet())
-//                        chatView
-//                    }
-//                    error?.let {
-//                        Toast.makeText(
-//                            context,
-//                            it,
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//            })
+        LiveLikeManager.engagementSDK.chat()?.getPinMessageInfoList(
+            chatRoomId!!,
+            LiveLikeOrdering.ASC,
+            LiveLikePagination.FIRST,
+            object : LiveLikeCallback<List<PinMessageInfo>>() {
+                override fun onResponse(result: List<PinMessageInfo>?, error:
+                String?) {
+                    result?.let {
+                        chatView.handleHistoricalPinMessages(result)
+                    }
+                }
+            })
 
     }
 

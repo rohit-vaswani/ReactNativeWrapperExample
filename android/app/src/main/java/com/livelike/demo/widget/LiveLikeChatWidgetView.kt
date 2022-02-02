@@ -18,6 +18,7 @@ import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ThemedReactContext
 import com.livelike.demo.R
+import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
 import com.livelike.demo.ui.main.VideoView
 import com.livelike.engagementsdk.LiveLikeContentSession
@@ -46,6 +47,7 @@ class LiveLikeChatWidgetView(
     var chatSession: LiveLikeChatSession? = null
     var chatRoomId = ""
     var userAvatarUrl = ""
+    private var pinMessageAdapter = PinMessageAdapter(ArrayList())
 
     init {
 
@@ -60,7 +62,7 @@ class LiveLikeChatWidgetView(
         Choreographer.getInstance().postFrameCallback(fallback)
         val inflater: LayoutInflater = LayoutInflater.from(context)
         chatViewBinding = FcChatViewBinding.bind(inflater.inflate(R.layout.fc_chat_view, null))
-
+        chatViewBinding!!.pinnedMessageList.adapter = pinMessageAdapter
         chatViewBinding?.let {
             chatView = it.chatView
             addView(it.root)
@@ -322,11 +324,11 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
-                TODO("Not yet implemented")
+                pinMessageAdapter.addMessageToList(message)
             }
 
             override fun onUnPinMessage(pinMessageId: String) {
-                TODO("Not yet implemented")
+                pinMessageAdapter.removeMessageFromList(pinMessageId)
             }
         })
 
@@ -339,6 +341,9 @@ class LiveLikeChatWidgetView(
     }
 
 
+    fun handleHistoricalPinMessages(pinnedMessages: List<PinMessageInfo>) {
+        pinMessageAdapter.addMessages(pinnedMessages as ArrayList<PinMessageInfo>)
+    }
 }
 
 /*

@@ -54,7 +54,6 @@ export const LiveLikeAndroidView = () => {
     //     createFragment(viewId);
     // }, []);
 
-
     return (
         <LiveLikeChatWidgetView
             programId={programId}

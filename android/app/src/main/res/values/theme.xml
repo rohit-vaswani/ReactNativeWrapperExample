@@ -2,20 +2,12 @@
 <resources>
     <style name="CustomChatTheme">
 
-
-        <item name="displayUserProfile">false
-        </item><!-- To display the gamification display in chatView -->
-<!--        <item name="chatWidth">match_parent</item>&lt;!&ndash; to update the width od chat bubble &ndash;&gt;-->
-
-        <item name="rankValueTextColor">@color/white
-        </item><!-- update the text color of the rank show in the chat view -->
+        <item name="displayUserProfile">false</item><!-- To display the gamification display in chatView -->
+        <item name="rankValueTextColor">@color/white</item><!-- update the text color of the rank show in the chat view -->
 
         <!--Chat View-->
-        <item name="chatDisplayBackground">#FFFFFF
-        </item><!-- update the background of Chat List, it can be drawable/color  -->
-        <item name="chatViewBackground">#FFFFFF
-        </item><!-- update the background of full ChatFull View, it can be drawable/color -->
-
+        <item name="chatDisplayBackground">@color/white</item><!-- update the background of Chat List, it can be drawable/color  -->
+        <item name="chatViewBackground">@color/white</item><!-- update the background of full ChatFull View, it can be drawable/color -->
 
         <!--Chat User Name-->
         <item name="chatUserNameCustomFontPath" type="font">@font/noto_sans_display_semibold</item><!-- to set the font of the username of the sender ,it takes file from the asset folder -->
@@ -28,42 +20,28 @@
         <!--Chat Message = Chat Bubble + Avatar -->
         <item name="chatBubbleBackground">@drawable/chat_bubble_background</item><!-- to update the background of chat bubble,it can be drawable/color -->
         <item name="messageColor">#121212</item><!-- update color of message in chat message -->
-        <item name="chatUserNameTextAllCaps">false
-        </item><!-- to make all the text of username as capital -->
+        <item name="chatUserNameTextAllCaps">false</item><!-- to make all the text of username as capital -->
         <item name="chatMessageCustomFontPath">font/noto_sans_display_regular.ttf</item><!-- to set he custom font of message -->
         <item name="chatMessageTextLetterSpacing">0.01</item>
         <item name="chatMessageTextSize">14sp</item><!-- to set the textsize of message -->
-        <item name="chatMessageTimeTextSize">10sp
-        </item><!-- to update the textsize of the time of the message-->
-        <item name="chatMessageTimeCustomFontPath">@font/noto_sans_display_regular
-        </item><!-- to set the font of the time of the message -->
-        <item name="chatMessageTimeTextAllCaps">false
-        </item><!-- to make all text capital of time of message -->
-        <item name="chatMessageTimeTextColor">#000000
-        </item><!-- to udpate the textcolor of message time -->
-        <item name="chatBubbleWidth">match_parent
-        </item><!-- update the width of chat bubble,it is not the entire message box only the bubble which exclude the chat avatar -->
-        <item name="chatBackgroundWidth">wrap_content
-        </item><!-- update the width of the chat message box the entire box which include chat avatar and message bubble -->
-<!--         update the padding of the chat bubble -->
+        <item name="chatMessageTimeTextSize">10sp</item><!-- to update the textsize of the time of the message-->
+        <item name="chatMessageTimeCustomFontPath">@font/noto_sans_display_regular</item><!-- to set the font of the time of the message -->
+        <item name="chatMessageTimeTextAllCaps">false</item><!-- to make all text capital of time of message -->
+        <item name="chatMessageTimeTextColor">#000000</item><!-- to udpate the textcolor of message time -->
+        <item name="chatBubbleWidth">match_parent</item><!-- update the width of chat bubble,it is not the entire message box only the bubble which exclude the chat avatar -->
+        <item name="chatBackgroundWidth">wrap_content</item><!-- update the width of the chat message box the entire box which include chat avatar and message bubble -->
         <item name="chatBubblePaddingLeft">8dp</item>
         <item name="chatBubblePaddingRight">24dp</item>
         <item name="chatBubblePaddingTop">8dp</item>
         <item name="chatBubblePaddingBottom">24dp</item>
         <item name="chatMessageTopBorderHeight">1dp</item><!--update height of top border of chat message box -->
-        <item name="chatMessageTopBorderColor">#232d37
-        </item><!-- update color of top border of chat message box -->
-        <item name="chatMessageBottomBorderHeight">1dp
-        </item><!--update height of bottom border of chat message box -->
-        <item name="chatMessageBottomBorderColor">#232d37
-        </item><!-- update color of bottom border of chat message box -->
-        <!-- update the margin for chat bubble in the message box -->
+        <item name="chatMessageTopBorderColor">#232d37</item><!-- update color of top border of chat message box -->
+        <item name="chatMessageBottomBorderHeight">1dp</item><!--update height of bottom border of chat message box -->
+        <item name="chatMessageBottomBorderColor">#232d37</item><!-- update color of bottom border of chat message box -->
         <item name="chatBubbleMarginLeft">10dp</item>
         <item name="chatBubbleMarginTop">10dp</item>
         <item name="chatBubbleMarginRight">10dp</item>
         <item name="chatBubbleMarginBottom">10dp</item>
-        <!-- update the margin for chat bubble in the message box -->
-        <!--update the margin for chat box -->
         <item name="chatMarginBottom">0dp</item>
         <item name="chatMarginTop">0dp</item>
         <item name="chatMarginLeft">0dp</item>

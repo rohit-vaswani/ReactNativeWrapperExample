@@ -24,4 +24,5 @@
     <dimen name="livelike_alert_label_text_size">16sp</dimen>
     <dimen name="livelike_alert_body_text_size">16sp</dimen>
     <dimen name="livelike_header_text_size">18sp</dimen>
+    <dimen name="livelike_chat_input_border_box_margin_top">4dp</dimen>
 </resources>

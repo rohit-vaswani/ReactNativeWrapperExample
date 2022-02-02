@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {NativeModules, requireNativeComponent} from 'react-native';
+import {NativeModules, requireNativeComponent, View} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 
@@ -55,58 +55,46 @@ export const LiveLikeAndroidView = () => {
     // }, []);
 
     return (
-        <LiveLikeChatWidgetView
-            programId={programId}
-            chatRoomId={chatRoomId}
-            userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-            userNickName={"Rohit Vaswani"}
-            style={{flex: 1}}
-            onWidgetShown={(event) => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                this.setState({widgetHeight: event.nativeEvent.height})
-            }}
-            onWidgetHidden={(event) => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                this.setState({widgetHeight: 0})
-            }}
-            onEvent={event => {
-            }}
-        />
+        <>
+            <LiveLikeChatWidgetView
+                programId={programId}
+                chatRoomId={chatRoomId}
+                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+                userNickName={"Rohit Vaswani"}
+                style={{flex: 1}}
+                onWidgetShown={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: event.nativeEvent.height})
+                }}
+                onWidgetHidden={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: 0})
+                }}
+                onEvent={event => {
+                }}
+            />
+        </>
     )
-
-    // return (
-    //     <LiveLikeWidgetView
-    //         style={{
-    //             // converts dpi to px, provide desired height
-    //             height: PixelRatio.getPixelSizeForLayoutSize(600),
-    //             // converts dpi to px, provide desired width
-    //             width: PixelRatio.getPixelSizeForLayoutSize(360) // 420
-    //         }}
-    //         programId={programId}
-    //         clientId={clientId}
-    //         chatRoomId={chatRoomId}
-    //         ref={ref}
-    //     />
-    // );
 };
 
 
 /*
 
-    <View style={{
-        position: 'absolute',
-        borderWidth: 1,
-        borderColor: 'red',
-        bottom: 0,
-        left: 0
-    }}>
-        <Button
-            title={'Widget'}
-            onPress={() => {
-                console.log('test')
-            }}
-        />
-    </View>
+            <View style={{
+                position: 'absolute',
+                left: 10,
+                bottom: 10,
+                backgroundColor: 'red',
+                height: 40,
+                width: 40
+            }}/>
 
  */
 
+
+
+/*
+
+
+
+ */

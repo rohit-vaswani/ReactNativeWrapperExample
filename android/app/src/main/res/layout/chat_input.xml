@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="0dp"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <View
         android:id="@+id/chat_input_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/livelike_chat_input_margin_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +19,7 @@
     <View
         android:id="@+id/bottomBarGradient"
         android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/livelike_chat_input_margin_left"
         android:layout_height="0dp"
         android:background="@drawable/ic_chat_bottom_bar_gradient"
         android:visibility="gone"
@@ -40,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/livelike_chat_input_border_box_margin_start"
-        android:layout_marginLeft="@dimen/livelike_chat_input_border_box_margin_left"
+        android:layout_marginLeft="@dimen/livelike_chat_input_margin_left"
         android:layout_marginTop="@dimen/livelike_chat_input_border_box_margin_top"
         android:layout_marginRight="@dimen/livelike_chat_input_border_box_margin_right"
         android:background="@drawable/ic_chat_input"

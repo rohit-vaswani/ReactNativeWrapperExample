@@ -1,14 +1,19 @@
 package com.livelike.demo.widget
 
+import android.content.res.Resources
 import android.util.Log
+import android.util.TypedValue
 import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ThemedReactContext
@@ -25,7 +30,6 @@ import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.ChatMessageType
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
-import okhttp3.internal.notifyAll
 import org.json.JSONObject
 
 
@@ -146,6 +150,9 @@ class LiveLikeChatWidgetView(
 
     private fun registerVideoMessageHandler() {
 
+
+        var chatAvatarUrl = this.userAvatarUrl
+
         chatView.chatViewDelegate = object : ChatViewDelegate {
             override fun onCreateViewHolder(
                 parent: ViewGroup,
@@ -161,82 +168,184 @@ class LiveLikeChatWidgetView(
                 chatViewThemeAttributes: ChatViewThemeAttributes,
                 showChatAvatar: Boolean
             ) {
-                // Do not do anything
-                chatViewThemeAttributes.chatBubbleBackgroundRes?.let {
-                    val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
-                    val url = jsonObject.get("custom_message").toString()
-                    (holder as MyCustomMsgViewHolder).videoUrl = url
+
+                chatViewThemeAttributes.apply {
+                    (holder.itemView as VideoView)._binding?.let {
+
+                        // Setting nickName
+                        // TODO: Handle this as the current user
+                        it.chatNickname.setTextColor(chatNickNameColor)
+                        it.chatNickname.text = liveLikeChatMessage.nickname
+                        it.chatNickname.setTextSize(
+                            TypedValue.COMPLEX_UNIT_PX,
+                            chatUserNameTextSize
+                        )
+                        it.chatNickname.isAllCaps = chatUserNameTextAllCaps
+
+
+                        // Handle Chat background
+                        val layoutParam = it.chatBackground!!.layoutParams as ConstraintLayout.LayoutParams
+                        it.chatBubbleBackground.setBackgroundResource(R.drawable.ic_chat_message_bubble_rounded_rectangle)
+                        layoutParam.setMargins(
+                            chatMarginLeft,
+                            chatMarginTop + dpToPx(6),
+                            chatMarginRight,
+                            chatMarginBottom
+                        )
+                        layoutParam.width = ViewGroup.LayoutParams.MATCH_PARENT
+                        it.chatBackground.layoutParams = layoutParam
+
+                        // Handle Chat Bubble background
+                        it.chatBubbleBackground.setPadding(
+                            chatBubblePaddingLeft,
+                            chatBubblePaddingTop,
+                            chatBubblePaddingRight,
+                            chatBubblePaddingBottom
+                        )
+                        val layoutParam1: LinearLayout.LayoutParams = it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
+                        layoutParam1.setMargins(
+                            chatBubbleMarginLeft,
+                            chatBubbleMarginTop,
+                            chatBubbleMarginRight,
+                            chatBubbleMarginBottom
+                        )
+                        layoutParam1.width = ViewGroup.LayoutParams.MATCH_PARENT
+                        it.chatBubbleBackground.layoutParams = layoutParam1
+
+
+                        // Handle Avatar
+                        it.imgChatAvatar.visibility =
+                            when (showChatAvatar) {
+                                true -> View.VISIBLE
+                                else -> View.GONE
+                            }
+                        val layoutParamAvatar = LinearLayout.LayoutParams(
+                            chatAvatarWidth,
+                            chatAvatarHeight
+                        )
+                        layoutParamAvatar.setMargins(
+                            chatAvatarMarginLeft,
+                            chatAvatarMarginTop,
+                            chatAvatarMarginRight,
+                            chatAvatarMarginBottom
+                        )
+                        layoutParamAvatar.gravity = chatAvatarGravity
+                        it.imgChatAvatar.layoutParams = layoutParamAvatar
+                        val options = RequestOptions()
+                        if (chatAvatarCircle) {
+                            options.optionalCircleCrop()
+                        }
+                        if (chatAvatarRadius > 0) {
+                            options.transform(
+                                CenterCrop(),
+                                RoundedCorners(chatAvatarRadius)
+                            )
+                        }
+                        if (chatAvatarUrl.isNullOrEmpty()) { // liveLikeChatMessage.userPic
+                            // load local image
+                            Glide.with(holder.itemView.context.applicationContext)
+                                .load(R.drawable.default_avatar)
+                                //.apply(options)
+                                .placeholder(chatUserPicDrawable)
+                                .into(it.imgChatAvatar)
+                        } else {
+                            Glide.with(holder.itemView.context.applicationContext)
+                                .load(chatAvatarUrl)
+                                //.apply(options)
+                                .placeholder(chatUserPicDrawable)
+                                .error(chatUserPicDrawable)
+                                .into(it.imgChatAvatar)
+                        }
+
+                        // Handle VideoView
+                        val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
+                        val url = jsonObject.get("custom_message").toString()
+                        (holder as MyCustomMsgViewHolder).videoUrl = url
+                    }
+                }
+
+
+//                // Do not do anything
+//                chatViewThemeAttributes.chatBubbleBackgroundRes?.let {
+//                    val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
+//                    val url = jsonObject.get("custom_message").toString()
+//                    (holder as MyCustomMsgViewHolder).videoUrl = url
+//                }
                 }
             }
+
         }
 
-    }
-
-    // TOOD: Change the name
-    class MyCustomMsgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var videoUrl: String? = null
-            set(value) {
-                field = value
-                (itemView as VideoView).videoUrl = value
-            }
-    }
+        // TOOD: Change the name
+        class MyCustomMsgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            var videoUrl: String? = null
+                set(value) {
+                    field = value
+                    (itemView as VideoView).videoUrl = value
+                }
+        }
 
 
 //    Test Area
 
-    private fun registerInputListener() {
+        private fun registerInputListener() {
 
 
-        val url = "http://techslides.com/demos/sample-videos/small.mp4"
+            val url = "http://techslides.com/demos/sample-videos/small.mp4"
 
-        chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
+            chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
 //            val url = chatViewBinding?.urlInput?.text
-            url?.let {
-                chatSession?.sendCustomChatMessage("{" +
-                        "\"custom_message\": \"" + url + "\"" +
-                        "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
-                    override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
-                        result?.let {
-                            println("ExoPlayerActivity.onResponse> ${it.id}")
+                url?.let {
+                    chatSession?.sendCustomChatMessage("{" +
+                            "\"custom_message\": \"" + url + "\"" +
+                            "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
+                        override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
+                            result?.let {
+                                println("ExoPlayerActivity.onResponse> ${it.id}")
+                            }
+                            error?.let {
+                                //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
+                            }
                         }
-                        error?.let {
-                            //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                })
+                    })
+                }
             }
         }
+
+        private fun registerMessageListener() {
+
+            chatSession?.setMessageListener(object : MessageListener {
+                override fun onDeleteMessage(messageId: String) {
+                    Log.i("Delete Message", messageId)
+                }
+
+                override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
+                    Log.i("History Message", messages.toString())
+                }
+
+                override fun onNewMessage(message: LiveLikeChatMessage) {
+                    Log.i("New Message", message.toString())
+                }
+
+                override fun onPinMessage(message: PinMessageInfo) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onUnPinMessage(pinMessageId: String) {
+                    TODO("Not yet implemented")
+                }
+            })
+
+        }
+
+
+        fun dpToPx(dp: Int): Int {
+            val scale = Resources.getSystem().displayMetrics.density
+            return (dp * scale + 0.5f).toInt()
+        }
+
+
     }
-
-    private fun registerMessageListener() {
-
-        chatSession?.setMessageListener(object : MessageListener {
-            override fun onDeleteMessage(messageId: String) {
-                Log.i("Delete Message", messageId)
-            }
-
-            override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
-                Log.i("History Message", messages.toString())
-            }
-
-            override fun onNewMessage(message: LiveLikeChatMessage) {
-                Log.i("New Message", message.toString())
-            }
-
-            override fun onPinMessage(message: PinMessageInfo) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onUnPinMessage(pinMessageId: String) {
-                TODO("Not yet implemented")
-            }
-        })
-
-    }
-
-
-
-}
 
 /*
 

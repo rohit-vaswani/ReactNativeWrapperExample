@@ -8,6 +8,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewOutlineProvider
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
@@ -22,7 +23,7 @@ class VideoView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
 
     private var inflated = false
@@ -30,8 +31,8 @@ class VideoView @JvmOverloads constructor(
     private var isMuted: Boolean = false
     private var playedAtLeastOnce: Boolean = false
     private var stopPosition: Int = 0
-    private var _binding: CustomMsgItemBinding? = null
-    var videoUrl : String? = null
+    var _binding: CustomMsgItemBinding? = null
+    var videoUrl: String? = null
         set(value) {
             field = value
             if (value != null) {
@@ -59,7 +60,13 @@ class VideoView @JvmOverloads constructor(
     private fun inflate(context: Context) {
         if (!inflated) {
             inflated = true
-            _binding = CustomMsgItemBinding.bind(inflate(context, R.layout.custom_msg_item, this@VideoView))
+            _binding = CustomMsgItemBinding.bind(
+                inflate(
+                    context,
+                    R.layout.custom_msg_item,
+                    this@VideoView
+                )
+            )
         }
         _binding?.playbackErrorView?.visibility = View.GONE
         if (!videoUrl.isNullOrEmpty()) {
@@ -159,7 +166,7 @@ class VideoView @JvmOverloads constructor(
             it.playbackErrorView.visibility = View.GONE
             it.thumbnailView.visibility = View.GONE
             it.playerView.visibility = View.VISIBLE
-            videoUrl?.let { url-> initializePlayer(url) }
+            videoUrl?.let { url -> initializePlayer(url) }
         }
     }
 
@@ -266,7 +273,6 @@ class VideoView @JvmOverloads constructor(
             }
         }
     }
-
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

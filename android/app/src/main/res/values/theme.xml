@@ -18,16 +18,11 @@
 
 
         <!--Chat User Name-->
-        <item name="chatUserNameCustomFontPath" type="font">@font/notosansdisplay_bold
-        </item><!-- to set the font of the username of the sender ,it takes file from the asset folder -->
-        <item name="usernameColor">#004d98
-        </item><!-- update the color of username in chat message -->
-        <item name="otherUsernameColor">#12121280
-        </item><!-- update the color of different username in chat message -->
+        <item name="chatUserNameCustomFontPath" type="font">@font/noto_sans_display_semibold</item><!-- to set the font of the username of the sender ,it takes file from the asset folder -->
+        <item name="usernameColor">#004d98</item><!-- update the color of username in chat message -->
+        <item name="otherUsernameColor">#121212</item><!-- update the color of different username in chat message -->
         <item name="chatUserNameTextSize">12sp</item><!-- set the textsize of username -->
-        <item name="chatUserNameTextLetterSpacing">0.0
-        </item><!--set the letter spacing of chat username -->
-        <!-- update the padding of send button -->
+        <item name="chatUserNameTextLetterSpacing">0.03</item><!--set the letter spacing of chat username -->
 <!--        <item name="userPicDrawable">@drawable/ic_user_pic</item>&lt;!&ndash; placeholder for user display image in chat message &ndash;&gt;-->
 
         <!--Chat Message = Chat Bubble + Avatar -->
@@ -35,11 +30,12 @@
         <item name="messageColor">#121212</item><!-- update color of message in chat message -->
         <item name="chatUserNameTextAllCaps">false
         </item><!-- to make all the text of username as capital -->
-        <item name="chatMessageCustomFontPath">fonts/RingsideRegular-Book.otf</item><!-- to set he custom font of message -->
+        <item name="chatMessageCustomFontPath">font/noto_sans_display_regular.ttf</item><!-- to set he custom font of message -->
+        <item name="chatMessageTextLetterSpacing">0.01</item>
         <item name="chatMessageTextSize">14sp</item><!-- to set the textsize of message -->
         <item name="chatMessageTimeTextSize">10sp
         </item><!-- to update the textsize of the time of the message-->
-        <item name="chatMessageTimeCustomFontPath">@font/antenna_bold
+        <item name="chatMessageTimeCustomFontPath">@font/noto_sans_display_regular
         </item><!-- to set the font of the time of the message -->
         <item name="chatMessageTimeTextAllCaps">false
         </item><!-- to make all text capital of time of message -->
@@ -76,10 +72,10 @@
 
         <!--Chat Reaction -->
         <item name="chatReactionDisplayCountTextSize">10sp</item><!-- to update the text size of the count of reactions in message -->
-        <item name="chatReactionDisplayCountCustomFontPath">fonts/RingsideExtraWide-Black.otf</item><!-- to set the font of the reaction count of the message -->
+        <item name="chatReactionDisplayCountCustomFontPath">@font/noto_sans_display_regular</item><!-- to set the font of the reaction count of the message -->
         <item name="chatReactionDisplayCountTextStyle">bold</item>
         <item name="chatReactionDisplaySize">16dp</item><!-- to update the size of the reaction icons -->
-        <item name="chatReactionPanelCountCustomFontPath">fonts/RingsideExtraWide-Black.otf</item><!-- to set the font of count shown in reaction panel for every reaction -->
+        <item name="chatReactionPanelCountCustomFontPath">@font/noto_sans_display_regular</item><!-- to set the font of count shown in reaction panel for every reaction -->
         <item name="chatReactionPanelCountVisibleIfZero">true</item><!-- to set the visibility of reaction count on Reaction panel if value is zero -->
 
 
@@ -110,7 +106,6 @@
 
         <!--Chat Time Posted-->
         <item name="chatMessageTimeTextLetterSpacing">0.1</item><!--set the letter spacing of chat message time -->
-        <item name="chatMessageTextLetterSpacing">0.0</item><!--set the letter spacing of chat message -->
         <item name="showMessageTime">false</item><!--show/hide message time in the chat message box -->
 
         <!--Avatar-->

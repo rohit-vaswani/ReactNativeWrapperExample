@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {NativeModules, requireNativeComponent, View} from 'react-native';
+import {NativeModules, requireNativeComponent} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 
@@ -35,6 +35,17 @@ export const LiveLikeAndroidView = () => {
 
     useEffect(() => {
         LiveLikeModule.initializeSDK(clientId)
+    }, [])
+
+    useEffect(() => {
+
+
+        setTimeout(() => {
+            LiveLikeModule.getChatRoomName(chatRoomId).then((roomName, error) => {
+                console.log('Room name', roomName)
+            })
+        }, 2000)
+
     }, [])
 
 
@@ -90,7 +101,6 @@ export const LiveLikeAndroidView = () => {
             }}/>
 
  */
-
 
 
 /*

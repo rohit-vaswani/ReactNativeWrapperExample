@@ -142,18 +142,6 @@ class LiveLikeChatWidgetView(
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
 
-
-                    LiveLikeManager.engagementSDK.chat().getChatRoom(chatRoomId, object :
-                        LiveLikeCallback<ChatRoomInfo>() {
-                        override fun onResponse(result: ChatRoomInfo?, error: String?) {
-                            Log.i("Chat room details", result.toString())
-                        }
-                    })
-
-
-                    if (error != null) {
-                        Log.e("TEST", error)
-                    }
                 }
             })
     }

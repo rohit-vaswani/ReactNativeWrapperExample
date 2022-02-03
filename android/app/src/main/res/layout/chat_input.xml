@@ -65,6 +65,7 @@
         android:maxLength="250"
         android:maxLines="3"
         android:minHeight="40dp"
+        android:textCursorDrawable="@drawable/chat_input_cursor"
         android:paddingStart="@dimen/livelike_chat_input_padding_start"
         android:paddingLeft="@dimen/livelike_chat_input_padding_left"
         android:paddingEnd="@dimen/livelike_chat_input_padding_end"

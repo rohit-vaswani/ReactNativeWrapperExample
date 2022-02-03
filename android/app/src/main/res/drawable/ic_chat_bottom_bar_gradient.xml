@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient android:angle="@integer/chat_bottom_bar_gradient_angle"
+                android:endColor="#ffffff"
+                android:startColor="#2b2b2b10"
+                android:type="linear" />
+        </shape>
+    </item>
+</selector>

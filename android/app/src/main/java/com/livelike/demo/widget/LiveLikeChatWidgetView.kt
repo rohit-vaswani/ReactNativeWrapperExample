@@ -286,23 +286,22 @@ class LiveLikeChatWidgetView(
 
         val url = "http://techslides.com/demos/sample-videos/small.mp4"
 
-        chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
-//            val url = chatViewBinding?.urlInput?.text
-            url?.let {
-                chatSession?.sendCustomChatMessage("{" +
-                        "\"custom_message\": \"" + url + "\"" +
-                        "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
-                    override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
-                        result?.let {
-                            println("ExoPlayerActivity.onResponse> ${it.id}")
-                        }
-                        error?.let {
-                            //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                })
-            }
-        }
+//        chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
+//            url?.let {
+//                chatSession?.sendCustomChatMessage("{" +
+//                        "\"custom_message\": \"" + url + "\"" +
+//                        "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
+//                    override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
+//                        result?.let {
+//                            println("ExoPlayerActivity.onResponse> ${it.id}")
+//                        }
+//                        error?.let {
+//                            //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                })
+//            }
+//        }
     }
 
     private fun registerMessageListener() {

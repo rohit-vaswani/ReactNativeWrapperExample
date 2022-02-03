@@ -20,6 +20,7 @@
         <!--Chat Bubble = Avatar + Chat Message -->
         <item name="chatBubbleBackground">@drawable/chat_bubble_background</item><!-- to update the background of chat bubble,it can be drawable/color -->
         <item name="messageColor">#121212</item><!-- update color of message in chat message -->
+        <item name="chatReactionMessageBubbleHighlightedBackground">@drawable/chat_bubble_background</item>
         <item name="chatUserNameTextAllCaps">false</item><!-- to make all the text of username as capital -->
         <item name="chatMessageCustomFontPath">font/noto_sans_display_regular.ttf</item><!-- to set he custom font of message -->
         <item name="chatMessageTextLetterSpacing">0.01</item>

@@ -28,6 +28,7 @@
   <color name="livelike_poll_background_color">#213335</color>
   <color name="livelike_prediction_background_color">#213335</color>
   <color name="livelike_quiz_background_color">#213335</color>
+  <color name="livelike_chat_reaction_selected_background_color">#f0f0f0</color>
   <array name="default_index_gradient">
     <item>@color/green</item>
     <item>@color/red</item>

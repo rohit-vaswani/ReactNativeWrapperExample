@@ -28,4 +28,5 @@
     <dimen name="livelike_chat_input_margin_left">30dp</dimen>
     <dimen name="livelike_chat_input_box_margin_bottom">6dp</dimen>
     <dimen name="livelike_reaction_count_text_size">6sp</dimen>
+    <dimen name="chatBubbleMinWidth">100dp</dimen>
 </resources>

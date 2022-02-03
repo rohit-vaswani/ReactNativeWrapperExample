@@ -6,8 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/livelike_chat_input_margin_left"
     android:gravity="center_vertical"
+    android:layout_marginStart="@dimen/livelike_chat_input_margin_left"
+    android:layout_marginLeft="@dimen/livelike_chat_input_margin_left"
     android:orientation="horizontal"
     tools:showIn="@layout/chat_input">
 

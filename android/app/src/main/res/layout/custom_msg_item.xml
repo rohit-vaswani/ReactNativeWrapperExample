@@ -88,31 +88,16 @@
                     android:textStyle="bold"
                     app:fontFamily="@font/livelike_chat_nickname_font"
                     tools:ignore="HardcodedText"
+                    android:layout_marginBottom="4dp"
                     tools:text="asd" />
 
-                <TextView
-                    android:id="@+id/message_date_timessage_date_timeme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/livelike_chat_message_date_time_margin_left"
-                    android:layout_marginTop="@dimen/livelike_chat_message_date_time_margin_top"
-                    android:layout_marginRight="@dimen/livelike_chat_message_date_time_margin_right"
-                    android:layout_marginBottom="@dimen/livelike_chat_message_date_time_margin_bottom"
-                    android:fontFamily="@font/livelike_chatMessage_timestamp_text_font"
-                    android:gravity="start"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/livelike_chatMessage_timestamp_text_color"
-                    android:textSize="@dimen/livelike_chat_message_date_time_text_size"
-                    android:visibility="visible"
-                    tools:text="Jan 13, 3:45 PM"
-                    tools:visibility="visible" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/widgetContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/livelike_video_player_width"
+                    android:layout_height="@dimen/livelike_video_player_height"
                     android:animateLayoutChanges="@bool/livelike_widget_component_layout_transition_enabled"
-                    android:background="@drawable/video_alert_rounded_corner_black_background">
+                    android:background="@drawable/video_view_background">
 
                     <ImageView
                         android:id="@+id/thumbnailView"
@@ -171,7 +156,7 @@
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/video_alert_volume_button_background"
                         android:orientation="horizontal"
-                        android:visibility="invisible"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent">

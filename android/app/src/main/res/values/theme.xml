@@ -34,7 +34,7 @@
         <item name="chatBubblePaddingLeft">8dp</item>
         <item name="chatBubblePaddingRight">24dp</item>
         <item name="chatBubblePaddingTop">8dp</item>
-        <item name="chatBubblePaddingBottom">24dp</item>
+        <item name="chatBubblePaddingBottom">32dp</item>
         <item name="chatMessageTopBorderHeight">0dp</item><!--update height of top border of chat message box -->
         <item name="chatMessageTopBorderColor">#232d37</item><!-- update color of top border of chat message box -->
         <item name="chatMessageBottomBorderHeight">0dp</item><!--update height of bottom border of chat message box -->
@@ -56,14 +56,14 @@
         <item name="chatReactionDisplaySize">16dp</item><!-- to update the size of the reaction icons -->
         <item name="chatReactionPanelCountCustomFontPath">@font/noto_sans_display_regular</item><!-- to set the font of count shown in reaction panel for every reaction -->
         <item name="chatReactionPanelCountVisibleIfZero">true</item><!-- to set the visibility of reaction count on Reaction panel if value is zero -->
-        <item name="reaction_icons_margin_bottom">14dp</item>
-        <item name="reaction_icons_margin_right">6dp</item>
+        <item name="reaction_icons_margin_bottom">18dp</item>
+        <item name="reaction_icons_margin_right">8dp</item>
         <item name="reaction_icons_margin_top">14dp</item>
         <item name="reaction_icons_margin_left">6dp</item>
         <item name="reaction_icon_position_bottom">true</item>
-        <item name="reaction_count_margin_bottom">16dp</item>
+        <item name="reaction_count_margin_bottom">20dp</item>
+        <item name="reaction_count_margin_right">20dp</item>
         <item name="chatReactionDisplayCountColor">#141414</item>
-        <item name="reaction_count_margin_right">16dp</item>
         <item name="reaction_count_icons_position_bottom">true</item><!-- to show the reaction count with icons positions at bottom of message box -->
         <item name="reaction_icons_gap_factor">0.80</item><!-- the gap between the reaction icons shown at top message box, it is the factor which will define the gap with standard width, to overlay the icons use factor value less than 1 and to show gap use factor value greater than 1  -->
         <item name="chatReactionModerationFlagVisible">false</item><!-- to show/hide the moderation flag icon with reaction panel -->
@@ -75,7 +75,7 @@
 
         <!--Reaction Panel-->
         <item name="chatReactionPanelGravity">right|bottom</item><!-- to set the gravity of the reaction panel w.r.t the message box -->
-        <item name="chatReactionXPosition">-200dp</item> <!--Panel margin: -ve takes it left w.r.t message box -->
+        <item name="chatReactionXPosition">-260dp</item> <!--Panel margin: -ve takes it left w.r.t message box -->
         <item name="chatReactionYPosition">-60dp</item> <!--Panel margin: -ve takes it up w.r.t message box-->
         <item name="chatSelectedReactionRadius">8dp</item><!-- update the radius of the selected reaction in the reaction popup -->
         <item name="chatReactionElevation">6dp</item><!-- update the elevation of chat reaction (CardView) -->

@@ -198,7 +198,7 @@ class LiveLikeChatWidgetView(
                             chatBubblePaddingLeft,
                             chatBubblePaddingTop,
                             chatBubblePaddingRight,
-                            chatBubblePaddingBottom
+                            dpToPx(0)
                         )
                         chatBubbleLayoutParams.setMargins(
                             chatBubbleMarginLeft - dpToPx(12),

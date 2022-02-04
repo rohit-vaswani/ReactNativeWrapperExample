@@ -8,24 +8,35 @@
     android:orientation="vertical">
 
     <View
+        android:id="@+id/border_top"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#27141414"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <View
         android:id="@+id/chat_input_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/border_top" />
 
     <View
         android:id="@+id/bottomBarGradient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/ic_chat_bottom_bar_gradient"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/edittext_chat_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/border_top" />
 
     <include
         android:id="@+id/user_profile_display_LL"
@@ -33,7 +44,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button_chat_send"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/border_top" />
 
     <View
         android:id="@+id/chat_input_border"

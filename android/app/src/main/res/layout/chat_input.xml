@@ -61,7 +61,7 @@
         android:imeOptions="flagNoExtractUi"
         android:importantForAccessibility="yes"
         android:importantForAutofill="no"
-        android:maxLength="250"
+        android:maxLength="@integer/chat_input_max_char_length"
         android:maxLines="3"
         android:minHeight="40dp"
         android:textCursorDrawable="@drawable/chat_input_cursor"
@@ -76,6 +76,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button_emoji"
         app:layout_constraintStart_toStartOf="@+id/chat_input_border"
         app:layout_constraintTop_toTopOf="@+id/chat_input_border"
+        android:longClickable="false"
         tools:targetApi="o" />
 
     <ImageButton

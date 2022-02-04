@@ -57,7 +57,7 @@
         <item name="chatReactionPanelCountCustomFontPath">@font/noto_sans_display_regular</item><!-- to set the font of count shown in reaction panel for every reaction -->
         <item name="chatReactionPanelCountVisibleIfZero">true</item><!-- to set the visibility of reaction count on Reaction panel if value is zero -->
         <item name="reaction_icons_margin_bottom">18dp</item>
-        <item name="reaction_icons_margin_right">8dp</item>
+        <item name="reaction_icons_margin_right">5dp</item>
         <item name="reaction_icons_margin_top">14dp</item>
         <item name="reaction_icons_margin_left">6dp</item>
         <item name="reaction_icon_position_bottom">true</item>

@@ -29,20 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/rel_reactions_lay"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/livelike_reaction_height"
-            android:layout_marginLeft="@dimen/livelike_reaction_margin_left"
-            android:layout_marginTop="@dimen/livelike_reaction_margin_top"
-            android:layout_marginRight="@dimen/livelike_reaction_margin_right"
-            android:layout_marginBottom="@dimen/livelike_reaction_margin_bottom"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toStartOf="@+id/txt_chat_reactions_count"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/chatBackground"
@@ -61,8 +47,8 @@
                 android:layout_gravity="bottom"
                 android:layout_marginLeft="@dimen/livelike_chat_avatar_margin_left"
                 android:layout_marginTop="@dimen/livelike_chat_avatar_margin_top"
-                android:layout_marginRight="@dimen/livelike_chat_avatar_margin_right"
                 android:layout_marginBottom="@dimen/livelike_chat_avatar_margin_bottom"
+                android:layout_marginEnd="0dp"
                 android:contentDescription="@string/user_image"
                 android:visibility="visible"
                 tools:visibility="visible" />
@@ -71,7 +57,6 @@
                 android:id="@+id/chatBubbleBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/livelike_chat_bubble_background_margin_left"
                 android:layout_marginTop="@dimen/livelike_chat_bubble_background_margin_top"
                 android:layout_marginRight="@dimen/livelike_chat_bubble_background_margin_right"
                 android:layout_marginBottom="@dimen/livelike_chat_bubble_background_margin_bottom"
@@ -88,37 +73,29 @@
                     android:textStyle="bold"
                     app:fontFamily="@font/livelike_chat_nickname_font"
                     tools:ignore="HardcodedText"
-                    android:layout_marginBottom="4dp"
-                    tools:text="asd" />
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="6dp"
+                    tools:text="Rohit Vaswani" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/widgetContainer"
                     android:layout_width="@dimen/livelike_video_player_width"
                     android:layout_height="@dimen/livelike_video_player_height"
+                    android:layout_marginLeft="0dp"
                     android:animateLayoutChanges="@bool/livelike_widget_component_layout_transition_enabled"
                     android:background="@drawable/video_view_background">
 
                     <ImageView
                         android:id="@+id/thumbnailView"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="match_parent"
                         android:contentDescription="@string/image"
                         android:scaleType="centerCrop"
+                        android:background="@drawable/video_view_background"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/ic_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/image"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_play_button" />
 
 
                     <LinearLayout
@@ -148,6 +125,38 @@
                             android:textDirection="locale" />
                     </LinearLayout>
 
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:indeterminateTint="@color/livelike_video_loader_color"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/playerView"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/playerView" />
+
+                    <android.widget.VideoView
+                        android:id="@+id/playerView"
+                        android:layout_width="@dimen/livelike_video_player_width"
+                        android:layout_height="@dimen/livelike_video_player_height"
+                        android:background="@drawable/video_view_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/ic_play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/image"
+                        app:layout_constraintBottom_toBottomOf="@id/widgetContainer"
+                        app:layout_constraintLeft_toLeftOf="@id/widgetContainer"
+                        app:layout_constraintRight_toRightOf="@id/widgetContainer"
+                        app:layout_constraintTop_toTopOf="@id/widgetContainer"
+                        app:srcCompat="@drawable/ic_play_button" />
 
                     <LinearLayout
                         android:id="@+id/sound_view"
@@ -177,32 +186,11 @@
                             android:layout_marginLeft="3dp"
                             android:paddingRight="3dp"
                             android:text="@string/livelike_mute_label"
+                            android:textSize="12sp"
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />
 
-
                     </LinearLayout>
-
-                    <ProgressBar
-                        android:id="@+id/progress_bar"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:indeterminateTint="@color/livelike_video_loader_color"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@id/playerView"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/playerView" />
-
-                    <VideoView
-                        android:id="@+id/playerView"
-                        android:layout_width="fill_parent"
-                        android:layout_height="200dp"
-                        android:background="@drawable/video_view_background"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

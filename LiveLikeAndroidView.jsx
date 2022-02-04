@@ -44,6 +44,11 @@ export const LiveLikeAndroidView = () => {
             LiveLikeModule.getChatRoomName(chatRoomId).then((roomName, error) => {
                 console.log('Room name', roomName)
             })
+
+            LiveLikeModule.getCurrentUserProfileId().then((profileId, error) =>  {
+                console.log('Profile ID', profileId)
+            })
+
         }, 2000)
 
     }, [])

@@ -30,6 +30,6 @@
     <dimen name="livelike_reaction_count_text_size">6sp</dimen>
     <dimen name="chatBubbleMinWidth">130dp</dimen>
     <dimen name="livelike_video_player_border_radius">8dp</dimen>
-    <dimen name="livelike_video_player_height">146dp</dimen>
-    <dimen name="livelike_video_player_width">260dp</dimen>
+    <dimen name="livelike_video_player_height">129dp</dimen>
+    <dimen name="livelike_video_player_width">230dp</dimen>
 </resources>

@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.livelike.engagementsdk.chat.ChatRoomInfo
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
+import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 
 class RNLiveLikeModule(
     val application: Application,
@@ -24,7 +25,8 @@ class RNLiveLikeModule(
 
     @ReactMethod
     fun getChatRoomName(chatRoomId: String, promise: Promise) {
-        LiveLikeManager.engagementSDK.chat().getChatRoom(chatRoomId, object : LiveLikeCallback<ChatRoomInfo>() {
+        LiveLikeManager.engagementSDK.chat()
+            .getChatRoom(chatRoomId, object : LiveLikeCallback<ChatRoomInfo>() {
                 override fun onResponse(chatRoomDetails: ChatRoomInfo?, error: String?) {
                     chatRoomDetails?.let {
                         return promise.resolve(chatRoomDetails?.title)
@@ -34,5 +36,20 @@ class RNLiveLikeModule(
                     }
                 }
             })
+    }
+
+    @ReactMethod
+    fun getCurrentUserProfileId(promise: Promise) {
+        LiveLikeManager.engagementSDK.getCurrentUserDetails(object :
+            com.livelike.engagementsdk.publicapis.LiveLikeCallback<LiveLikeUserApi>() {
+            override fun onResponse(result: LiveLikeUserApi?, error: String?) {
+                result?.let {
+                    promise.resolve(result.userId)
+                }
+                error?.let {
+                    promise.reject(Throwable(error))
+                }
+            }
+        })
     }
 }

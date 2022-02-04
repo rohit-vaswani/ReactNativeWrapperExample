@@ -10,13 +10,11 @@ import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.livelike.demo.R
-import com.livelike.demo.databinding.CustomMsgItemBinding
-import com.livelike.demo.databinding.FcChatViewBinding
+import com.livelike.demo.databinding.VideoViewBinding
 import com.livelike.engagementsdk.DismissAction
 
 class VideoView @JvmOverloads constructor(
@@ -31,7 +29,7 @@ class VideoView @JvmOverloads constructor(
     private var isMuted: Boolean = false
     private var playedAtLeastOnce: Boolean = false
     private var stopPosition: Int = 0
-    var _binding: CustomMsgItemBinding? = null
+    var _binding: VideoViewBinding? = null
     var videoUrl: String? = null
         set(value) {
             field = value
@@ -60,15 +58,16 @@ class VideoView @JvmOverloads constructor(
     private fun inflate(context: Context) {
         if (!inflated) {
             inflated = true
-            _binding = CustomMsgItemBinding.bind(
+            _binding = VideoViewBinding.bind(
                 inflate(
                     context,
-                    R.layout.custom_msg_item,
+                    R.layout.video_view,
                     this@VideoView
                 )
             )
         }
         _binding?.playbackErrorView?.visibility = View.GONE
+        _binding?.thumbnailView?.clipToOutline = true
         if (!videoUrl.isNullOrEmpty()) {
             videoUrl?.let {
                 setFrameThumbnail(videoUrl!!)
@@ -110,8 +109,8 @@ class VideoView @JvmOverloads constructor(
         _binding?.let {
             try {
                 val uri = Uri.parse(videoUrl)
+                it.playerView.clipToOutline = true
                 it.playerView.setVideoURI(uri)
-                // playerView.seekTo(stopPosition)
                 it.playerView.requestFocus()
                 it.playerView.start()
                 unMute()
@@ -119,30 +118,23 @@ class VideoView @JvmOverloads constructor(
                 // perform set on prepared listener event on video view
                 try {
                     it.playerView.setOnPreparedListener { mp ->
-                        // do something when video is ready to play
                         this.mediaPlayer = mp
                         playedAtLeastOnce = true
                         it.progressBar.visibility = View.GONE
                         it.playbackErrorView.visibility = View.GONE
-                        it.soundView.visibility = VISIBLE
-                        it.icSound.visibility = VISIBLE
                     }
 
                     it.playerView.setOnCompletionListener { mediaPlayer ->
                         it.playerView?.stopPlayback()
-                        it.soundView.visibility = GONE
                         setFrameThumbnail(videoUrl)
+                        it.soundView.visibility = GONE
                     }
 
-
-
                     it.playerView.setOnErrorListener { _, what, extra ->
-                        //logError { "Error on playback" }
+                        hideVideoControls()
                         it.progressBar.visibility = GONE
-                        it.icPlay.visibility = GONE
                         it.playerView.visibility = INVISIBLE
                         it.playbackErrorView.visibility = VISIBLE
-                        it.soundView.visibility = GONE
                         true
                     }
                 } catch (e: Exception) {
@@ -158,11 +150,30 @@ class VideoView @JvmOverloads constructor(
         }
     }
 
+
+    private fun showVideoControls(){
+        _binding?.let {
+            it.icPlay.setImageResource(R.drawable.ic_play_button)
+            it.icPlay.visibility = VISIBLE
+            it.playbackErrorView.visibility = GONE
+            it.soundView.visibility = VISIBLE
+        }
+    }
+
+    private fun hideVideoControls() {
+        _binding?.let {
+            it.icPlay.setImageResource(R.drawable.ic_play_button)
+            it.icPlay.visibility = GONE
+            it.playbackErrorView.visibility = GONE
+            it.soundView.visibility = GONE
+        }
+    }
+
     /** responsible for playing the video */
     private fun play() {
         _binding?.let {
             it.progressBar.visibility = View.VISIBLE
-            it.icPlay.visibility = View.GONE
+            hideVideoControls()
             it.playbackErrorView.visibility = View.GONE
             it.thumbnailView.visibility = View.GONE
             it.playerView.visibility = View.VISIBLE
@@ -173,11 +184,10 @@ class VideoView @JvmOverloads constructor(
     /** responsible for resuming the video from where it was stopped */
     private fun resume() {
         _binding?.let {
-            it.soundView.visibility = VISIBLE
             it.playbackErrorView.visibility = GONE
             it.progressBar.visibility = GONE
-            it.icPlay.visibility = GONE
             it.playerView.seekTo(stopPosition)
+            hideVideoControls()
             if (it.playerView.currentPosition == 0) {
                 play()
             } else {
@@ -186,15 +196,13 @@ class VideoView @JvmOverloads constructor(
         }
     }
 
+
     /** responsible for stopping the video */
     private fun pause() {
         _binding?.let {
             stopPosition = it.playerView.currentPosition
             it.playerView.pause()
-            it.soundView.visibility = GONE
-            it.icPlay.visibility = View.VISIBLE
-            it.playbackErrorView.visibility = View.GONE
-            it.icPlay.setImageResource(R.drawable.ic_play_button)
+            showVideoControls()
         }
     }
 
@@ -222,7 +230,6 @@ class VideoView @JvmOverloads constructor(
         return !mediaPlayer!!.isPlaying && playedAtLeastOnce
     }
 
-    /** mutes the video */
     private fun mute() {
         try {
             isMuted = true
@@ -236,7 +243,6 @@ class VideoView @JvmOverloads constructor(
         }
     }
 
-    /** unmute the video */
     private fun unMute() {
         try {
             isMuted = false
@@ -255,10 +261,9 @@ class VideoView @JvmOverloads constructor(
     private fun setFrameThumbnail(videoUrl: String) {
         _binding?.let {
             it.thumbnailView.visibility = VISIBLE
-            it.icPlay.visibility = VISIBLE
+            showVideoControls()
             it.progressBar.visibility = GONE
             it.playbackErrorView.visibility = GONE
-            it.icPlay.setImageResource(R.drawable.ic_play_button)
             it.playerView.visibility = INVISIBLE
             var requestOptions = RequestOptions()
 

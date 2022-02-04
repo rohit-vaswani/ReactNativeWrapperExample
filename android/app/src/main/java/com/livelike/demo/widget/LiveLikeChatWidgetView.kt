@@ -17,14 +17,16 @@ import com.bumptech.glide.request.RequestOptions
 import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ThemedReactContext
-import com.livelike.demo.LiveLikeManager
 import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
 import com.livelike.demo.ui.main.VideoView
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.MessageListener
-import com.livelike.engagementsdk.chat.*
+import com.livelike.engagementsdk.chat.ChatView
+import com.livelike.engagementsdk.chat.ChatViewDelegate
+import com.livelike.engagementsdk.chat.ChatViewThemeAttributes
+import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.ChatMessageType
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
@@ -110,9 +112,6 @@ class LiveLikeChatWidgetView(
         setUserAvatar()
         registerMessageListener()
         registerVideoMessageHandler()
-        registerInputListener()
-
-        Log.i("Room name", chatSession?.getCurrentChatRoom.toString())
 
         if (chatSession != null) {
             chatView.allowMediaFromKeyboard = true
@@ -172,7 +171,6 @@ class LiveLikeChatWidgetView(
                     (holder.itemView as VideoView)._binding?.let {
 
                         // Setting nickName
-                        // TODO: Handle this as the current user
                         it.chatNickname.setTextColor(chatNickNameColor)
                         it.chatNickname.text = liveLikeChatMessage.nickname
                         it.chatNickname.setTextSize(
@@ -183,55 +181,52 @@ class LiveLikeChatWidgetView(
 
 
                         // Handle Chat background
-                        val layoutParam =
-                            it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
-                        it.chatBubbleBackground.setBackgroundResource(R.drawable.ic_chat_message_bubble_rounded_rectangle)
-                        layoutParam.setMargins(
+                        val chatBackgroundLayoutParams = it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
+                        chatBackgroundLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+                        chatBackgroundLayoutParams.setMargins(
                             chatMarginLeft,
                             chatMarginTop + dpToPx(6),
                             chatMarginRight,
                             chatMarginBottom
                         )
-                        layoutParam.width = ViewGroup.LayoutParams.MATCH_PARENT
-                        it.chatBackground.layoutParams = layoutParam
+                        it.chatBackground.layoutParams = chatBackgroundLayoutParams
 
                         // Handle Chat Bubble background
+                        val chatBubbleLayoutParams: LinearLayout.LayoutParams = it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
+                        it.chatBubbleBackground.setBackgroundResource(R.drawable.ic_chat_message_bubble_rounded_rectangle)
                         it.chatBubbleBackground.setPadding(
                             chatBubblePaddingLeft,
                             chatBubblePaddingTop,
                             chatBubblePaddingRight,
                             chatBubblePaddingBottom
                         )
-                        val layoutParam1: LinearLayout.LayoutParams =
-                            it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
-                        layoutParam1.setMargins(
-                            chatBubbleMarginLeft,
+                        chatBubbleLayoutParams.setMargins(
+                            chatBubbleMarginLeft - dpToPx(12),
                             chatBubbleMarginTop,
                             chatBubbleMarginRight,
                             chatBubbleMarginBottom
                         )
-                        layoutParam1.width = ViewGroup.LayoutParams.MATCH_PARENT
-                        it.chatBubbleBackground.layoutParams = layoutParam1
+                        chatBubbleLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+                        it.chatBubbleBackground.layoutParams = chatBubbleLayoutParams
 
 
                         // Handle Avatar
-                        it.imgChatAvatar.visibility =
-                            when (showChatAvatar) {
-                                true -> View.VISIBLE
-                                else -> View.GONE
-                            }
-                        val layoutParamAvatar = LinearLayout.LayoutParams(
+                        it.imgChatAvatar.visibility = when (showChatAvatar) {
+                            true -> View.VISIBLE
+                            else -> View.GONE
+                        }
+                        val avatarLayoutParams = LinearLayout.LayoutParams(
                             chatAvatarWidth,
                             chatAvatarHeight
                         )
-                        layoutParamAvatar.setMargins(
+                        avatarLayoutParams.setMargins(
                             chatAvatarMarginLeft,
                             chatAvatarMarginTop,
                             chatAvatarMarginRight,
                             chatAvatarMarginBottom
                         )
-                        layoutParamAvatar.gravity = chatAvatarGravity
-                        it.imgChatAvatar.layoutParams = layoutParamAvatar
+                        avatarLayoutParams.gravity = chatAvatarGravity
+                        it.imgChatAvatar.layoutParams = avatarLayoutParams
                         val options = RequestOptions()
                         if (chatAvatarCircle) {
                             options.optionalCircleCrop()
@@ -279,31 +274,6 @@ class LiveLikeChatWidgetView(
     }
 
 
-//    Test Area
-
-    private fun registerInputListener() {
-
-
-        val url = "http://techslides.com/demos/sample-videos/small.mp4"
-
-//        chatViewBinding?.customChatMessageSendBtn?.setOnClickListener {
-//            url?.let {
-//                chatSession?.sendCustomChatMessage("{" +
-//                        "\"custom_message\": \"" + url + "\"" +
-//                        "}", object : LiveLikeCallback<LiveLikeChatMessage>() {
-//                    override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
-//                        result?.let {
-//                            println("ExoPlayerActivity.onResponse> ${it.id}")
-//                        }
-//                        error?.let {
-//                            //Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                })
-//            }
-//        }
-    }
-
     private fun registerMessageListener() {
 
         chatSession?.setMessageListener(object : MessageListener {
@@ -341,27 +311,3 @@ class LiveLikeChatWidgetView(
         pinMessageAdapter.addMessages(pinnedMessages as ArrayList<PinMessageInfo>)
     }
 }
-
-/*
-
-
-    <com.livelike.engagementsdk.chat.ChatView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/chat_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@color/red"
-        app:displayUserProfile="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        />
-
-
-        //        val parentView = LayoutInflater.from(context).inflate(R.layout.fc_chat_view, null) as ConstraintLayout;
-//        chatView = parentView.findViewById(R.id.chat_view);
-//        addView(parentView)
-
- */

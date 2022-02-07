@@ -13,48 +13,31 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.R
 import com.livelike.engagementsdk.LiveLikeContentSession
-import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
-import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
-import com.livelike.engagementsdk.widget.data.models.TextAskUserInteraction
 import com.livelike.engagementsdk.widget.view.WidgetView
 import com.livelike.engagementsdk.widget.widgetModel.*
+
+
+/*
+    TOOD:
+        1. Register Dismiss on sendButton Click.
+
+
+ */
 
 class LiveLikeWidgetView(
     val context: ThemedReactContext,
     val applicationContext: ReactApplicationContext
 ) : LinearLayout(context), LifecycleEventListener {
 
-
-    inner class CustomTextAskWidget(override val widgetData: LiveLikeWidget) : TextAskWidgetModel {
-        override fun finish() {
-            TODO("Not yet implemented")
-        }
-
-        override fun getUserInteraction(): TextAskUserInteraction? {
-            TODO("Not yet implemented")
-        }
-
-        override fun loadInteractionHistory(liveLikeCallback: LiveLikeCallback<List<TextAskUserInteraction>>) {
-            TODO("Not yet implemented")
-        }
-
-        override fun markAsInteractive() {
-            TODO("Not yet implemented")
-        }
-
-        override fun submitReply(response: String) {
-            TODO("Not yet implemented")
-        }
-    }
-
     var contentSession: LiveLikeContentSession? = null
     lateinit var widgetView: WidgetView;
     var askWidgetModel: TextAskWidgetModel? = null
     var fallback: Choreographer.FrameCallback;
     private var renderWidget = true // TODO: Make it false
+
 
     init {
         this.applicationContext.addLifecycleEventListener(this)
@@ -69,6 +52,57 @@ class LiveLikeWidgetView(
         createView()
         registerCustomViewModel()
     }
+
+    private fun createView() {
+        val parentView = LayoutInflater.from(context).inflate(R.layout.fc_widget_view, null) as LinearLayout;
+        widgetView = parentView.findViewById(R.id.widget_view);
+        addView(parentView)
+    }
+
+    override fun onHostResume() {
+        contentSession?.resume()
+    }
+
+    override fun onHostPause() {
+        contentSession?.pause()
+    }
+
+    override fun onHostDestroy() {
+        contentSession?.close()
+    }
+
+    fun updateContentSession(contentSession: LiveLikeContentSession) {
+        this.contentSession = contentSession;
+        contentSession.widgetInterceptor = object : WidgetInterceptor() {
+            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
+                showWidget()
+                renderWidget = true
+                Choreographer.getInstance().postFrameCallback(fallback)
+            }
+        }
+        widgetView.setSession(contentSession)
+    }
+
+    fun manuallyLayoutChildren() {
+        for (i in 0 until getChildCount()) {
+            var child = getChildAt(i);
+            child.measure(
+                MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY)
+            );
+            child.layout(0, 0, child.getMeasuredWidth(), child.getMeasuredHeight());
+        }
+    }
+
+    fun sendEvent(
+        eventName: String,
+        params: WritableMap?
+    ) {
+        val reactContext = this.getContext() as ReactContext;
+        reactContext.getJSModule(RCTEventEmitter::class.java)
+            .receiveEvent(this.getId(), eventName, params)
+    }
+
 
     private fun registerCustomViewModel() {
         widgetView.widgetViewFactory = object : LiveLikeWidgetViewFactory {
@@ -131,70 +165,17 @@ class LiveLikeWidgetView(
                 return null
             }
 
+            // Returns a view for customising Ask a Widget
             override fun createTextAskWidgetView(imageSliderWidgetModel: TextAskWidgetModel): View? {
-                return null
-//                return CustomTextAskWidget(imageSliderWidgetModel.widgetData).apply {
-//                    askWidgetModel = imageSliderWidgetModel
-//                } as View
-
+                return CustomTextAskWidget(context).apply {
+                    askWidgetModel = imageSliderWidgetModel
+                }
             }
 
             override fun createVideoAlertWidgetView(videoAlertWidgetModel: VideoAlertWidgetModel): View? {
                 return null
             }
         }
-    }
-
-    private fun createView() {
-        val parentView = LayoutInflater.from(context).inflate(R.layout.fc_widget_view, null) as LinearLayout;
-        widgetView = parentView.findViewById(R.id.widget_view);
-        addView(parentView)
-    }
-
-    override fun onHostResume() {
-        contentSession?.resume()
-    }
-
-    override fun onHostPause() {
-        contentSession?.pause()
-    }
-
-    override fun onHostDestroy() {
-        contentSession?.close()
-    }
-
-    fun updateContentSession(contentSession: LiveLikeContentSession) {
-        this.contentSession = contentSession;
-        contentSession.widgetInterceptor = object : WidgetInterceptor() {
-            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
-                Log.i("Widget show", widgetData.kind)
-                showWidget()
-                renderWidget = true
-                Choreographer.getInstance().postFrameCallback(fallback)
-            }
-        }
-
-        widgetView.setSession(contentSession)
-    }
-
-    fun manuallyLayoutChildren() {
-        for (i in 0 until getChildCount()) {
-            var child = getChildAt(i);
-            child.measure(
-                MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY)
-            );
-            child.layout(0, 0, child.getMeasuredWidth(), child.getMeasuredHeight());
-        }
-    }
-
-    fun sendEvent(
-        eventName: String,
-        params: WritableMap?
-    ) {
-        val reactContext = this.getContext() as ReactContext;
-        reactContext.getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(this.getId(), eventName, params)
     }
 }
 

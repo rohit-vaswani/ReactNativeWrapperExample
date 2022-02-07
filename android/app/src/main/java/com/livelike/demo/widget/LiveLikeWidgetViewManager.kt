@@ -1,5 +1,6 @@
 package com.livelike.demo.widget
 
+import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
@@ -30,6 +31,7 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
 
     @ReactProp(name = "programId")
     fun setProgramId(view: LiveLikeWidgetView, programId: String) {
+
         val session = LiveLikeManager.engagementSDK.createContentSession(programId)
         view.updateContentSession(session)
     }

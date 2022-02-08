@@ -22,9 +22,11 @@ import com.livelike.engagementsdk.widget.widgetModel.*
 
 
 /*
-    TOOD:
+    TODO:
         1. Register Dismiss on sendButton Click.
-
+        2. Correct the UI for the confirmation.
+        3. Register dismiss on the cross button
+        4. Change the colour of the userName for video posting
 
  */
 
@@ -107,8 +109,15 @@ class LiveLikeWidgetView(
         params: WritableMap?
     ) {
         val reactContext = this.getContext() as ReactContext;
-        reactContext.getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(this.getId(), eventName, params)
+        reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(this.getId(), eventName, params)
+    }
+
+    private fun registerCustomViewListeners(){
+        customAskWidgetView.userEventsListener = object : CustomTextAskWidgetView.UserEventsListener {
+            override fun closeDialog() {
+                contentSession?.widgetInterceptor?.dismissWidget()
+            }
+        }
     }
 
 
@@ -178,6 +187,7 @@ class LiveLikeWidgetView(
                 customAskWidgetView = CustomTextAskWidgetView(context).apply {
                     askWidgetModel = imageSliderWidgetModel
                 }
+                registerCustomViewListeners()
                 return customAskWidgetView
             }
 

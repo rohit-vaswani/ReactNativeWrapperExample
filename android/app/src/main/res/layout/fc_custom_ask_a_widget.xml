@@ -1,84 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_marginHorizontal="12dp"
     android:layout_marginTop="24dp"
     android:layout_marginBottom="16dp"
+    android:orientation="vertical"
+    android:background="#ffffff"
     >
 
+
+    <Button
+        android:id="@+id/closeIconBtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="end"
+        android:background="@drawable/close_icon"
+        />
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/askInfluencerContentWrapper"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/influencer_question_image"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:srcCompat="@drawable/ic_ask_influence_question"
-            android:layout_marginRight="12dp"
-            />
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ask_influencer_title"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/influencer_question_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="12dp"
+                app:srcCompat="@drawable/ic_ask_influencer_question" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.01"
+                android:text="@string/ask_influencer_title"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/influencerQuestionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ask_influencer_chat_input_box"
+            android:gravity="top|start"
+            android:hint="@string/influencer_input_hint"
+            android:maxLength="@integer/ask_influencer_input_word_limit"
+            android:minHeight="83dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="14dp"
             android:textColor="#000000"
-            android:textSize="16sp"
-            android:letterSpacing="0.1"
-    />
+            android:textColorHint="#787878"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/wordCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:hint="0/240"
+            android:letterSpacing="0.08"
+            android:textColor="#787878"
+            android:textSize="11sp" />
+
+
+        <Button
+            android:id="@+id/sendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ask_a_widget_send_btn_selector"
+            android:text="@string/ask_a_widget_send_btn"
+            android:textAllCaps="true"
+            android:enabled="false"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/influencerQuestionInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ask_influencer_chat_input_box"
-        android:hint="@string/influencer_input_hint"
-        android:minHeight="83dp"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="14dp"
-        android:textColor="#000000"
-        android:textColorHint="#787878"
-        android:layout_marginTop="12dp"
-        android:gravity="top|start"
-        android:textSize="14sp"
-        android:maxLength="@integer/ask_influencer_input_word_limit"
-        />
-
-    <TextView
-        android:id="@+id/wordCount"
+    <LinearLayout
+        android:id="@+id/ask_influencer_confirmation_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="0/240"
-        android:layout_gravity="end"
-        android:layout_marginTop="12dp"
-        android:textColor="#787878"
-        android:letterSpacing="0.08"
-        android:textSize="11sp"
-        android:layout_marginRight="12dp"
-        />
-
-
-    <Button
-        android:id="@+id/sendBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/ask_a_widget_in_active_input"
-        android:text="@string/ask_a_widget_send_btn"
-        android:textAllCaps="true"
-        android:textColor="#fff"
-        android:textSize="12sp"
-        android:textStyle="bold"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        />
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ask_influencer_check_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/ask_influencer_confirmation_message"
+            android:textColor="#000000"
+            android:textSize="16sp"></TextView>
+    </LinearLayout>
 
 </LinearLayout>

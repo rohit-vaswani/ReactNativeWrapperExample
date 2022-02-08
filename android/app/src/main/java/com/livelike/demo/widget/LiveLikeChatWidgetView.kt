@@ -149,7 +149,7 @@ class LiveLikeChatWidgetView(
     private fun registerVideoMessageHandler() {
 
 
-        var chatAvatarUrl = this.userAvatarUrl
+        val chatAvatarUrl = this.userAvatarUrl
 
         chatView.chatViewDelegate = object : ChatViewDelegate {
             override fun onCreateViewHolder(
@@ -297,7 +297,6 @@ class LiveLikeChatWidgetView(
                 pinMessageAdapter.removeMessageFromList(pinMessageId)
             }
         })
-
     }
 
 

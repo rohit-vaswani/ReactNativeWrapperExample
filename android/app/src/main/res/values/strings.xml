@@ -6,4 +6,5 @@
     <string name="ask_influencer_title">Ask Influencer</string>
     <string name="influencer_input_hint">Type your question here..</string>
     <string name="ask_a_widget_send_btn">SEND</string>
+    <string name="ask_influencer_confirmation_message">Your message has been sent</string>
 </resources>

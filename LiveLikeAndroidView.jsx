@@ -73,8 +73,6 @@ export const LiveLikeAndroidView = () => {
 
     const [show, setShow] = React.useState(false)
 
-    console.log("Show:", show)
-
     return (
         <>
             <LiveLikeWidgetView
@@ -85,8 +83,8 @@ export const LiveLikeAndroidView = () => {
             <View
                 style={{
                     backgroundColor: 'red',
-                    height: 200,
-                    width: 200,
+                    height: 50,
+                    width: 50,
                     position: 'absolute',
                     left: 0,
                     bottom: 0

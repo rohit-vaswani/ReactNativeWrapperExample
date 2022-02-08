@@ -12,87 +12,9 @@
     <com.livelike.engagementsdk.widget.view.WidgetView
         android:id="@+id/widget_view"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="match_parent" />
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="300dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"
-        >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            >
-
-            <ImageView
-                android:id="@+id/influencer_question_image"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:srcCompat="@drawable/ic_ask_influence_question"
-                android:layout_marginRight="12dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ask_influencer_title"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:letterSpacing="0.1"
-                />
-
-        </LinearLayout>
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/influenceQuestionInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ask_influencer_chat_input_box"
-            android:hint="Type your question here.."
-            android:minHeight="83dp"
-            android:padding="12dp"
-            android:textColor="#000000"
-            android:textColorHint="#787878"
-            android:layout_marginTop="20dp"
-            android:gravity="top|start"
-            />
-
-        <TextView
-            android:id="@+id/wordCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="0/240"
-            android:layout_gravity="end"
-            android:layout_marginTop="12dp"
-            />
-
-
-        <Button
-            android:id="@+id/sendBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#ff5000"
-            android:text="SEND"
-            android:textAllCaps="true"
-            android:textColor="#fff"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            />
-
-    </LinearLayout>
-
-
 </LinearLayout>
+
+
 

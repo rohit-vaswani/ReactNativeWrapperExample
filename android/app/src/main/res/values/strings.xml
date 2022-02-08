@@ -4,4 +4,6 @@
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
   <string name="livelike_chat_input_hint" translatable="false">Send a message</string>
     <string name="ask_influencer_title">Ask Influencer</string>
+    <string name="influencer_input_hint">Type your question here..</string>
+    <string name="ask_a_widget_send_btn">SEND</string>
 </resources>

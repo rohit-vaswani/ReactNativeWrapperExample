@@ -1,7 +1,8 @@
 import React, {useEffect, useRef} from 'react';
-import {NativeModules, requireNativeComponent} from 'react-native';
+import {NativeModules, requireNativeComponent, View} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
+export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 
 
 const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
@@ -32,7 +33,6 @@ const {LiveLikeModule} = NativeModules
 
 export const LiveLikeAndroidView = () => {
 
-
     useEffect(() => {
         LiveLikeModule.initializeSDK(clientId)
     }, [])
@@ -41,13 +41,14 @@ export const LiveLikeAndroidView = () => {
 
 
         setTimeout(() => {
-            LiveLikeModule.getChatRoomName(chatRoomId).then((roomName, error) => {
-                console.log('Room name', roomName)
-            })
 
-            LiveLikeModule.getCurrentUserProfileId().then((profileId, error) =>  {
-                console.log('Profile ID', profileId)
-            })
+            // LiveLikeModule.getChatRoomName(chatRoomId).then((roomName, error) => {
+            //     console.log('Room name', roomName)
+            // })
+            //
+            // LiveLikeModule.getCurrentUserProfileId().then((profileId, error) =>  {
+            //     console.log('Profile ID', profileId)
+            // })
 
         }, 2000)
 
@@ -70,13 +71,50 @@ export const LiveLikeAndroidView = () => {
     //     createFragment(viewId);
     // }, []);
 
+    const [show, setShow] = React.useState(false)
+
+    console.log("Show:", show)
+
+    return (
+        <>
+            <LiveLikeWidgetView
+                programId={programId}
+                showAskWidget={true}
+                style={{flex: 1}}
+            />
+            <View
+                style={{
+                    backgroundColor: 'red',
+                    height: 200,
+                    width: 200,
+                    position: 'absolute',
+                    left: 0,
+                    bottom: 0
+                }}
+                onClick={() => {
+                    setShow(true)
+                    setTimeout(() => {
+                        setShow(false)
+                    }, 3000)
+                }}
+            />
+        </>
+    )
+
+
+};
+
+
+/*
+
+
     return (
         <>
             <LiveLikeChatWidgetView
                 programId={programId}
                 chatRoomId={chatRoomId}
                 userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-                userNickName={"Rohit Vaswani"}
+                userNickName={"Rohit Vasw New"}
                 style={{flex: 1}}
                 onWidgetShown={(event) => {
                     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
@@ -91,25 +129,5 @@ export const LiveLikeAndroidView = () => {
             />
         </>
     )
-};
-
-
-/*
-
-            <View style={{
-                position: 'absolute',
-                left: 10,
-                bottom: 10,
-                backgroundColor: 'red',
-                height: 40,
-                width: 40
-            }}/>
-
- */
-
-
-/*
-
-
 
  */

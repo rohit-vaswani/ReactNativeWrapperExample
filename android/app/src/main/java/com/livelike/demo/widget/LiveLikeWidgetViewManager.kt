@@ -1,6 +1,5 @@
 package com.livelike.demo.widget
 
-import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
@@ -10,7 +9,8 @@ import com.livelike.demo.LiveLikeManager
 import java.util.*
 
 
-class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeWidgetView>() {
+class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext) :
+    ViewGroupManager<LiveLikeWidgetView>() {
 
     val REACT_CLASS = "LiveLikeWidgetView"
 
@@ -34,6 +34,13 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
 
         val session = LiveLikeManager.engagementSDK.createContentSession(programId)
         view.updateContentSession(session)
+    }
+
+    @ReactProp(name = "showAskWidget")
+    fun showAskWidget(view: LiveLikeWidgetView, showWidget: Boolean) {
+        if (showWidget) {
+            view.showWidget()
+        }
     }
 
     override fun onDropViewInstance(view: LiveLikeWidgetView) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginHorizontal="12dp"
     android:layout_marginTop="24dp"
@@ -37,17 +37,20 @@
 
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/influenceQuestionInput"
+        android:id="@+id/influencerQuestionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ask_influencer_chat_input_box"
-        android:hint="Type your question here.."
+        android:hint="@string/influencer_input_hint"
         android:minHeight="83dp"
-        android:padding="12dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="14dp"
         android:textColor="#000000"
         android:textColorHint="#787878"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:gravity="top|start"
+        android:textSize="14sp"
+        android:maxLength="@integer/ask_influencer_input_word_limit"
         />
 
     <TextView
@@ -57,6 +60,10 @@
         android:hint="0/240"
         android:layout_gravity="end"
         android:layout_marginTop="12dp"
+        android:textColor="#787878"
+        android:letterSpacing="0.08"
+        android:textSize="11sp"
+        android:layout_marginRight="12dp"
         />
 
 
@@ -64,8 +71,8 @@
         android:id="@+id/sendBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ff5000"
-        android:text="SEND"
+        android:background="@color/ask_a_widget_in_active_input"
+        android:text="@string/ask_a_widget_send_btn"
         android:textAllCaps="true"
         android:textColor="#fff"
         android:textSize="12sp"

@@ -1,6 +1,5 @@
 package com.livelike.demo.widget
 
-import android.util.Log
 import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,13 @@ import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
+import com.livelike.demo.LiveLikeManager
 import com.livelike.demo.R
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
+import com.livelike.engagementsdk.widget.SpecifiedWidgetView
 import com.livelike.engagementsdk.widget.view.WidgetView
 import com.livelike.engagementsdk.widget.widgetModel.*
 
@@ -34,9 +35,9 @@ class LiveLikeWidgetView(
 
     var contentSession: LiveLikeContentSession? = null
     lateinit var widgetView: WidgetView;
-    var askWidgetModel: TextAskWidgetModel? = null
+    lateinit var customAskWidgetView: CustomTextAskWidgetView
     var fallback: Choreographer.FrameCallback;
-    private var renderWidget = true // TODO: Make it false
+    private var renderWidget = false
 
 
     init {
@@ -53,10 +54,16 @@ class LiveLikeWidgetView(
         registerCustomViewModel()
     }
 
+
+    // TODO: This might not be working
+    fun showWidget() {
+//        this.widgetView.displayWidget("text-ask", widgetView as SpecifiedWidgetView )
+    }
+
     private fun createView() {
         val parentView = LayoutInflater.from(context).inflate(R.layout.fc_widget_view, null) as LinearLayout;
-        widgetView = parentView.findViewById(R.id.widget_view);
         addView(parentView)
+        widgetView = parentView.findViewById(R.id.widget_view);
     }
 
     override fun onHostResume() {
@@ -80,6 +87,7 @@ class LiveLikeWidgetView(
                 Choreographer.getInstance().postFrameCallback(fallback)
             }
         }
+
         widgetView.setSession(contentSession)
     }
 
@@ -167,9 +175,10 @@ class LiveLikeWidgetView(
 
             // Returns a view for customising Ask a Widget
             override fun createTextAskWidgetView(imageSliderWidgetModel: TextAskWidgetModel): View? {
-                return CustomTextAskWidget(context).apply {
+                customAskWidgetView = CustomTextAskWidgetView(context).apply {
                     askWidgetModel = imageSliderWidgetModel
                 }
+                return customAskWidgetView
             }
 
             override fun createVideoAlertWidgetView(videoAlertWidgetModel: VideoAlertWidgetModel): View? {

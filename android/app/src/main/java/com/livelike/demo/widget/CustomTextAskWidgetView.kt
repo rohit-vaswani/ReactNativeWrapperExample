@@ -6,12 +6,11 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.livelike.demo.R
 import com.livelike.demo.databinding.FcCustomAskAWidgetBinding
 import com.livelike.engagementsdk.widget.widgetModel.TextAskWidgetModel
 
-class CustomTextAskWidget : LinearLayout {
+class CustomTextAskWidgetView : LinearLayout {
 
     var askWidgetModel: TextAskWidgetModel? = null
     private lateinit var binding: FcCustomAskAWidgetBinding
@@ -33,9 +32,7 @@ class CustomTextAskWidget : LinearLayout {
     }
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
-        binding = FcCustomAskAWidgetBinding.bind(inflate(context, R.layout.fc_widget_view, this))
-        addView(binding.root)
-        Log.i("View", "Added")
+        binding = FcCustomAskAWidgetBinding.bind(inflate(context, R.layout.fc_custom_ask_a_widget, this))
     }
 
     override fun onAttachedToWindow() {
@@ -52,14 +49,20 @@ class CustomTextAskWidget : LinearLayout {
 
     private fun registerListeners(): Unit {
 
-        Log.i("Listeners Registered", "Added")
+        binding.influencerQuestionInput.addTextChangedListener(object : TextWatcher {
 
-        // Text Change on input box
-        binding.influenceQuestionInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(arg0: Editable) {
-                if (!binding.sendBtn.isEnabled) {
-                    binding.sendBtn.isEnabled = true
+
+                // Updating Send Button
+                binding.sendBtn.isEnabled = binding.influencerQuestionInput.text?.length!! > 0
+                val bgColor = when (binding.sendBtn.isEnabled) {
+                    true -> R.color.ask_a_widget_active_input
+                    false -> R.color.ask_a_widget_in_active_input
                 }
+                binding.sendBtn.setBackgroundColor(bgColor)
+
+                // Updating Word Count
+                binding.wordCount.text = "${binding.influencerQuestionInput.text?.length}/${R.integer.ask_influencer_input_word_limit}"
             }
 
             override fun beforeTextChanged(
@@ -76,11 +79,8 @@ class CustomTextAskWidget : LinearLayout {
 
         // On Send Button
         binding.sendBtn.setOnClickListener {
-            if (binding.influenceQuestionInput.text.toString().trim().isNotEmpty()) {
-
-                askWidgetModel?.submitReply(binding.influenceQuestionInput.text.toString().trim())
-
-
+            if (binding.influencerQuestionInput.text.toString().trim().isNotEmpty()) {
+                askWidgetModel?.submitReply(binding.influencerQuestionInput.text.toString().trim())
 //                    TODO: DO this later
 //                    disableUserInput()// user input edit text disbaled
 //                    disableSendBtn() // send button disbaled

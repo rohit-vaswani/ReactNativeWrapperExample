@@ -33,6 +33,8 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : Re
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+
         if (getItemViewType(position) == MSG_TYPE_TEXT) {
             val textViewHolder = holder as ChatTextViewHolder
             val messagePayload = messageList[position].messagePayload

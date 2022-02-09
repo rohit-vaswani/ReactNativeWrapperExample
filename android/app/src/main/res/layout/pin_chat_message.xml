@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_weight="1"
             >
 
             <TextView
@@ -51,7 +52,9 @@
                 android:textSize="@dimen/chatUserNameTextSize"
                 android:textStyle="bold"
                 app:fontFamily="@font/livelike_chat_nickname_font"
-                tools:text="Rohit Vaswani" />
+                tools:text="Rohit Vaswani"
+                android:layout_weight="0.90"
+                />
 
             <ImageButton
                 android:id="@+id/pinIcon"

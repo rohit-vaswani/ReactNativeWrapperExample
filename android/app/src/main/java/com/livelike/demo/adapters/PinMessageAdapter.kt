@@ -12,8 +12,7 @@ import com.livelike.demo.viewHolders.ChatVideoViewHolder
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 
 
-class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

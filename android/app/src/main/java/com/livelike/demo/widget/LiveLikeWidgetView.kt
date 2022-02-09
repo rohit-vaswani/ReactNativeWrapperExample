@@ -68,7 +68,6 @@ class LiveLikeWidgetView(
                 override fun onResponse(result: List<LiveLikeWidget>?, error: String?) {
                     result?.last()?.let {
                         widgetDetails = it
-                        displayWidget()
                     }
                 }
             })
@@ -77,8 +76,8 @@ class LiveLikeWidgetView(
     private fun registerWidgetInterceptor() {
         contentSession?.widgetInterceptor = object : WidgetInterceptor() {
             override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
-                showWidget()
-                displayWidget()
+//                showWidget()
+//                displayWidget()
             }
         }
     }

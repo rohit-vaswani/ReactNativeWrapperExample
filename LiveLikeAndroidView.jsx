@@ -42,8 +42,8 @@ export const LiveLikeAndroidView = () => {
     useEffect(() => {
 
         setTimeout(() => {
-            setShow(false)
-        }, 2000)
+            setShow(true)
+        }, 5000)
 
     }, [])
 
@@ -90,21 +90,25 @@ export const LiveLikeAndroidView = () => {
 
     return (
         <>
-            <LiveLikeChatWidgetView
+            <LiveLikeWidgetView
                 programId={programId}
-                chatRoomId={chatRoomId}
-                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-                userNickName={"Rohit Vasw New"}
+                showAskWidget={show}
                 style={{flex: 1}}
-                onWidgetShown={(event) => {
-                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                    this.setState({widgetHeight: event.nativeEvent.height})
+            />
+            <View
+                style={{
+                    backgroundColor: 'red',
+                    height: 50,
+                    width: 50,
+                    position: 'absolute',
+                    left: 0,
+                    bottom: 0
                 }}
-                onWidgetHidden={(event) => {
-                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                    this.setState({widgetHeight: 0})
-                }}
-                onEvent={event => {
+                onClick={() => {
+                    setShow(true)
+                    setTimeout(() => {
+                        setShow(false)
+                    }, 3000)
                 }}
             />
         </>

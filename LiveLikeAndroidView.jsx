@@ -7,7 +7,8 @@ export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidget
 
 const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
 const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
-const chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
+// const chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
+const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
 
 
 const {LiveLikeModule} = NativeModules

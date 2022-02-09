@@ -253,7 +253,7 @@ class LiveLikeChatWidgetView(
                                 .into(it.imgChatAvatar)
                         }
 
-                        // Handle VideoView
+                        // Handle VideoView - AN entry to the flow of the Video View.
                         val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
                         val url = jsonObject.get("custom_message").toString()
                         (holder as MyCustomMsgViewHolder).videoUrl = url

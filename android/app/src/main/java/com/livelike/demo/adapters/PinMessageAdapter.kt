@@ -10,6 +10,7 @@ import com.livelike.demo.ui.main.FCVideoView
 import com.livelike.demo.viewHolders.ChatTextViewHolder
 import com.livelike.demo.viewHolders.ChatVideoViewHolder
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
+import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
 
 
 class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -34,27 +35,32 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : Re
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-
         if (getItemViewType(position) == MSG_TYPE_TEXT) {
             val textViewHolder = holder as ChatTextViewHolder
             val messagePayload = messageList[position].messagePayload
-
-            textViewHolder.bindingObject.container.clipToOutline = true
-            messagePayload?.let {
-                textViewHolder.bindingObject.chatMessage.text = it.message
-                textViewHolder.bindingObject.chatNickname.text = it.nickname
-                it.userPic?.let {
-                    Glide.with(holder.itemView.context.applicationContext)
-                        .load(it)
-                        .placeholder(R.drawable.default_avatar)
-                        .error(R.drawable.default_avatar)
-                        .into(textViewHolder.bindingObject.imgChatAvatar)
-                }
-
-            }
+            bindTextMessage(textViewHolder, messagePayload)
             return
         }
 
+
+
+    }
+
+    private fun bindTextMessage(textViewHolder: ChatTextViewHolder, messagePayload: LiveLikeChatMessage?) {
+
+        textViewHolder.bindingObject.container.clipToOutline = true
+        messagePayload?.let {
+            textViewHolder.bindingObject.chatMessage.text = it.message
+            textViewHolder.bindingObject.chatNickname.text = it.nickname
+            it.userPic?.let {
+                Glide.with(textViewHolder.itemView.context.applicationContext)
+                    .load(it)
+                    .placeholder(R.drawable.default_avatar)
+                    .error(R.drawable.default_avatar)
+                    .into(textViewHolder.bindingObject.imgChatAvatar)
+            }
+
+        }
 
     }
 

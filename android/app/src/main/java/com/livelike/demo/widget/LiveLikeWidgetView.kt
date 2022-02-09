@@ -38,6 +38,7 @@ class LiveLikeWidgetView(
     val applicationContext: ReactApplicationContext
 ) : LinearLayout(context), LifecycleEventListener {
 
+
     var contentSession: LiveLikeContentSession? = null
     lateinit var widgetView: WidgetView;
     lateinit var customAskWidgetView: CustomAskWidgetView
@@ -51,7 +52,9 @@ class LiveLikeWidgetView(
         this.fallback = Choreographer.FrameCallback() {
             manuallyLayoutChildren();
             viewTreeObserver.dispatchOnGlobalLayout();
-            Choreographer.getInstance().postFrameCallback(this!!.fallback)
+            if(renderWidget) {
+                Choreographer.getInstance().postFrameCallback(this!!.fallback)
+            }
         }
         Choreographer.getInstance().postFrameCallback(fallback)
         createView()
@@ -90,7 +93,7 @@ class LiveLikeWidgetView(
 
     fun hideWidget() {
         this.renderWidget = false
-        Choreographer.getInstance().postFrameCallback(this.fallback)
+        contentSession?.widgetInterceptor?.dismissWidget()
     }
 
 
@@ -132,7 +135,6 @@ class LiveLikeWidgetView(
         customAskWidgetView.userEventsListener =
             object : CustomAskWidgetView.UserEventsListener {
                 override fun closeDialog() {
-                    contentSession?.widgetInterceptor?.dismissWidget()
                     hideWidget()
                 }
             }

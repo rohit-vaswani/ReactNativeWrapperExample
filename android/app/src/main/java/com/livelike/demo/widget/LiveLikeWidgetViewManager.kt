@@ -12,6 +12,9 @@ import java.util.*
 class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext) :
     ViewGroupManager<LiveLikeWidgetView>() {
 
+
+
+
     val REACT_CLASS = "LiveLikeWidgetView"
 
     companion object {

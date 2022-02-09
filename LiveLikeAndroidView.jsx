@@ -90,28 +90,21 @@ export const LiveLikeAndroidView = () => {
 
     return (
         <>
-            <LiveLikeWidgetView
+            <LiveLikeChatWidgetView
                 programId={programId}
-                showAskWidget={show}
+                chatRoomId={chatRoomId}
+                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+                userNickName={"Rohit Vasw New"}
                 style={{flex: 1}}
-            />
-            <View
-                style={{
-                    backgroundColor: 'red',
-                    height: 50,
-                    width: 50,
-                    position: 'absolute',
-                    left: 0,
-                    bottom: 0
+                onWidgetShown={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: event.nativeEvent.height})
                 }}
-                onClick={() => {
-                    setShow(true)
-
-                    console.log('CLICKED')
-
-                    setTimeout(() => {
-                        setShow(false)
-                    }, 3000)
+                onWidgetHidden={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: 0})
+                }}
+                onEvent={event => {
                 }}
             />
         </>

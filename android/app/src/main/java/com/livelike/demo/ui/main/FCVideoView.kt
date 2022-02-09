@@ -17,7 +17,7 @@ import com.livelike.demo.R
 import com.livelike.demo.databinding.VideoViewBinding
 import com.livelike.engagementsdk.DismissAction
 
-class VideoView @JvmOverloads constructor(
+class FCVideoView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -62,7 +62,7 @@ class VideoView @JvmOverloads constructor(
                 inflate(
                     context,
                     R.layout.video_view,
-                    this@VideoView
+                    this@FCVideoView
                 )
             )
         }

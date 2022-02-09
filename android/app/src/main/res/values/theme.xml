@@ -13,7 +13,7 @@
         <item name="chatUserNameCustomFontPath" type="font">@font/noto_sans_display_semibold</item><!-- to set the font of the username of the sender ,it takes file from the asset folder -->
         <item name="usernameColor">#004d98</item><!-- update the color of username in chat message -->
         <item name="otherUsernameColor">#121212</item><!-- update the color of different username in chat message -->
-        <item name="chatUserNameTextSize">12sp</item><!-- set the textsize of username -->
+        <item name="chatUserNameTextSize">14sp</item><!-- set the textsize of username -->
         <item name="chatUserNameTextLetterSpacing">0.03</item><!--set the letter spacing of chat username -->
 <!--        <item name="userPicDrawable">@drawable/ic_user_pic</item>&lt;!&ndash; placeholder for user display image in chat message &ndash;&gt;-->
 

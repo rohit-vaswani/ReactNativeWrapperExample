@@ -13,10 +13,10 @@ import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.LiveLikeManager
 import com.livelike.demo.R
 import com.livelike.engagementsdk.LiveLikeContentSession
+import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
-import com.livelike.engagementsdk.widget.SpecifiedWidgetView
 import com.livelike.engagementsdk.widget.view.WidgetView
 import com.livelike.engagementsdk.widget.widgetModel.*
 
@@ -38,6 +38,7 @@ class LiveLikeWidgetView(
     var contentSession: LiveLikeContentSession? = null
     lateinit var widgetView: WidgetView;
     lateinit var customAskWidgetView: CustomTextAskWidgetView
+    lateinit var widgetDetails: LiveLikeWidget
     var fallback: Choreographer.FrameCallback;
     private var renderWidget = false
 
@@ -54,16 +55,28 @@ class LiveLikeWidgetView(
         Choreographer.getInstance().postFrameCallback(fallback)
         createView()
         registerCustomViewModel()
+        subscribeWidget()
+    }
+
+    private fun subscribeWidget() {
+        contentSession?.widgetStream?.subscribe(this) {
+            it?.let {
+                widgetDetails = it
+            }
+        }
     }
 
 
     // TODO: This might not be working
     fun showWidget() {
-//        this.widgetView.displayWidget("text-ask", widgetView as SpecifiedWidgetView )
+        widgetDetails?.let {
+            this.widgetView.displayWidget(LiveLikeManager.engagementSDK, it)
+        }
     }
 
     private fun createView() {
-        val parentView = LayoutInflater.from(context).inflate(R.layout.fc_widget_view, null) as LinearLayout;
+        val parentView =
+            LayoutInflater.from(context).inflate(R.layout.fc_widget_view, null) as LinearLayout;
         addView(parentView)
         widgetView = parentView.findViewById(R.id.widget_view);
     }
@@ -89,8 +102,6 @@ class LiveLikeWidgetView(
                 Choreographer.getInstance().postFrameCallback(fallback)
             }
         }
-
-        widgetView.setSession(contentSession)
     }
 
     fun manuallyLayoutChildren() {
@@ -109,15 +120,17 @@ class LiveLikeWidgetView(
         params: WritableMap?
     ) {
         val reactContext = this.getContext() as ReactContext;
-        reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(this.getId(), eventName, params)
+        reactContext.getJSModule(RCTEventEmitter::class.java)
+            .receiveEvent(this.getId(), eventName, params)
     }
 
-    private fun registerCustomViewListeners(){
-        customAskWidgetView.userEventsListener = object : CustomTextAskWidgetView.UserEventsListener {
-            override fun closeDialog() {
-                contentSession?.widgetInterceptor?.dismissWidget()
+    private fun registerCustomViewListeners() {
+        customAskWidgetView.userEventsListener =
+            object : CustomTextAskWidgetView.UserEventsListener {
+                override fun closeDialog() {
+                    contentSession?.widgetInterceptor?.dismissWidget()
+                }
             }
-        }
     }
 
 

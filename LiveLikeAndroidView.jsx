@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {NativeModules, requireNativeComponent, View} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
-export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
+// export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 
 
 const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
@@ -73,11 +73,35 @@ export const LiveLikeAndroidView = () => {
 
     const [show, setShow] = React.useState(false)
 
+
+    return (
+        <>
+            <LiveLikeChatWidgetView
+                programId={programId}
+                chatRoomId={chatRoomId}
+                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+                userNickName={"Rohit Vasw New"}
+                style={{flex: 1}}
+                onWidgetShown={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: event.nativeEvent.height})
+                }}
+                onWidgetHidden={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: 0})
+                }}
+                onEvent={event => {
+                }}
+            />
+        </>
+    )
+
+
     return (
         <>
             <LiveLikeWidgetView
                 programId={programId}
-                showAskWidget={true}
+                showAskWidget={show}
                 style={{flex: 1}}
             />
             <View

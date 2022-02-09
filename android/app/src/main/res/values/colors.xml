@@ -31,6 +31,8 @@
   <color name="livelike_chat_reaction_selected_background_color">#f0f0f0</color>
   <color name="ask_a_widget_active_input">#ff5000</color>
   <color name="ask_a_widget_in_active_input">#dcdee4</color>
+  <color name="otherUsernameColor">#121212</color>
+  <color name="messageColor">#121212</color>        <!-- update color of message in chat message -->
   <array name="default_index_gradient">
     <item>@color/green</item>
     <item>@color/red</item>

@@ -1,31 +1,71 @@
 package com.livelike.demo.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.livelike.demo.R
+import com.livelike.demo.databinding.PinChatMessageBinding
+import com.livelike.demo.ui.main.FCVideoView
+import com.livelike.demo.viewHolders.ChatTextViewHolder
+import com.livelike.demo.viewHolders.ChatVideoViewHolder
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 
 
-class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : RecyclerView.Adapter<PinMessageAdapter.ViewHolder>() {
+class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    // holder class to hold reference
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var messageTextView: TextView = view.findViewById(R.id.message) as TextView
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == MSG_TYPE_TEXT) {
+            val inflater = LayoutInflater.from(parent.context)
+            val bindingObject: PinChatMessageBinding = PinChatMessageBinding.bind(
+                inflater.inflate(
+                    R.layout.pin_chat_message,
+                    parent,
+                    false
+                )
+            )
+            return ChatTextViewHolder(bindingObject)
+        } else {
+            val videoView = FCVideoView(parent.context)
+            return ChatVideoViewHolder(videoView)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.pin_message_item, parent, false))
-    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (getItemViewType(position) == MSG_TYPE_TEXT) {
+            val textViewHolder = holder as ChatTextViewHolder
+            val messagePayload = messageList[position].messagePayload
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.messageTextView.text = messageList[position].messagePayload?.message
+            textViewHolder.bindingObject.container.clipToOutline = true
+            messagePayload?.let {
+                textViewHolder.bindingObject.chatMessage.text = it.message
+                textViewHolder.bindingObject.chatNickname.text = it.nickname
+                it.userPic?.let {
+                    Glide.with(holder.itemView.context.applicationContext)
+                        .load(it)
+                        .placeholder(R.drawable.default_avatar)
+                        .error(R.drawable.default_avatar)
+                        .into(textViewHolder.bindingObject.imgChatAvatar)
+                }
+
+            }
+            return
+        }
+
+
     }
 
     override fun getItemCount(): Int {
         return messageList.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (messageList[position].messagePayload?.custom_data == "") {
+            true -> MSG_TYPE_TEXT
+            false -> MSG_TYPE_VIDEO
+        }
     }
 
     fun addMessageToList(newMessage: PinMessageInfo) {
@@ -49,4 +89,12 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : Re
         notifyDataSetChanged()
 
     }
+
+
+    companion object {
+        private val MSG_TYPE_TEXT = 0
+        private val MSG_TYPE_VIDEO = 1
+    }
+
+
 }

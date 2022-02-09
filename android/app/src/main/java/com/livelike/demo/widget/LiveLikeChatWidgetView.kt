@@ -20,7 +20,7 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
-import com.livelike.demo.ui.main.VideoView
+import com.livelike.demo.ui.main.FCVideoView
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.MessageListener
 import com.livelike.engagementsdk.chat.ChatView
@@ -157,7 +157,7 @@ class LiveLikeChatWidgetView(
                 viewType: ChatMessageType
             ): RecyclerView.ViewHolder {
                 // TODO Should we return the default view holder for normal message
-                return MyCustomMsgViewHolder(VideoView(parent.context))
+                return MyCustomMsgViewHolder(FCVideoView(parent.context))
             }
 
             override fun onBindViewHolder(
@@ -168,7 +168,7 @@ class LiveLikeChatWidgetView(
             ) {
 
                 chatViewThemeAttributes.apply {
-                    (holder.itemView as VideoView)._binding?.let {
+                    (holder.itemView as FCVideoView)._binding?.let {
 
                         // Setting nickName
                         it.chatNickname.setTextColor(chatNickNameColor)
@@ -269,7 +269,7 @@ class LiveLikeChatWidgetView(
         var videoUrl: String? = null
             set(value) {
                 field = value
-                (itemView as VideoView).videoUrl = value
+                (itemView as FCVideoView).videoUrl = value
             }
     }
 

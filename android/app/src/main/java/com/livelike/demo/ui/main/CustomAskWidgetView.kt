@@ -1,4 +1,4 @@
-package com.livelike.demo.widget
+package com.livelike.demo.ui.main
 
 import android.content.Context
 import android.os.Handler
@@ -12,7 +12,7 @@ import com.livelike.demo.databinding.FcCustomAskAWidgetBinding
 import com.livelike.engagementsdk.widget.widgetModel.TextAskWidgetModel
 
 
-class CustomTextAskWidgetView : LinearLayout {
+class CustomAskWidgetView : LinearLayout {
 
     var askWidgetModel: TextAskWidgetModel? = null
     private lateinit var binding: FcCustomAskAWidgetBinding
@@ -51,12 +51,7 @@ class CustomTextAskWidgetView : LinearLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         registerListeners()
-        askWidgetModel?.widgetData?.let { liveLikeWidget ->
-//            titleTv.text = liveLikeWidget.title
-//            promptTv.text = liveLikeWidget.prompt
-//            confirmationMessageTv.text = liveLikeWidget.confirmation_message
-//            confirmationMessageTv.visibility = GONE
-        }
+        askWidgetModel?.widgetData?.let { liveLikeWidget -> }
     }
 
 

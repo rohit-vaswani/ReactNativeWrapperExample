@@ -31,7 +31,6 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
 
     @ReactProp(name = "programId")
     fun setProgramId(view: LiveLikeWidgetView, programId: String) {
-
         val session = LiveLikeManager.engagementSDK.createContentSession(programId)
         view.updateContentSession(session)
     }
@@ -39,7 +38,7 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
     @ReactProp(name = "showAskWidget")
     fun showAskWidget(view: LiveLikeWidgetView, showWidget: Boolean) {
         if (showWidget) {
-            view.showWidget()
+            view.displayWidget()
         }
     }
 

@@ -12,10 +12,13 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.LiveLikeManager
 import com.livelike.demo.R
+import com.livelike.demo.ui.main.CustomAskWidgetView
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.LiveLikeWidget
+import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
+import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
 import com.livelike.engagementsdk.widget.view.WidgetView
 import com.livelike.engagementsdk.widget.widgetModel.*
@@ -37,8 +40,8 @@ class LiveLikeWidgetView(
 
     var contentSession: LiveLikeContentSession? = null
     lateinit var widgetView: WidgetView;
-    lateinit var customAskWidgetView: CustomTextAskWidgetView
-    lateinit var widgetDetails: LiveLikeWidget
+    lateinit var customAskWidgetView: CustomAskWidgetView
+    var widgetDetails: LiveLikeWidget? = null
     var fallback: Choreographer.FrameCallback;
     private var renderWidget = false
 
@@ -48,17 +51,36 @@ class LiveLikeWidgetView(
         this.fallback = Choreographer.FrameCallback() {
             manuallyLayoutChildren();
             viewTreeObserver.dispatchOnGlobalLayout();
-            if (renderWidget) {
-                Choreographer.getInstance().postFrameCallback(this!!.fallback)
-            }
+            Choreographer.getInstance().postFrameCallback(this!!.fallback)
         }
         Choreographer.getInstance().postFrameCallback(fallback)
         createView()
         registerCustomViewModel()
-        subscribeWidget()
     }
 
-    private fun subscribeWidget() {
+    private fun fetchPublishedWidgets() {
+        contentSession?.getPublishedWidgets(
+            LiveLikePagination.FIRST,
+            object : LiveLikeCallback<List<LiveLikeWidget>>() {
+                override fun onResponse(result: List<LiveLikeWidget>?, error: String?) {
+                    result?.last()?.let {
+                        widgetDetails = it
+                        displayWidget()
+                    }
+                }
+            })
+    }
+
+    private fun registerWidgetInterceptor() {
+        contentSession?.widgetInterceptor = object : WidgetInterceptor() {
+            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
+                showWidget()
+                displayWidget()
+            }
+        }
+    }
+
+    private fun subscribeWidgetStream() {
         contentSession?.widgetStream?.subscribe(this) {
             it?.let {
                 widgetDetails = it
@@ -66,17 +88,22 @@ class LiveLikeWidgetView(
         }
     }
 
+    fun hideWidget() {
+        this.renderWidget = false
+        Choreographer.getInstance().postFrameCallback(this.fallback)
+    }
 
-    // TODO: This might not be working
-    fun showWidget() {
+
+    fun displayWidget() {
         widgetDetails?.let {
+            renderWidget = true
             this.widgetView.displayWidget(LiveLikeManager.engagementSDK, it)
+            Choreographer.getInstance().postFrameCallback(this.fallback)
         }
     }
 
     private fun createView() {
-        val parentView =
-            LayoutInflater.from(context).inflate(R.layout.fc_widget_view, null) as LinearLayout;
+        val parentView = LayoutInflater.from(context).inflate(R.layout.fc_widget_view, null) as LinearLayout;
         addView(parentView)
         widgetView = parentView.findViewById(R.id.widget_view);
     }
@@ -95,14 +122,22 @@ class LiveLikeWidgetView(
 
     fun updateContentSession(contentSession: LiveLikeContentSession) {
         this.contentSession = contentSession;
-        contentSession.widgetInterceptor = object : WidgetInterceptor() {
-            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
-                showWidget()
-                renderWidget = true
-                Choreographer.getInstance().postFrameCallback(fallback)
-            }
-        }
+        fetchPublishedWidgets()
+        registerWidgetInterceptor()
+        subscribeWidgetStream()
     }
+
+
+    private fun registerCustomViewListeners() {
+        customAskWidgetView.userEventsListener =
+            object : CustomAskWidgetView.UserEventsListener {
+                override fun closeDialog() {
+                    contentSession?.widgetInterceptor?.dismissWidget()
+                    hideWidget()
+                }
+            }
+    }
+
 
     fun manuallyLayoutChildren() {
         for (i in 0 until getChildCount()) {
@@ -122,15 +157,6 @@ class LiveLikeWidgetView(
         val reactContext = this.getContext() as ReactContext;
         reactContext.getJSModule(RCTEventEmitter::class.java)
             .receiveEvent(this.getId(), eventName, params)
-    }
-
-    private fun registerCustomViewListeners() {
-        customAskWidgetView.userEventsListener =
-            object : CustomTextAskWidgetView.UserEventsListener {
-                override fun closeDialog() {
-                    contentSession?.widgetInterceptor?.dismissWidget()
-                }
-            }
     }
 
 
@@ -197,7 +223,7 @@ class LiveLikeWidgetView(
 
             // Returns a view for customising Ask a Widget
             override fun createTextAskWidgetView(imageSliderWidgetModel: TextAskWidgetModel): View? {
-                customAskWidgetView = CustomTextAskWidgetView(context).apply {
+                customAskWidgetView = CustomAskWidgetView(context).apply {
                     askWidgetModel = imageSliderWidgetModel
                 }
                 registerCustomViewListeners()

@@ -290,11 +290,11 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
-                pinMessageAdapter.addMessageToList(message)
+                pinMessageAdapter.addPinMessage(message)
             }
 
             override fun onUnPinMessage(pinMessageId: String) {
-                pinMessageAdapter.removeMessageFromList(pinMessageId)
+                pinMessageAdapter.removePinMessage(pinMessageId)
             }
         })
     }
@@ -307,6 +307,6 @@ class LiveLikeChatWidgetView(
 
 
     fun handleHistoricalPinMessages(pinnedMessages: List<PinMessageInfo>) {
-        pinMessageAdapter.addMessages(pinnedMessages as ArrayList<PinMessageInfo>)
+        pinMessageAdapter.addPinMessages(pinnedMessages as ArrayList<PinMessageInfo>)
     }
 }

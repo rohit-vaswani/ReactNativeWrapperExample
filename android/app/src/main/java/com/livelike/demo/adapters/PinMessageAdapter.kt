@@ -67,12 +67,12 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : Re
         }
     }
 
-    fun addMessageToList(newMessage: PinMessageInfo) {
+    fun addPinMessage(newMessage: PinMessageInfo) {
         messageList.add(newMessage)
         notifyDataSetChanged()
     }
 
-    fun removeMessageFromList(messageId: String) {
+    fun removePinMessage(messageId: String) {
         val index = messageList.indexOfFirst { it.id == messageId }
         if (index != -1) {
             messageList.removeAt(index)
@@ -81,10 +81,10 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) : Re
 
     }
 
-    fun addMessages(newMessageList: ArrayList<PinMessageInfo>) {
+    fun addPinMessages(pinMessages: ArrayList<PinMessageInfo>) {
         messageList.clear()
         notifyDataSetChanged()
-        messageList.addAll(newMessageList)
+        messageList.addAll(pinMessages)
         notifyDataSetChanged()
 
     }

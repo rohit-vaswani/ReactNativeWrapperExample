@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:defaultFocusHighlightEnabled="true"
+    android:focusable="true"
+    android:focusedByDefault="true"
+    android:importantForAccessibility="yes"
+    android:orientation="vertical"
+    android:screenReaderFocusable="true"
+    tools:background="@color/livelike_black">
+
+    <View
+        android:id="@+id/border_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <View
+        android:id="@+id/border_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chat_constraint_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/chatBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_chat_avatar"
+                android:layout_width="@dimen/livelike_chat_avatar_width"
+                android:layout_height="@dimen/livelike_chat_avatar_height"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/livelike_chat_avatar_margin_left"
+                android:layout_marginTop="@dimen/livelike_chat_avatar_margin_top"
+                android:layout_marginBottom="@dimen/livelike_chat_avatar_margin_bottom"
+                android:layout_marginEnd="0dp"
+                android:contentDescription="@string/user_image"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/chatBubbleBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/livelike_chat_bubble_background_margin_top"
+                android:layout_marginRight="@dimen/livelike_chat_bubble_background_margin_right"
+                android:layout_marginBottom="@dimen/livelike_chat_bubble_background_margin_bottom"
+                android:animateLayoutChanges="@bool/livelike_chat_component_layout_transition_enabled"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/chat_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/livelike_default_chat_cell_name_color"
+                    android:textSize="@dimen/livelike_default_chat_cell_name_size"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/livelike_chat_nickname_font"
+                    tools:ignore="HardcodedText"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="6dp"
+                    tools:text="Rohit Vaswani" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/widgetContainer"
+                    android:layout_width="@dimen/livelike_video_player_width"
+                    android:layout_height="@dimen/livelike_video_player_height"
+                    android:layout_marginLeft="0dp"
+                    android:animateLayoutChanges="@bool/livelike_widget_component_layout_transition_enabled"
+                    android:background="@drawable/video_view_background">
+
+                    <ImageView
+                        android:id="@+id/thumbnailView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/image"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/video_view_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <LinearLayout
+                        android:id="@+id/playbackErrorView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/ic_play_disabled" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:text="@string/livelike_playback_error"
+                            android:textAlignment="gravity"
+                            android:textColor="@color/livelike_white"
+                            android:textDirection="locale" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:indeterminateTint="@color/livelike_video_loader_color"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/playerView"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/playerView" />
+
+                    <android.widget.VideoView
+                        android:id="@+id/playerView"
+                        android:layout_width="@dimen/livelike_video_player_width"
+                        android:layout_height="@dimen/livelike_video_player_height"
+                        android:background="@drawable/video_view_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/ic_play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/image"
+                        app:layout_constraintBottom_toBottomOf="@id/widgetContainer"
+                        app:layout_constraintLeft_toLeftOf="@id/widgetContainer"
+                        app:layout_constraintRight_toRightOf="@id/widgetContainer"
+                        app:layout_constraintTop_toTopOf="@id/widgetContainer"
+                        app:srcCompat="@drawable/ic_play_button" />
+
+                    <LinearLayout
+                        android:id="@+id/sound_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/video_alert_volume_button_background"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <ImageView
+                            android:id="@+id/ic_sound"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/image"
+                            android:paddingLeft="2dp"
+                            app:srcCompat="@drawable/ic_volume_off" />
+
+                        <TextView
+                            android:id="@+id/mute_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:text="@string/livelike_mute_label"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_chat_reactions_count"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/livelike_reaction_count_height"
+            android:layout_marginLeft="@dimen/livelike_reaction_count_margin_left"
+            android:layout_marginTop="@dimen/livelike_reaction_count_margin_top"
+            android:layout_marginRight="@dimen/livelike_reaction_count_margin_right"
+            android:layout_marginBottom="@dimen/livelike_reaction_count_margin_bottom"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/livelike_reaction_count_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/chatBackground"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

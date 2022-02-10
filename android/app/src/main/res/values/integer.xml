@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="chat_input_max_char_length">250</integer>
+    <integer name="ask_influencer_input_word_limit">240</integer>
+</resources>

@@ -3,13 +3,76 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../layout/custom_preview.xml" value="0.2942708333333333" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/header_rounded_corner_video_alert.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/ic_chat_bottom_bar_gradient.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/ic_chat_ic_live.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/ic_chat_input.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/ic_chat_message_bubble_rounded_rectangle.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/ic_chat_message_highlighted_bubble_rounded_rectangle.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/ic_chat_reaction_default.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/ic_chat_reaction_turner.xml" value="0.29322916666666665" />
+        <entry key="../../../../../.gradle/caches/transforms-3/1fdbe75f27347147fe8fc45858ba216b/transformed/jetified-android-engagement-sdk-2.29/res/drawable/video_alert_rounded_corner_black_background.xml" value="0.37592592592592594" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_chat_bottom_bar_gradient.xml" value="0.37037037037037035" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_chat_input.xml" value="0.3359375" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_chat_message_bubble_rounded_rectangle.xml" value="0.3359375" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_chat_reaction_turner.xml" value="0.32708333333333334" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_play_button.xml" value="0.2786458333333333" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_play_disabled.xml" value="0.271875" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_volume_off.xml" value="0.2786458333333333" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/ic_volume_on.xml" value="0.271875" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/user_input_background.xml" value="0.30833333333333335" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/video_alert_bottom_rounded_corner_with_background.xml" value="0.30833333333333335" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/video_alert_rounded_corner_black_background.xml" value="0.2786458333333333" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/video_alert_volume_button_background.xml" value="0.2786458333333333" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/drawable/video_view_background.xml" value="0.2786458333333333" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/layout/chat_user_profile_bar.xml" value="0.31979166666666664" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/layout/default_chat_cell.xml" value="0.19739583333333333" />
+        <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/layout/video_widget.xml" value="0.31145833333333334" />
+        <entry key="../../../../../Library/Android/sdk/platforms/android-30/data/res/drawable/btn_star.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/drawable-hdpi/white_separator.xml" value="0.13489583333333333" />
+        <entry key="app/src/main/res/drawable/ask_a_widget_selector.xml" value="0.27395833333333336" />
+        <entry key="app/src/main/res/drawable/ask_influencer_chat_input_box.xml" value="0.2838541666666667" />
+        <entry key="app/src/main/res/drawable/ask_influencer_check_icon.xml" value="0.2838541666666667" />
         <entry key="app/src/main/res/drawable/chat_bubble_background.xml" value="0.20092592592592592" />
+        <entry key="app/src/main/res/drawable/chat_input_cursor.xml" value="0.2765625" />
+        <entry key="app/src/main/res/drawable/chat_input_view_background.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/drawable/close_icon.xml" value="0.26927083333333335" />
+        <entry key="app/src/main/res/drawable/fc_ripple_light_border.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/drawable/ic_ask_influence_question.xml" value="0.2838541666666667" />
+        <entry key="app/src/main/res/drawable/ic_ask_influencer_question.xml" value="0.26927083333333335" />
+        <entry key="app/src/main/res/drawable/ic_chat_bottom_bar_gradient.xml" value="0.284375" />
+        <entry key="app/src/main/res/drawable/ic_chat_message_bubble_rounded_rectangle.xml" value="0.3359375" />
+        <entry key="app/src/main/res/drawable/ic_chat_reaction_turner.xml" value="0.30833333333333335" />
+        <entry key="app/src/main/res/drawable/ic_play_button.xml" value="0.271875" />
+        <entry key="app/src/main/res/drawable/ic_volume_off.xml" value="0.271875" />
+        <entry key="app/src/main/res/drawable/ic_volume_on.xml" value="0.271875" />
+        <entry key="app/src/main/res/drawable/pin_chat_message_background.xml" value="0.28125" />
+        <entry key="app/src/main/res/drawable/pin_icon.xml" value="0.28125" />
+        <entry key="app/src/main/res/drawable/splashscreen.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/drawable/user_input_background.xml" value="0.30833333333333335" />
+        <entry key="app/src/main/res/drawable/user_input_border.xml" value="0.284375" />
+        <entry key="app/src/main/res/drawable/video_alert_rounded_corner_black_background.xml" value="0.2786458333333333" />
+        <entry key="app/src/main/res/drawable/video_view_background.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/font/notosansdisplay_bold.xml" value="0.3223958333333333" />
+        <entry key="app/src/main/res/font/notosansdisplay_regular.xml" value="0.3223958333333333" />
         <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/chat_fragment_layout.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/chat_input.xml" value="0.3447727294450152" />
+        <entry key="app/src/main/res/layout/chat_user_profile_bar.xml" value="0.31979166666666664" />
+        <entry key="app/src/main/res/layout/chat_view.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/layout/custom_msg_item.xml" value="10.0" />
+        <entry key="app/src/main/res/layout/default_chat_cell.xml" value="0.2682291666666667" />
+        <entry key="app/src/main/res/layout/fc_chat_view.xml" value="0.25729166666666664" />
+        <entry key="app/src/main/res/layout/fc_custom_ask_a_widget.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fc_widget_view.xml" value="0.625" />
         <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/pin_chat_message.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/pin_message_item.xml" value="0.265625" />
+        <entry key="app/src/main/res/layout/pin_video_message.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/timeline_fragment_layout.xml" value="0.11875" />
+        <entry key="app/src/main/res/layout/video_view.xml" value="0.5" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.20092592592592592" />
       </map>
     </option>

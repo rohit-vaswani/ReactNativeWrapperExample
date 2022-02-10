@@ -18,7 +18,6 @@
             <option value="$PROJECT_DIR$/../node_modules/expo-dev-launcher/android" />
             <option value="$PROJECT_DIR$/../node_modules/expo-dev-menu-interface/android" />
             <option value="$PROJECT_DIR$/../node_modules/expo-dev-menu/android" />
-            <option value="$PROJECT_DIR$/../node_modules/expo-error-recovery/android" />
             <option value="$PROJECT_DIR$/../node_modules/expo-file-system/android" />
             <option value="$PROJECT_DIR$/../node_modules/expo-font/android" />
             <option value="$PROJECT_DIR$/../node_modules/expo-json-utils/android" />
@@ -33,6 +32,5 @@
         <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
-    <option name="offlineMode" value="true" />
   </component>
 </project>

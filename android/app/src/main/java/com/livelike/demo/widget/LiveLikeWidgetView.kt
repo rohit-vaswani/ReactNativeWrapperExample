@@ -66,9 +66,13 @@ class LiveLikeWidgetView(
             LiveLikePagination.FIRST,
             object : LiveLikeCallback<List<LiveLikeWidget>>() {
                 override fun onResponse(result: List<LiveLikeWidget>?, error: String?) {
-                    result?.last()?.let {
-                        widgetDetails = it
+
+                    if(result?.size!! > 0) {
+                        result?.last()?.let {
+                            widgetDetails = it
+                        }
                     }
+
                 }
             })
     }

@@ -79,6 +79,7 @@
                     android:textColor="@color/livelike_default_chat_cell_message_color"
                     android:textSize="@dimen/livelike_default_chat_cell_text_size"
                     app:fontFamily="@font/livelike_chat_message_font"
+                    android:layout_marginTop="@dimen/livelike_chatMessageMarginTop"
                     tools:ignore="HardcodedText"
                     tools:text="@tools:sample/lorem[30]" />
 

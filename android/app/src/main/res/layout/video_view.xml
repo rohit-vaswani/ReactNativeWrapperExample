@@ -154,8 +154,8 @@
                         android:contentDescription="@string/image"
                         app:layout_constraintBottom_toBottomOf="@id/widgetContainer"
                         app:layout_constraintLeft_toLeftOf="@id/widgetContainer"
-                        app:layout_constraintRight_toRightOf="@id/widgetContainer"
-                        app:layout_constraintTop_toTopOf="@id/widgetContainer"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginBottom="12dp"
                         app:srcCompat="@drawable/ic_play_button" />
 
                     <LinearLayout
@@ -166,9 +166,13 @@
                         android:background="@drawable/video_alert_volume_button_background"
                         android:orientation="horizontal"
                         android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent">
+                        app:layout_constraintTop_toTopOf="@id/ic_play"
+                        app:layout_constraintBottom_toBottomOf="@id/ic_play"
+                        android:layout_marginRight="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="12dp"
+                        android:padding="2dp"
+                        >
 
                         <ImageView
                             android:id="@+id/ic_sound"

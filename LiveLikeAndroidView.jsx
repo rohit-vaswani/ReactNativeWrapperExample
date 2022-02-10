@@ -6,6 +6,7 @@ export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 
 
 const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
+// const programId = "319a5414-dd78-49d2-b0cb-abdef76d29b7" // TODO: No published widget
 const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 const chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
@@ -90,25 +91,21 @@ export const LiveLikeAndroidView = () => {
 
     return (
         <>
-            <LiveLikeWidgetView
+            <LiveLikeChatWidgetView
                 programId={programId}
-                showAskWidget={show}
+                chatRoomId={chatRoomId}
+                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+                userNickName={"Rohit Vaswani"}
                 style={{flex: 1}}
-            />
-            <View
-                style={{
-                    backgroundColor: 'red',
-                    height: 50,
-                    width: 50,
-                    position: 'absolute',
-                    left: 0,
-                    bottom: 0
+                onWidgetShown={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: event.nativeEvent.height})
                 }}
-                onClick={() => {
-                    setShow(true)
-                    setTimeout(() => {
-                        setShow(false)
-                    }, 3000)
+                onWidgetHidden={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: 0})
+                }}
+                onEvent={event => {
                 }}
             />
         </>

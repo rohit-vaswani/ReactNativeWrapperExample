@@ -37,6 +37,6 @@
     <dimen name="chatMessageMarginTop">4dp</dimen><!-- to set the textsize of message -->
     <dimen name="chatAvatarHeight">32dp</dimen>
     <dimen name="chatAvatarWidth">32dp</dimen>
-
+    <dimen name="livelike_chatMessageMarginTop">4dp</dimen>
 
 </resources>

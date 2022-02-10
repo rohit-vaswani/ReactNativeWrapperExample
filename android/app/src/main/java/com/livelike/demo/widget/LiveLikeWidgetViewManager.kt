@@ -9,7 +9,12 @@ import com.livelike.demo.LiveLikeManager
 import java.util.*
 
 
-class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeWidgetView>() {
+class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext) :
+    ViewGroupManager<LiveLikeWidgetView>() {
+
+
+
+
     val REACT_CLASS = "LiveLikeWidgetView"
 
     companion object {
@@ -31,6 +36,13 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
     fun setProgramId(view: LiveLikeWidgetView, programId: String) {
         val session = LiveLikeManager.engagementSDK.createContentSession(programId)
         view.updateContentSession(session)
+    }
+
+    @ReactProp(name = "showAskWidget")
+    fun showAskWidget(view: LiveLikeWidgetView, showWidget: Boolean) {
+        if (showWidget) {
+            view.displayWidget()
+        }
     }
 
     override fun onDropViewInstance(view: LiveLikeWidgetView) {

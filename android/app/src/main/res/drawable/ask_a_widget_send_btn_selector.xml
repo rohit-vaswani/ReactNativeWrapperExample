@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_enabled="true" >
+        <shape android:shape="rectangle"  >
+            <corners android:radius="4dp" />
+            <solid android:color="@color/ask_a_widget_active_input"/>
+        </shape>
+    </item>
+    <item >
+        <shape android:shape="rectangle"  >
+            <corners android:radius="4dp" />
+            <solid android:color="@color/ask_a_widget_in_active_input"/>
+        </shape>
+    </item>
+</selector>

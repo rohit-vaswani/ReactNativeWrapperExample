@@ -20,7 +20,7 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
-import com.livelike.demo.ui.main.VideoView
+import com.livelike.demo.ui.main.FCVideoView
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.MessageListener
 import com.livelike.engagementsdk.chat.ChatView
@@ -149,7 +149,7 @@ class LiveLikeChatWidgetView(
     private fun registerVideoMessageHandler() {
 
 
-        var chatAvatarUrl = this.userAvatarUrl
+        val chatAvatarUrl = this.userAvatarUrl
 
         chatView.chatViewDelegate = object : ChatViewDelegate {
             override fun onCreateViewHolder(
@@ -157,7 +157,7 @@ class LiveLikeChatWidgetView(
                 viewType: ChatMessageType
             ): RecyclerView.ViewHolder {
                 // TODO Should we return the default view holder for normal message
-                return MyCustomMsgViewHolder(VideoView(parent.context))
+                return MyCustomMsgViewHolder(FCVideoView(parent.context))
             }
 
             override fun onBindViewHolder(
@@ -168,7 +168,7 @@ class LiveLikeChatWidgetView(
             ) {
 
                 chatViewThemeAttributes.apply {
-                    (holder.itemView as VideoView)._binding?.let {
+                    (holder.itemView as FCVideoView)._binding?.let {
 
                         // Setting nickName
                         it.chatNickname.setTextColor(chatNickNameColor)
@@ -253,7 +253,7 @@ class LiveLikeChatWidgetView(
                                 .into(it.imgChatAvatar)
                         }
 
-                        // Handle VideoView
+                        // Handle VideoView - AN entry to the flow of the Video View.
                         val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
                         val url = jsonObject.get("custom_message").toString()
                         (holder as MyCustomMsgViewHolder).videoUrl = url
@@ -269,7 +269,7 @@ class LiveLikeChatWidgetView(
         var videoUrl: String? = null
             set(value) {
                 field = value
-                (itemView as VideoView).videoUrl = value
+                (itemView as FCVideoView).videoUrl = value
             }
     }
 
@@ -290,14 +290,13 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
-                pinMessageAdapter.addMessageToList(message)
+                pinMessageAdapter.addPinMessage(message)
             }
 
             override fun onUnPinMessage(pinMessageId: String) {
-                pinMessageAdapter.removeMessageFromList(pinMessageId)
+                pinMessageAdapter.removePinMessage(pinMessageId)
             }
         })
-
     }
 
 
@@ -308,6 +307,6 @@ class LiveLikeChatWidgetView(
 
 
     fun handleHistoricalPinMessages(pinnedMessages: List<PinMessageInfo>) {
-        pinMessageAdapter.addMessages(pinnedMessages as ArrayList<PinMessageInfo>)
+        pinMessageAdapter.addPinMessages(pinnedMessages as ArrayList<PinMessageInfo>)
     }
 }

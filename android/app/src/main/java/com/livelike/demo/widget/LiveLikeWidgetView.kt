@@ -97,6 +97,7 @@ class LiveLikeWidgetView(
     fun hideWidget() {
         this.renderWidget = false
         contentSession?.widgetInterceptor?.dismissWidget()
+        widgetView.clearWidget()
     }
 
 

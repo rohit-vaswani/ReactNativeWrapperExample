@@ -13,11 +13,14 @@
     >
 
 
-    <Button
+    <ImageButton
         android:id="@+id/closeIconBtn"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="end"
+        android:padding="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="6dp"
         android:background="@drawable/close_icon"
         />
 

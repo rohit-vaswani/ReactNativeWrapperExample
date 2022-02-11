@@ -114,7 +114,7 @@ class LiveLikeChatWidgetView(
         registerVideoMessageHandler()
 
         if (chatSession != null) {
-            chatView.allowMediaFromKeyboard = true
+            chatView.allowMediaFromKeyboard = false
             chatView.isChatInputVisible = true
             chatView.setSession(chatSession)
         }
@@ -255,8 +255,10 @@ class LiveLikeChatWidgetView(
 
                         // Handle VideoView - AN entry to the flow of the Video View.
                         val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
-                        val url = jsonObject.get("custom_message").toString()
-                        (holder as MyCustomMsgViewHolder).videoUrl = url
+                        val url = jsonObject.get("url").toString()
+                        url?.let {
+                            (holder as MyCustomMsgViewHolder).videoUrl = it
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.livelike.demo.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.livelike.demo.viewHolders.PinnedTextMessageHolder
 import com.livelike.demo.viewHolders.PinnedVideoMsgHolder
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
+import org.json.JSONObject
 
 
 class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
@@ -73,30 +75,31 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
     ) {
 
         val videoMessageView = videoViewHolder.itemView as PinVideoMessageView
-        val videoUrl = messagePayload?.message
+        val imgChatAvatar = videoMessageView._binding?.imgChatAvatar
 
-        videoMessageView._binding?.let {
 
-            val imgChatAvatar = it.imgChatAvatar
+        messagePayload?.custom_data?.let {
 
-            // Set userName
-            videoMessageView._binding?.chatNickname?.text = messagePayload?.nickname
+            val jsonObject = JSONObject(it)
+            val url = jsonObject.get("url").toString()
+            val nickName = jsonObject.get("nickName").toString()
+            val userPic = jsonObject.get("userPic").toString()
+
+            url?.let {
+                videoMessageView.videoUrl = it
+            }
+            nickName?.let {
+                videoMessageView._binding?.chatNickname?.text = it
+            }
 
             // Set Avatar
-            messagePayload?.userPic?.let {
+            imgChatAvatar?.let {
                 Glide.with(videoViewHolder.itemView.context.applicationContext)
-                    .load(it)
+                    .load(userPic)
                     .placeholder(R.drawable.default_avatar)
                     .error(R.drawable.default_avatar)
-                    .into(imgChatAvatar)
+                    .into(it)
             }
-        }
-
-        // Set Player - AN entry to the flow of the Video View.
-        messagePayload?.custom_data.let {
-//            val jsonObject = JSONObject(it)
-//            val url = jsonObject.get("custom_message").toString()
-            videoMessageView.videoUrl = videoUrl
         }
 
     }
@@ -105,15 +108,26 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
         return messageList.size
     }
 
-    private fun isVideoMessage(messagePayload: LiveLikeChatMessage?): Boolean? {
-        return messagePayload?.message?.contains("mp4", ignoreCase = true)
+    private fun isVideoMessage(messagePayload: LiveLikeChatMessage?): Boolean {
+
+        if(messagePayload?.custom_data.isNullOrEmpty()) {
+            return false
+        }
+
+        messagePayload?.custom_data?.let {
+            val jsonObject = JSONObject(it)
+            val messageType = jsonObject.get("messageType").toString()
+            return messageType.toLowerCase() == "video"
+        }
+
+        return false
+
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (isVideoMessage(messageList[position].messagePayload)) {
             true -> MSG_TYPE_VIDEO
             false -> MSG_TYPE_TEXT
-            else -> MSG_TYPE_TEXT
         }
     }
 

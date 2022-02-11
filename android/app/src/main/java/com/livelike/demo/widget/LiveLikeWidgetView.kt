@@ -79,10 +79,7 @@ class LiveLikeWidgetView(
 
     private fun registerWidgetInterceptor() {
         contentSession?.widgetInterceptor = object : WidgetInterceptor() {
-            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
-//                showWidget()
-//                displayWidget()
-            }
+            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {}
         }
     }
 
@@ -97,10 +94,11 @@ class LiveLikeWidgetView(
     fun hideWidget() {
         this.renderWidget = false
         contentSession?.widgetInterceptor?.dismissWidget()
+        widgetView.clearWidget()
     }
 
 
-    fun displayWidget() {
+    fun displayAskWidget() {
         widgetDetails?.let {
             renderWidget = true
             this.widgetView.displayWidget(LiveLikeManager.engagementSDK, it)

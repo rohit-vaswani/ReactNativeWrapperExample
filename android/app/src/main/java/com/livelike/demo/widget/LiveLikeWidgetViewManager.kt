@@ -41,7 +41,7 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
     @ReactProp(name = "showAskWidget")
     fun showAskWidget(view: LiveLikeWidgetView, showWidget: Boolean) {
         if (showWidget) {
-            view.displayWidget()
+            view.displayAskWidget()
         }
     }
 

@@ -8,8 +8,9 @@ export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
 // const programId = "319a5414-dd78-49d2-b0cb-abdef76d29b7" // TODO: No published widget
 const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
-const chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
+// const chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
+const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Video Pinned New
 
 
 const {LiveLikeModule} = NativeModules
@@ -44,24 +45,7 @@ export const LiveLikeAndroidView = () => {
 
         setTimeout(() => {
             setShow(true)
-        }, 5000)
-
-    }, [])
-
-    useEffect(() => {
-
-
-        setTimeout(() => {
-
-            // LiveLikeModule.getChatRoomName(chatRoomId).then((roomName, error) => {
-            //     console.log('Room name', roomName)
-            // })
-            //
-            // LiveLikeModule.getCurrentUserProfileId().then((profileId, error) =>  {
-            //     console.log('Profile ID', profileId)
-            // })
-
-        }, 2000)
+        }, 3000)
 
     }, [])
 
@@ -87,28 +71,26 @@ export const LiveLikeAndroidView = () => {
 
     useEffect(() => {
         console.log('SHOW value', show)
-    },[show])
+    }, [show])
 
     return (
-        <>
-            <LiveLikeChatWidgetView
-                programId={programId}
-                chatRoomId={chatRoomId}
-                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-                userNickName={"Rohit Vaswani"}
-                style={{flex: 1}}
-                onWidgetShown={(event) => {
-                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                    this.setState({widgetHeight: event.nativeEvent.height})
-                }}
-                onWidgetHidden={(event) => {
-                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                    this.setState({widgetHeight: 0})
-                }}
-                onEvent={event => {
-                }}
-            />
-        </>
+        <LiveLikeChatWidgetView
+            programId={programId}
+            chatRoomId={chatRoomId}
+            userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+            userNickName={"Rohit Vaswani"}
+            style={{flex: 1}}
+            onWidgetShown={(event) => {
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                this.setState({widgetHeight: event.nativeEvent.height})
+            }}
+            onWidgetHidden={(event) => {
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                this.setState({widgetHeight: 0})
+            }}
+            onEvent={event => {
+            }}
+        />
     )
 
 };
@@ -137,11 +119,13 @@ export const LiveLikeAndroidView = () => {
 
 
 
-    <LiveLikeWidgetView
-        programId={programId}
-        showAskWidget={show}
-        style={{flex: 1}}
-    />
+<View style={{marginTop: 12, height: 500}}>
+            <LiveLikeWidgetView
+                programId={programId}
+                showAskWidget={show}
+                style={{flex: 1}}
+            />
+        </View>
 
 
     <View

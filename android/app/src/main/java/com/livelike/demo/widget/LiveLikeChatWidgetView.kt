@@ -114,7 +114,7 @@ class LiveLikeChatWidgetView(
         registerVideoMessageHandler()
 
         if (chatSession != null) {
-            chatView.allowMediaFromKeyboard = true
+            chatView.allowMediaFromKeyboard = false
             chatView.isChatInputVisible = true
             chatView.setSession(chatSession)
         }
@@ -156,8 +156,7 @@ class LiveLikeChatWidgetView(
                 parent: ViewGroup,
                 viewType: ChatMessageType
             ): RecyclerView.ViewHolder {
-                // TODO Should we return the default view holder for normal message
-                return MyCustomMsgViewHolder(FCVideoView(parent.context))
+                return FCVideoViewHolder(FCVideoView(parent.context))
             }
 
             override fun onBindViewHolder(
@@ -255,8 +254,10 @@ class LiveLikeChatWidgetView(
 
                         // Handle VideoView - AN entry to the flow of the Video View.
                         val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
-                        val url = jsonObject.get("custom_message").toString()
-                        (holder as MyCustomMsgViewHolder).videoUrl = url
+                        val url = jsonObject.get("url").toString()
+                        url?.let {
+                            (holder as FCVideoViewHolder).videoUrl = it
+                        }
                     }
                 }
             }
@@ -264,8 +265,7 @@ class LiveLikeChatWidgetView(
 
     }
 
-    // TOOD: Change the name
-    class MyCustomMsgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FCVideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var videoUrl: String? = null
             set(value) {
                 field = value

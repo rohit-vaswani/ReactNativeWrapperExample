@@ -7,7 +7,9 @@
     android:layout_marginTop="24dp"
     android:layout_marginBottom="16dp"
     android:orientation="vertical"
-    android:background="#ffffff"
+    android:background="@drawable/ask_a_widget_background"
+    android:paddingBottom="12dp"
+    android:paddingHorizontal="8dp"
     >
 
 

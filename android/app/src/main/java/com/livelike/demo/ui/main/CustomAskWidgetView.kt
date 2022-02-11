@@ -52,6 +52,7 @@ class CustomAskWidgetView : LinearLayout {
         super.onAttachedToWindow()
         registerListeners()
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
+        binding.closeIconBtn.visibility = View.GONE
     }
 
 
@@ -87,6 +88,7 @@ class CustomAskWidgetView : LinearLayout {
                 askWidgetModel?.submitReply(binding.influencerQuestionInput.text.toString().trim())
                 binding.askInfluencerContentWrapper.visibility = View.GONE
                 binding.askInfluencerConfirmationWrapper.visibility = View.VISIBLE
+                binding.closeIconBtn.visibility = View.GONE
                 Handler().postDelayed({
                     userEventsListener.closeDialog()
                 }, 2500)

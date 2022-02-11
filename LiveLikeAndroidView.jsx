@@ -77,24 +77,13 @@ export const LiveLikeAndroidView = () => {
     }, [show])
 
     return (
-
-        <LiveLikeChatWidgetView
-            programId={programId}
-            chatRoomId={chatRoomId}
-            userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-            userNickName={"Rohit Vasw New"}
-            style={{flex: 1}}
-            onWidgetShown={(event) => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                this.setState({widgetHeight: event.nativeEvent.height})
-            }}
-            onWidgetHidden={(event) => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                this.setState({widgetHeight: 0})
-            }}
-            onEvent={event => {
-            }}
-        />
+        <View style={{marginTop: 12, height: 500}}>
+            <LiveLikeWidgetView
+                programId={programId}
+                showAskWidget={show}
+                style={{flex: 1}}
+            />
+        </View>
     )
 
 };

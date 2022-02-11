@@ -156,8 +156,7 @@ class LiveLikeChatWidgetView(
                 parent: ViewGroup,
                 viewType: ChatMessageType
             ): RecyclerView.ViewHolder {
-                // TODO Should we return the default view holder for normal message
-                return MyCustomMsgViewHolder(FCVideoView(parent.context))
+                return FCVideoViewHolder(FCVideoView(parent.context))
             }
 
             override fun onBindViewHolder(
@@ -257,7 +256,7 @@ class LiveLikeChatWidgetView(
                         val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
                         val url = jsonObject.get("url").toString()
                         url?.let {
-                            (holder as MyCustomMsgViewHolder).videoUrl = it
+                            (holder as FCVideoViewHolder).videoUrl = it
                         }
                     }
                 }
@@ -266,8 +265,7 @@ class LiveLikeChatWidgetView(
 
     }
 
-    // TOOD: Change the name
-    class MyCustomMsgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FCVideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var videoUrl: String? = null
             set(value) {
                 field = value

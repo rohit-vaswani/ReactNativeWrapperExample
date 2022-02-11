@@ -52,7 +52,7 @@ class CustomAskWidgetView : LinearLayout {
         super.onAttachedToWindow()
         registerListeners()
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
-        binding.closeIconBtn.visibility = View.GONE
+        binding.closeIconBtn.visibility = View.VISIBLE
     }
 
 

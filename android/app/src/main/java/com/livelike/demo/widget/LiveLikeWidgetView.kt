@@ -95,6 +95,7 @@ class LiveLikeWidgetView(
         this.renderWidget = false
         contentSession?.widgetInterceptor?.dismissWidget()
         widgetView.clearWidget()
+        sendEvent(LiveLikeWidgetViewManager.EVENT_WIDGET_HIDDEN, null)
     }
 
 
@@ -103,6 +104,7 @@ class LiveLikeWidgetView(
             renderWidget = true
             this.widgetView.displayWidget(LiveLikeManager.engagementSDK, it)
             Choreographer.getInstance().postFrameCallback(this.fallback)
+            sendEvent(LiveLikeWidgetViewManager.EVENT_WIDGET_SHOWN, null)
         }
     }
 
@@ -239,36 +241,3 @@ class LiveLikeWidgetView(
         }
     }
 }
-
-
-/*
-
-//        widgetView!!.setSession(contentSession, object : WidgetListener {
-
-
-//            override fun onRemoveWidget() {
-//                renderWidget = false
-//                val params = Arguments.createMap()
-//                sendEvent(LiveLikeWidgetViewManager.EVENT_WIDGET_HIDDEN, params)
-//            }
-//
-//            override fun onNewWidget(liveLikeWidget: LiveLikeWidget) {
-//                val params = Arguments.createMap()
-//                params.putInt("height", ViewUtils.pxToDp(context, height))
-//                params.putInt("width", ViewUtils.pxToDp(context, width))
-//                sendEvent(LiveLikeWidgetViewManager.EVENT_WIDGET_SHOWN, params)
-//            }
-//        });
-
-
-//        contentSession.analyticService.setEventObserver { eventKey, eventJson ->
-//            run {
-//                val params = Arguments.createMap()
-//                params.putString("eventKey", eventKey)
-//                params.putString("eventJson", eventJson.toString())
-//                sendEvent(LiveLikeWidgetViewManager.EVENT_ANALYTICS, params)
-//            }
-//        }
-
-
- */

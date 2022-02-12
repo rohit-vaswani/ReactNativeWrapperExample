@@ -45,7 +45,7 @@ export const LiveLikeAndroidView = () => {
 
         setTimeout(() => {
             setShow(true)
-        }, 3000)
+        }, 5000)
 
     }, [])
 
@@ -74,23 +74,28 @@ export const LiveLikeAndroidView = () => {
     }, [show])
 
     return (
-        <LiveLikeChatWidgetView
-            programId={programId}
-            chatRoomId={chatRoomId}
-            userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-            userNickName={"Rohit Vaswani"}
-            style={{flex: 1}}
-            onWidgetShown={(event) => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                this.setState({widgetHeight: event.nativeEvent.height})
-            }}
-            onWidgetHidden={(event) => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                this.setState({widgetHeight: 0})
-            }}
-            onEvent={event => {
-            }}
-        />
+        <>
+            <View style={{
+                marginTop: 12,
+                height: 500,
+                width: '100%',
+                position: 'absolute',
+                left: 0,
+                top: 0
+            }}>
+                <LiveLikeWidgetView
+                    programId={programId}
+                    showAskWidget={show}
+                    style={{flex: 1}}
+                    onWidgetShown={(event) => {
+                        console.log('DEBUG1:', 'widget shown')
+                    }}
+                    onWidgetHidden={(event) => {
+                        console.log('DEBUG2:', 'widget hidden')
+                    }}
+                />
+            </View>
+        </>
     )
 
 };

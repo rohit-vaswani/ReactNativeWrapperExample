@@ -1,6 +1,8 @@
 package com.livelike.demo.widget
 
 import android.content.res.Resources
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import android.view.Choreographer
@@ -180,7 +182,8 @@ class LiveLikeChatWidgetView(
 
 
                         // Handle Chat background
-                        val chatBackgroundLayoutParams = it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
+                        val chatBackgroundLayoutParams =
+                            it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
                         chatBackgroundLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
                         chatBackgroundLayoutParams.setMargins(
                             chatMarginLeft,
@@ -191,7 +194,8 @@ class LiveLikeChatWidgetView(
                         it.chatBackground.layoutParams = chatBackgroundLayoutParams
 
                         // Handle Chat Bubble background
-                        val chatBubbleLayoutParams: LinearLayout.LayoutParams = it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
+                        val chatBubbleLayoutParams: LinearLayout.LayoutParams =
+                            it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
                         it.chatBubbleBackground.setBackgroundResource(R.drawable.ic_chat_message_bubble_rounded_rectangle)
                         it.chatBubbleBackground.setPadding(
                             chatBubblePaddingLeft,
@@ -236,7 +240,7 @@ class LiveLikeChatWidgetView(
                                 RoundedCorners(chatAvatarRadius)
                             )
                         }
-                        if (chatAvatarUrl.isNullOrEmpty()) { // liveLikeChatMessage.userPic
+                        if (liveLikeChatMessage.custom_data.isNullOrEmpty()) {
                             // load local image
                             Glide.with(holder.itemView.context.applicationContext)
                                 .load(R.drawable.default_avatar)
@@ -244,8 +248,12 @@ class LiveLikeChatWidgetView(
                                 .placeholder(chatUserPicDrawable)
                                 .into(it.imgChatAvatar)
                         } else {
+
+                            val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
+                            val userPic = jsonObject.get("userPic").toString()
+
                             Glide.with(holder.itemView.context.applicationContext)
-                                .load(chatAvatarUrl)
+                                .load(userPic)
                                 //.apply(options)
                                 .placeholder(chatUserPicDrawable)
                                 .error(chatUserPicDrawable)
@@ -290,11 +298,17 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
-                pinMessageAdapter.addPinMessage(message)
+                Handler(Looper.getMainLooper()).post(Runnable {
+                    pinMessageAdapter.addPinMessage(message)
+                })
             }
 
             override fun onUnPinMessage(pinMessageId: String) {
-                pinMessageAdapter.removePinMessage(pinMessageId)
+
+                Handler(Looper.getMainLooper()).post(Runnable {
+                    pinMessageAdapter.removePinMessage(pinMessageId)
+                })
+
             }
         })
     }

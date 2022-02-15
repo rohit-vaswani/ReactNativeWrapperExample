@@ -79,7 +79,7 @@ export const LiveLikeAndroidView = () => {
             programId={programId}
             chatRoomId={chatRoomId}
             userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-            userNickName={"Rohit Vaswani"}
+            userNickName={"Rohit Vaswani SwaniChand Narayanna"}
             style={{flex: 1}}
             onWidgetShown={(event) => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)

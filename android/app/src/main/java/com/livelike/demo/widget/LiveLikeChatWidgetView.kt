@@ -1,5 +1,6 @@
 package com.livelike.demo.widget
 
+import android.content.Context
 import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -69,7 +71,6 @@ class LiveLikeChatWidgetView(
             chatView = it.chatView
             addView(it.root)
         }
-
 
     }
 
@@ -264,8 +265,19 @@ class LiveLikeChatWidgetView(
                         val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
                         val url = jsonObject.get("url").toString()
                         url?.let {
-                            (holder as FCVideoViewHolder).videoUrl = it
+                            val videoViewHolder = (holder as FCVideoViewHolder)
+                            val fcVideoView = videoViewHolder.itemView as FCVideoView
+
+
+                            try{
+                                val videoThumbnail = jsonObject.get("videoThumbnail").toString()
+                                videoThumbnail.let {
+                                    fcVideoView.setVideoThumbnail(it)
+                                }
+                            }catch (e: Exception) {}
+                            videoViewHolder.videoUrl = it
                         }
+
                     }
                 }
             }
@@ -294,7 +306,8 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
-                Log.i("New Message", message.toString())
+                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm?.hideSoftInputFromWindow(chatView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
 
             override fun onPinMessage(message: PinMessageInfo) {

@@ -82,7 +82,7 @@
                     android:id="@+id/widgetContainer"
                     android:layout_width="@dimen/livelike_video_player_width"
                     android:layout_height="@dimen/livelike_video_player_height"
-                    android:layout_marginLeft="0dp"
+                    android:layout_marginLeft="8dp"
                     android:animateLayoutChanges="@bool/livelike_widget_component_layout_transition_enabled"
                     android:background="@drawable/video_view_background">
 

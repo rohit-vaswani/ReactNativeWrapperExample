@@ -13,7 +13,7 @@
         <item name="chatUserNameCustomFontPath" type="font">@font/noto_sans_display_semibold</item><!-- to set the font of the username of the sender ,it takes file from the asset folder -->
         <item name="usernameColor">#004d98</item><!-- update the color of username in chat message -->
         <item name="otherUsernameColor">#121212</item><!-- update the color of different username in chat message -->
-        <item name="chatUserNameTextSize">14sp</item><!-- set the textsize of username -->
+        <item name="chatUserNameTextSize">12sp</item><!-- set the textsize of username -->
         <item name="chatUserNameTextLetterSpacing">0.03</item><!--set the letter spacing of chat username -->
 <!--        <item name="userPicDrawable">@drawable/ic_user_pic</item>&lt;!&ndash; placeholder for user display image in chat message &ndash;&gt;-->
 
@@ -31,22 +31,22 @@
         <item name="chatMessageTimeTextColor">#000000</item><!-- to udpate the textcolor of message time -->
         <item name="chatBubbleWidth">match_parent</item><!-- update the width of chat bubble,it is not the entire message box only the bubble which exclude the chat avatar -->
         <item name="chatBackgroundWidth">wrap_content</item><!-- update the width of the chat message box the entire box which include chat avatar and message bubble -->
-        <item name="chatBubblePaddingLeft">12dp</item>
-        <item name="chatBubblePaddingRight">24dp</item>
-        <item name="chatBubblePaddingTop">12dp</item>
-        <item name="chatBubblePaddingBottom">38dp</item>
+        <item name="chatBubblePaddingLeft">4dp</item>
+        <item name="chatBubblePaddingRight">8dp</item>
+        <item name="chatBubblePaddingTop">4dp</item>
+        <item name="chatBubblePaddingBottom">4dp</item>
         <item name="chatMessageTopBorderHeight">0dp</item><!--update height of top border of chat message box -->
         <item name="chatMessageTopBorderColor">#232d37</item><!-- update color of top border of chat message box -->
         <item name="chatMessageBottomBorderHeight">0dp</item><!--update height of bottom border of chat message box -->
         <item name="chatMessageBottomBorderColor">#232d37</item><!-- update color of bottom border of chat message box -->
-        <item name="chatBubbleMarginLeft">10dp</item>
-        <item name="chatBubbleMarginTop">6dp</item>
-        <item name="chatBubbleMarginRight">10dp</item>
-        <item name="chatBubbleMarginBottom">6dp</item>
+        <item name="chatBubbleMarginLeft">4dp</item>
+        <item name="chatBubbleMarginTop">3dp</item>
+        <item name="chatBubbleMarginRight">16dp</item>
+        <item name="chatBubbleMarginBottom">3dp</item>
         <item name="chatMarginBottom">0dp</item>
         <item name="chatMarginTop">0dp</item>
         <item name="chatMarginLeft">0dp</item>
-        <item name="chatMarginRight">0dp</item>
+        <item name="chatMarginRight">16dp</item>
         <!--update the margin for chat box -->
 
         <!--Chat Reaction -->
@@ -56,15 +56,16 @@
         <item name="chatReactionDisplaySize">16dp</item><!-- to update the size of the reaction icons -->
         <item name="chatReactionPanelCountCustomFontPath">@font/noto_sans_display_regular</item><!-- to set the font of count shown in reaction panel for every reaction -->
         <item name="chatReactionPanelCountVisibleIfZero">true</item><!-- to set the visibility of reaction count on Reaction panel if value is zero -->
-        <item name="reaction_icons_margin_bottom">18dp</item>
-        <item name="reaction_icons_margin_right">5dp</item>
-        <item name="reaction_icons_margin_top">14dp</item>
-        <item name="reaction_icons_margin_left">6dp</item>
-        <item name="reaction_icon_position_bottom">true</item>
-        <item name="reaction_count_margin_bottom">20dp</item>
+        <item name="reaction_icons_margin_bottom">0dp</item>
+        <item name="reaction_icons_margin_right">4dp</item>
+        <item name="reaction_icons_margin_top">12dp</item>
+        <item name="reaction_icons_margin_left">0dp</item>
+        <item name="reaction_icon_position_bottom">false</item>
+        <item name="reaction_count_margin_bottom">0dp</item>
+        <item name="reaction_count_margin_top">14dp</item>
         <item name="reaction_count_margin_right">20dp</item>
         <item name="chatReactionDisplayCountColor">#141414</item>
-        <item name="reaction_count_icons_position_bottom">true</item><!-- to show the reaction count with icons positions at bottom of message box -->
+        <item name="reaction_count_icons_position_bottom">false</item><!-- to show the reaction count with icons positions at bottom of message box -->
         <item name="reaction_icons_gap_factor">0.80</item><!-- the gap between the reaction icons shown at top message box, it is the factor which will define the gap with standard width, to overlay the icons use factor value less than 1 and to show gap use factor value greater than 1  -->
         <item name="chatReactionModerationFlagVisible">false</item><!-- to show/hide the moderation flag icon with reaction panel -->
 
@@ -74,9 +75,9 @@
         <item name="reaction_hint_enable">true</item><!--enable/disable reaction hint in chat message box -->
 
         <!--Reaction Panel-->
-        <item name="chatReactionPanelGravity">right|bottom</item><!-- to set the gravity of the reaction panel w.r.t the message box -->
-        <item name="chatReactionXPosition">-260dp</item> <!--Panel margin: -ve takes it left w.r.t message box -->
-        <item name="chatReactionYPosition">-60dp</item> <!--Panel margin: -ve takes it up w.r.t message box-->
+        <item name="chatReactionPanelGravity">top|right</item><!-- to set the gravity of the reaction panel w.r.t the message box -->
+        <item name="chatReactionXPosition">-130dp</item> <!--Panel margin: -ve takes it left w.r.t message box -->
+        <item name="chatReactionYPosition">-2dp</item> <!--Panel margin: -ve takes it up w.r.t message box-->
         <item name="chatSelectedReactionRadius">8dp</item><!-- update the radius of the selected reaction in the reaction popup -->
         <item name="chatReactionElevation">6dp</item><!-- update the elevation of chat reaction (CardView) -->
         <item name="chatReactionPadding">6dp</item> <!-- padding of the container of the reaction panel -->
@@ -87,14 +88,14 @@
         <item name="showMessageTime">false</item><!--show/hide message time in the chat message box -->
 
         <!--Avatar-->
-        <item name="chatAvatarRadius">15dp</item><!--update the radius of the chat avatar -->
+        <item name="chatAvatarRadius">10dp</item><!--update the radius of the chat avatar -->
         <item name="chatAvatarMarginLeft">16dp</item>
         <item name="chatAvatarMarginRight">0dp</item>
         <item name="chatAvatarMarginBottom">0dp</item>
         <item name="chatAvatarMarginTop">10dp</item>
         <item name="chatAvatarCircle">true</item> <!-- circle the user display image in the chat message -->
-        <item name="chatAvatarHeight">32dp</item>
-        <item name="chatAvatarWidth">32dp</item>
+        <item name="chatAvatarHeight">28dp</item>
+        <item name="chatAvatarWidth">28dp</item>
         <item name="chatAvatarGravity">top</item> <!-- update the gravity position of the user avatar -->
 
         <!--Send Button-->

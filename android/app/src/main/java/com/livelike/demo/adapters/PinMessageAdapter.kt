@@ -1,6 +1,5 @@
 package com.livelike.demo.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +30,9 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
             )
             return PinnedTextMessageHolder(bindingObject)
         } else {
-            val videoView = PinVideoMessageView(parent.context)
+            val videoView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.pin_video_message, parent, false) as PinVideoMessageView
+            videoView.initViews()
             return PinnedVideoMsgHolder(videoView)
         }
     }
@@ -75,21 +76,32 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
     ) {
 
         val videoMessageView = videoViewHolder.itemView as PinVideoMessageView
-        val imgChatAvatar = videoMessageView._binding?.imgChatAvatar
+        val imgChatAvatar = videoMessageView.imgChatAvatar
 
 
         messagePayload?.custom_data?.let {
+
+
 
             val jsonObject = JSONObject(it)
             val url = jsonObject.get("url").toString()
             val nickName = jsonObject.get("nickName").toString()
             val userPic = jsonObject.get("userPic").toString()
 
+
+            try{
+                val videoThumbnail = jsonObject.get("videoThumbnail").toString()
+                videoThumbnail.let {
+                    videoMessageView.setVideoThumbnail(it)
+                }
+            }catch (e: Exception) {}
+
+
             url?.let {
                 videoMessageView.videoUrl = it
             }
             nickName?.let {
-                videoMessageView._binding?.chatNickname?.text = it
+                videoMessageView.chatNickname.text = it
             }
 
             // Set Avatar
@@ -110,7 +122,7 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
 
     private fun isVideoMessage(messagePayload: LiveLikeChatMessage?): Boolean {
 
-        if(messagePayload?.custom_data.isNullOrEmpty()) {
+        if (messagePayload?.custom_data.isNullOrEmpty()) {
             return false
         }
 

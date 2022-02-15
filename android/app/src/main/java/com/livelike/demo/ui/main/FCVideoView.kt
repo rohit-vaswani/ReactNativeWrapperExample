@@ -30,6 +30,14 @@ class FCVideoView @JvmOverloads constructor(
     private var playedAtLeastOnce: Boolean = false
     private var stopPosition: Int = 0
     var _binding: VideoViewBinding? = null
+    var thumbnailUrl: String? = null
+
+    fun setVideoThumbnail(url: String?){
+        url?.let {
+            this.thumbnailUrl = url
+        }
+    }
+
     var videoUrl: String? = null
         set(value) {
             field = value
@@ -274,6 +282,14 @@ class FCVideoView @JvmOverloads constructor(
                     .apply(requestOptions)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .thumbnail(0.1f)
+                    .into(it.thumbnailView)
+            }
+
+            if(thumbnailUrl != null) {
+                Glide.with(context.applicationContext)
+                    .load(thumbnailUrl)
+                    .apply(requestOptions)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(it.thumbnailView)
             }
         }

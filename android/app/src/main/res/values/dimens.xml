@@ -28,15 +28,21 @@
     <dimen name="livelike_chat_input_margin_left">30dp</dimen>
     <dimen name="livelike_chat_input_box_margin_bottom">6dp</dimen>
     <dimen name="livelike_reaction_count_text_size">6sp</dimen>
-    <dimen name="chatBubbleMinWidth">130dp</dimen>
+    <dimen name="chatBubbleMinWidth">180dp</dimen>
     <dimen name="livelike_video_player_border_radius">8dp</dimen>
     <dimen name="livelike_video_player_height">129dp</dimen>
     <dimen name="livelike_video_player_width">230dp</dimen>
-    <dimen name="chatUserNameTextSize">14sp</dimen>
-    <dimen name="chatMessageTextSize">14sp</dimen><!-- to set the textsize of message -->
-    <dimen name="chatMessageMarginTop">4dp</dimen><!-- to set the textsize of message -->
-    <dimen name="chatAvatarHeight">32dp</dimen>
-    <dimen name="chatAvatarWidth">32dp</dimen>
-    <dimen name="livelike_chatMessageMarginTop">4dp</dimen>
 
+
+    <dimen name="chatUserNameTextSize">12sp</dimen>
+    <dimen name="chatMessageTextSize">14sp</dimen><!-- to set the textsize of message -->
+
+    <dimen name="chatAvatarHeight">28dp</dimen>
+    <dimen name="chatAvatarWidth">28dp</dimen>
+
+    <dimen name="livelike_chatMessageMarginTop">2dp</dimen>
+    <dimen name="chatMessageMarginTop">0dp</dimen><!-- to set the textsize of message -->
+
+    <dimen name="livelike_chat_avatar_width">28dp</dimen>
+    <dimen name="livelike_chat_avatar_height">28dp</dimen>
 </resources>

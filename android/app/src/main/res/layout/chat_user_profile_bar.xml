@@ -10,6 +10,7 @@
     android:layout_marginStart="@dimen/livelike_chat_input_margin_left"
     android:layout_marginLeft="@dimen/livelike_chat_input_margin_left"
     android:orientation="horizontal"
+    android:paddingVertical="2dp"
     tools:showIn="@layout/chat_input">
 
     <androidx.constraintlayout.widget.ConstraintLayout

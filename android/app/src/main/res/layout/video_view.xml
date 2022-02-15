@@ -165,7 +165,7 @@
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/video_alert_volume_button_background"
                         android:orientation="horizontal"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintTop_toTopOf="@id/ic_play"
                         app:layout_constraintBottom_toBottomOf="@id/ic_play"
                         android:layout_marginRight="12dp"
@@ -180,6 +180,7 @@
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/image"
                             android:paddingLeft="2dp"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_volume_off" />
 
                         <TextView
@@ -191,6 +192,7 @@
                             android:paddingRight="3dp"
                             android:text="@string/livelike_mute_label"
                             android:textSize="12sp"
+                            android:visibility="gone"
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />
 

@@ -58,6 +58,12 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         }
     }
 
+    private fun scrollToBottom(
+        view: LiveLikeChatWidgetView,
+    ) {
+        view.scrollToBottom()
+    }
+
     private fun sendMessage(
         view: LiveLikeChatWidgetView,
         args: ReadableArray?
@@ -65,6 +71,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         val message = args?.getString(1)
         message?.let {
             view.sendChatMessage(it)
+            view.scrollToBottom()
         }
     }
 

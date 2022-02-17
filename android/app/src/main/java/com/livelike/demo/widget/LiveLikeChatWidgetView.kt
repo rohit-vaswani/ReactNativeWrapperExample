@@ -96,6 +96,10 @@ class LiveLikeChatWidgetView(
         this.chatSession = chatSession
     }
 
+    fun scrollToBottom() {
+        chatView.scrollChatToBottom()
+    }
+
     fun manuallyLayoutChildren() {
         for (i in 0 until getChildCount()) {
             var child = getChildAt(i);
@@ -120,6 +124,7 @@ class LiveLikeChatWidgetView(
             chatView.allowMediaFromKeyboard = false
             chatView.isChatInputVisible = false
             chatView.setSession(chatSession)
+            chatSession.allowDiscardOwnPublishedMessageInSubscription = false
         }
     }
 

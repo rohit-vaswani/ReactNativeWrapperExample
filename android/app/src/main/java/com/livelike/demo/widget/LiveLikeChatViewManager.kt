@@ -1,7 +1,9 @@
 package com.livelike.demo.widget
 
+import android.util.Log
 import android.widget.Toast
 import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
@@ -24,14 +26,46 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     var chatSession: LiveLikeChatSession? = null
     var chatRoomId = ""
 
+
+
     companion object {
         const val EVENT_WIDGET_SHOWN = "widgetShown"
         const val EVENT_WIDGET_HIDDEN = "widgetHidden"
         const val EVENT_ANALYTICS = "analytics"
+        const val CHAT_MESSAGE_SENT = "onChatMessageSent"
+        const val COMMAND_SEND_MESSAGE = 0
     }
 
     override fun getName(): String {
         return REACT_CLASS
+    }
+
+
+    override fun getCommandsMap(): Map<String, Int>? {
+        return MapBuilder.of("sendMessage", COMMAND_SEND_MESSAGE)
+    }
+
+    override fun receiveCommand(
+        root: LiveLikeChatWidgetView,
+        commandId: String,
+        args: ReadableArray?
+    ) {
+        super.receiveCommand(root, commandId, args)
+        val commandIdInt = commandId.toInt()
+        when (commandIdInt) {
+            COMMAND_SEND_MESSAGE -> sendMessage(root, args)
+            else -> {}
+        }
+    }
+
+    private fun sendMessage(
+        view: LiveLikeChatWidgetView,
+        args: ReadableArray?
+    ) {
+        val message = args?.getString(1)
+        message?.let {
+            view.sendChatMessage(it)
+        }
     }
 
     override fun createViewInstance(reactContext: ThemedReactContext): LiveLikeChatWidgetView {
@@ -86,6 +120,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         map.put(EVENT_WIDGET_SHOWN, MapBuilder.of("registrationName", "onWidgetShown"));
         map.put(EVENT_WIDGET_HIDDEN, MapBuilder.of("registrationName", "onWidgetHidden"));
         map.put(EVENT_ANALYTICS, MapBuilder.of("registrationName", "onEvent"));
+        map.put(CHAT_MESSAGE_SENT, MapBuilder.of("registrationName", "onChatMessageSent"));
         return map;
     }
 

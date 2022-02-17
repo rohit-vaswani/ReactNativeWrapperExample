@@ -24,6 +24,11 @@ class RNLiveLikeModule(
     }
 
     @ReactMethod
+    fun subscribeUserStream(key: String, promise: Promise) {
+        LiveLikeManager.subscribeUserStream(key, promise)
+    }
+
+    @ReactMethod
     fun getChatRoomName(chatRoomId: String, promise: Promise) {
         LiveLikeManager.engagementSDK.chat()
             .getChatRoom(chatRoomId, object : LiveLikeCallback<ChatRoomInfo>() {

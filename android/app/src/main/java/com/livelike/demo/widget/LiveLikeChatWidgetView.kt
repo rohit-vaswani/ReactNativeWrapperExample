@@ -18,9 +18,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.facebook.react.bridge.LifecycleEventListener
-import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.*
 import com.facebook.react.uimanager.ThemedReactContext
+import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
@@ -118,7 +118,7 @@ class LiveLikeChatWidgetView(
 
         if (chatSession != null) {
             chatView.allowMediaFromKeyboard = false
-            chatView.isChatInputVisible = true
+            chatView.isChatInputVisible = false
             chatView.setSession(chatSession)
         }
     }
@@ -150,9 +150,6 @@ class LiveLikeChatWidgetView(
 
 
     private fun registerVideoMessageHandler() {
-
-
-        val chatAvatarUrl = this.userAvatarUrl
 
         chatView.chatViewDelegate = object : ChatViewDelegate {
             override fun onCreateViewHolder(
@@ -269,12 +266,13 @@ class LiveLikeChatWidgetView(
                             val fcVideoView = videoViewHolder.itemView as FCVideoView
 
 
-                            try{
+                            try {
                                 val videoThumbnail = jsonObject.get("videoThumbnail").toString()
                                 videoThumbnail.let {
                                     fcVideoView.setVideoThumbnail(it)
                                 }
-                            }catch (e: Exception) {}
+                            } catch (e: Exception) {
+                            }
                             videoViewHolder.videoUrl = it
                         }
 
@@ -306,8 +304,12 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
-                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm?.hideSoftInputFromWindow(chatView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+                val imm =
+                    context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm?.hideSoftInputFromWindow(
+                    chatView.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
@@ -326,6 +328,23 @@ class LiveLikeChatWidgetView(
         })
     }
 
+    fun sendChatMessage(message: String) {
+        chatSession?.sendChatMessage(
+            message,
+            null,
+            null,
+            null,
+            object : LiveLikeCallback<LiveLikeChatMessage>() {
+                override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
+                    val params = Arguments.createMap()
+                    params.putString("message", message)
+                    params.putBoolean("isSuccess", error.isNullOrEmpty())
+                    sendEvent(CHAT_MESSAGE_SENT, params)
+                }
+            })
+
+    }
+
 
     fun dpToPx(dp: Int): Int {
         val scale = Resources.getSystem().displayMetrics.density
@@ -335,5 +354,19 @@ class LiveLikeChatWidgetView(
 
     fun handleHistoricalPinMessages(pinnedMessages: List<PinMessageInfo>) {
         pinMessageAdapter.addPinMessages(pinnedMessages as ArrayList<PinMessageInfo>)
+    }
+
+    fun sendEvent(
+        eventName: String,
+        params: WritableMap?
+    ) {
+        val reactContext = this.getContext() as ReactContext;
+        reactContext.getJSModule(RCTEventEmitter::class.java)
+            .receiveEvent(this.getId(), eventName, params)
+    }
+
+
+    companion object {
+        const val CHAT_MESSAGE_SENT = "onChatMessageSent"
     }
 }

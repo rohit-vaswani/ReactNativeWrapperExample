@@ -2,6 +2,7 @@ package com.livelike.demo
 
 import android.content.Context
 import android.util.Log
+import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactMethod
 import com.livelike.demo.ui.main.PageViewModel.Companion.PREF_USER_ACCESS_TOKEN
 import com.livelike.engagementsdk.EngagementSDK
@@ -14,6 +15,20 @@ object LiveLikeManager {
 
     lateinit var engagementSDK: EngagementSDK;
     var userAccessToken: String? = null;
+
+
+    @ReactMethod
+    fun subscribeUserStream(key: String, promise: Promise) {
+        engagementSDK.userStream.subscribe(key) {
+            promise.resolve(it?.nickname)
+            unSubscribeUserStream()
+        }
+    }
+
+    @ReactMethod
+    fun unSubscribeUserStream() {
+        engagementSDK.userStream.subscribe("invalid-key") {}
+    }
 
     @ReactMethod
     fun initializeSDK(applicationContext: Context, clientId: String) {

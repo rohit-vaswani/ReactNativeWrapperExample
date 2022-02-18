@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {NativeModules, requireNativeComponent, findNodeHandle, UIManager} from 'react-native';
+import {findNodeHandle, NativeModules, requireNativeComponent, UIManager} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
@@ -17,23 +17,27 @@ const chatRoomId = "93b222a6-74dd-4f9e-a728-ca3addcdce8b" // TODO: Video Pinned 
 const {LiveLikeModule} = NativeModules
 
 
-// const createFragment = (viewId) => {
-//     UIManager.dispatchViewManagerCommand(
-//         viewId,
-//         // we are calling the 'create' command
-//         UIManager.LiveLikeWidgetView.Commands.create.toString(),
-//         [viewId]
-//     );
-// }
-
 const sendMessage = (viewId, message) => {
     UIManager.dispatchViewManagerCommand(
         viewId,
-        // we are calling the 'sendMessage' command
         UIManager.LiveLikeChatWidgetView.Commands.sendMessage.toString(),
         [viewId, message]
     );
 }
+
+
+const updateNickName = (viewId, nickName) => {
+
+
+    console.log("DEBUG: CHECK THIS: ", !!UIManager.LiveLikeChatWidgetView.Commands.updateNickName)
+
+    UIManager.dispatchViewManagerCommand(
+        viewId,
+        UIManager.LiveLikeChatWidgetView.Commands.updateNickName.toString(),
+        [viewId, nickName]
+    );
+}
+
 
 export const LiveLikeAndroidView = () => {
 
@@ -49,6 +53,14 @@ export const LiveLikeAndroidView = () => {
         }, 2000)
     }, [])
 
+    useEffect(() => {
+        const viewId = findNodeHandle(ref.current);
+        setTimeout(() => {
+            updateNickName(viewId, "NEW NAME 2")
+        }, 12000)
+
+    }, [])
+
 
     // useEffect(() => {
     //     setTimeout(() => {
@@ -60,7 +72,7 @@ export const LiveLikeAndroidView = () => {
     const ref = useRef(null);
 
     useEffect(() => {
-        const newMessage = 'Hey, New Message 17'
+        const newMessage = 'Hey, New Message' + Math.floor(Math.random() * 100)
         const viewId = findNodeHandle(ref.current);
         setTimeout(() => {
             sendMessage(viewId, newMessage)
@@ -69,7 +81,7 @@ export const LiveLikeAndroidView = () => {
 
 
     useEffect(() => {
-        const newMessage = 'Hey, New Message 18'
+        const newMessage = 'Hey, New Message' + Math.floor(Math.random() * 100)
         const viewId = findNodeHandle(ref.current);
         setTimeout(() => {
             sendMessage(viewId, newMessage)
@@ -78,7 +90,7 @@ export const LiveLikeAndroidView = () => {
 
 
     useEffect(() => {
-        const newMessage = 'Hey, New Message 19'
+        const newMessage = 'Hey, New Message' + Math.floor(Math.random() * 100)
         const viewId = findNodeHandle(ref.current);
         setTimeout(() => {
             sendMessage(viewId, newMessage)
@@ -103,7 +115,6 @@ export const LiveLikeAndroidView = () => {
             programId={programId}
             chatRoomId={chatRoomId}
             userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-            userNickName={null}
             style={{flex: 1}}
             onWidgetShown={(event) => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
@@ -116,7 +127,7 @@ export const LiveLikeAndroidView = () => {
             onEvent={event => {
             }}
             onChatMessageSent={(event) => {
-                console.log('DEBUG3:', event.nativeEvent)
+                console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
             }}
         />
     )

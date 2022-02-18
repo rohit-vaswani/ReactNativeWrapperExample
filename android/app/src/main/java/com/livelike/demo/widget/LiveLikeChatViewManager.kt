@@ -34,6 +34,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         const val EVENT_ANALYTICS = "analytics"
         const val CHAT_MESSAGE_SENT = "onChatMessageSent"
         const val COMMAND_SEND_MESSAGE = 0
+        const val COMMAND_UPDATE_NICK_NAME = 1
+        const val COMMAND_UPDATE_USER_AVATAR = 2
     }
 
     override fun getName(): String {
@@ -42,7 +44,11 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
 
 
     override fun getCommandsMap(): Map<String, Int>? {
-        return MapBuilder.of("sendMessage", COMMAND_SEND_MESSAGE)
+        val hashMap = hashMapOf<String, Int>()
+        hashMap.put("sendMessage", COMMAND_SEND_MESSAGE)
+        hashMap.put("updateNickName", COMMAND_UPDATE_NICK_NAME)
+        hashMap.put("updateUserAvatar", COMMAND_UPDATE_USER_AVATAR)
+        return hashMap
     }
 
     override fun receiveCommand(
@@ -54,9 +60,31 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         val commandIdInt = commandId.toInt()
         when (commandIdInt) {
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
-            else -> {}
+            COMMAND_UPDATE_NICK_NAME -> updateNickName(root, args)
+            COMMAND_UPDATE_USER_AVATAR -> updateUserAvatar(root, args)
+            else -> { }
         }
     }
+
+    private fun updateNickName(
+        view: LiveLikeChatWidgetView,
+        args: ReadableArray?
+    ) {
+        val nickName = args?.getString(1)
+        setNickName(nickName)
+    }
+
+    private fun updateUserAvatar(
+        view: LiveLikeChatWidgetView,
+        args: ReadableArray?
+    ) {
+        val userAvatar = args?.getString(1)
+        userAvatar?.let {
+            view.setAvatar(it)
+        }
+    }
+
+
 
     private fun scrollToBottom(
         view: LiveLikeChatWidgetView,

@@ -309,12 +309,7 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
-                val imm =
-                    context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm?.hideSoftInputFromWindow(
-                    chatView.windowToken,
-                    InputMethodManager.HIDE_NOT_ALWAYS
-                )
+
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
@@ -333,6 +328,14 @@ class LiveLikeChatWidgetView(
         })
     }
 
+    private fun dismissKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm?.hideSoftInputFromWindow(
+            chatView.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
+    }
+
     fun sendChatMessage(message: String) {
         chatSession?.sendChatMessage(
             message,
@@ -344,6 +347,7 @@ class LiveLikeChatWidgetView(
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
+                    dismissKeyboard()
                     sendEvent(CHAT_MESSAGE_SENT, params)
                 }
             })

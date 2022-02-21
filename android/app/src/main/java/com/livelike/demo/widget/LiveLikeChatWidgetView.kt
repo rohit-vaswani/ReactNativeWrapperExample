@@ -122,7 +122,7 @@ class LiveLikeChatWidgetView(
 
         if (chatSession != null) {
             chatView.allowMediaFromKeyboard = false
-            chatView.isChatInputVisible = false
+            chatView.isChatInputVisible = true
             chatView.setSession(chatSession)
             chatSession.allowDiscardOwnPublishedMessageInSubscription = false
         }

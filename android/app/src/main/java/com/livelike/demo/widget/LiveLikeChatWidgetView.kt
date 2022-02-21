@@ -92,11 +92,23 @@ class LiveLikeChatWidgetView(
         chatViewBinding!!.pinnedMessageList.adapter = pinMessageAdapter
         chatViewBinding!!.pinnedMessageList.addItemDecoration(OverlapDecoration());
         chatViewBinding!!.pinnedMessageList.setLayoutManager(LinearLayoutManager(context));
+        registerPinMessagesHandler()
         chatViewBinding?.let {
             chatView = it.chatView
             addView(it.root)
         }
 
+    }
+
+    private fun registerPinMessagesHandler() {
+        pinMessageAdapter.pinMessageHandler = object : PinMessageAdapter.PinMessageActionHandler {
+            override fun onVideoPlayed(videoUrl: String) {
+                val params = Arguments.createMap()
+                params.putString("videoUrl", videoUrl)
+                sendEvent(EVENT_VIDEO_PLAYED, params)
+            }
+
+        }
     }
 
     override fun onHostResume() {
@@ -402,5 +414,6 @@ class LiveLikeChatWidgetView(
 
     companion object {
         const val CHAT_MESSAGE_SENT = "onChatMessageSent"
+        const val EVENT_VIDEO_PLAYED = "onVideoPlayed"
     }
 }

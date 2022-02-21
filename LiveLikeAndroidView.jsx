@@ -4,15 +4,16 @@ import {findNodeHandle, NativeModules, requireNativeComponent, UIManager} from '
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 
-
-const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
-// const programId = "319a5414-dd78-49d2-b0cb-abdef76d29b7" // TODO: No published widget
 const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
-// const chatRoomId = "32d1d38b-6321-4f45-ab38-05750792547d"
+
+// const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Video Pinned New
-const chatRoomId = "93b222a6-74dd-4f9e-a728-ca3addcdce8b" // TODO: Video Pinned New NEW
 
+
+const programId = "eabc6bfe-6b8c-44f6-9651-ddd362d89689"    // Production --
+const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb" // TODO: Video Pinned New NEW
+// https://cf-blast.livelikecdn.com/producer/applications/BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml/chat-rooms/1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb/pinned-messages
 
 const {LiveLikeModule} = NativeModules
 
@@ -63,6 +64,9 @@ export const LiveLikeAndroidView = () => {
             }}
             onChatMessageSent={(event) => {
                 console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
+            }}
+            onVideoPlayed={(event) => {
+                console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
             }}
         />
     )

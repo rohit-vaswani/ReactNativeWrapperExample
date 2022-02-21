@@ -25,6 +25,12 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
+    lateinit var pinMessageHandler: PinMessageActionHandler
+
+    interface PinMessageActionHandler {
+        fun onVideoPlayed(videoUrl: String)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val bindingObject: PinHybridMessageBinding = PinHybridMessageBinding.bind(
@@ -116,7 +122,8 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
     private fun registerListener(bindingObject: PinHybridMessageBinding, messageId: String) {
 
 
-        val isChatMessage = getDetailedMessageBy(messageId)
+        val messageDetails = getDetailedMessageBy(messageId)
+        val isVideoMessage = isVideoMessage(messageDetails.messagePayload)
 
         bindingObject.closeIconBtn.setOnClickListener {
             removeAllPinMessages()
@@ -124,7 +131,13 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
 
 
         bindingObject.container.setOnClickListener {
-            removePinMessage(messageId)
+            if (isVideoMessage) {
+                getCustomDataProp("url", messageDetails.messagePayload)?.let {
+                    pinMessageHandler.onVideoPlayed(it)
+                }
+            } else {
+                removePinMessage(messageId)
+            }
         }
 
 
@@ -176,7 +189,6 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
             val url = jsonObject.get("url").toString()
             val nickName = jsonObject.get("nickName").toString()
             val userPic = jsonObject.get("userPic").toString()
-
 
             try {
                 val videoThumbnail = jsonObject.get("videoThumbnail").toString()

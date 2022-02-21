@@ -32,7 +32,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         const val EVENT_WIDGET_SHOWN = "widgetShown"
         const val EVENT_WIDGET_HIDDEN = "widgetHidden"
         const val EVENT_ANALYTICS = "analytics"
-        const val CHAT_MESSAGE_SENT = "onChatMessageSent"
         const val COMMAND_SEND_MESSAGE = 0
         const val COMMAND_UPDATE_NICK_NAME = 1
         const val COMMAND_UPDATE_USER_AVATAR = 2
@@ -155,7 +154,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         map.put(EVENT_WIDGET_SHOWN, MapBuilder.of("registrationName", "onWidgetShown"));
         map.put(EVENT_WIDGET_HIDDEN, MapBuilder.of("registrationName", "onWidgetHidden"));
         map.put(EVENT_ANALYTICS, MapBuilder.of("registrationName", "onEvent"));
-        map.put(CHAT_MESSAGE_SENT, MapBuilder.of("registrationName", "onChatMessageSent"));
+        map.put(LiveLikeChatWidgetView.CHAT_MESSAGE_SENT, MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT));
+        map.put(LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED));
         return map;
     }
 

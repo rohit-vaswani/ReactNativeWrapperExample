@@ -15,32 +15,73 @@
     android:layout_marginHorizontal="16dp"
     >
 
-    <ImageView
-        android:id="@+id/img_chat_avatar"
-        android:layout_width="@dimen/chatAvatarHeight"
-        android:layout_height="@dimen/chatAvatarHeight"
-        android:layout_gravity="top"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="@dimen/livelike_chat_avatar_margin_top"
         android:layout_marginBottom="@dimen/livelike_chat_avatar_margin_bottom"
         android:layout_marginEnd="0dp"
-        android:contentDescription="@string/user_image"
-        app:srcCompat="@drawable/default_avatar"
-        />
+        >
 
+        <ImageView
+            android:id="@+id/img_chat_avatar"
+            android:layout_width="@dimen/chatAvatarHeight"
+            android:layout_height="@dimen/chatAvatarHeight"
+            android:layout_gravity="top"
+            android:contentDescription="@string/user_image"
+            app:srcCompat="@drawable/default_avatar"
+            android:visibility="gone"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/img_video_thumbnail_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/img_video_thumbnail"
+                android:layout_width="@dimen/livelike_pin_video_thumbnail_width"
+                android:layout_height="@dimen/livelike_pin_video_thumbnail_height"
+                android:background="@drawable/video_view_background"
+                android:contentDescription="@string/image"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/default_video_thumbnail" />
+
+            <ImageView
+                android:id="@+id/ic_play_small"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_alignRight="@id/img_video_thumbnail"
+                android:layout_alignBottom="@id/img_video_thumbnail"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/pin_video_play_background"
+                android:contentDescription="@string/image"
+                android:paddingBottom="2dp"
+                app:srcCompat="@drawable/ic_play_small" />
+
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_gravity="start"
         android:layout_marginLeft="6dp"
         >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="1"
+            android:visibility="gone"
             >
 
             <TextView
@@ -54,6 +95,7 @@
                 app:fontFamily="@font/livelike_chat_nickname_font"
                 tools:text="Rohit Vaswani"
                 android:layout_weight="0.90"
+                android:visibility="gone"
                 />
 
             <ImageButton
@@ -62,6 +104,7 @@
                 android:layout_height="14dp"
                 android:layout_gravity="end"
                 android:background="@drawable/pin_icon"
+                android:visibility="gone"
                 />
 
         </LinearLayout>
@@ -70,9 +113,9 @@
             android:id="@+id/chat_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start"
             android:text=""
             android:textAlignment="viewStart"
+            android:layout_gravity="start"
             android:textColor="@color/messageColor"
             android:textSize="@dimen/chatMessageTextSize"
             android:layout_marginTop="@dimen/chatMessageMarginTop"
@@ -82,6 +125,14 @@
 
 
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/closeIconBtn"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:background="@drawable/close_icon"
+        android:padding="20dp" />
 
 
 </LinearLayout>

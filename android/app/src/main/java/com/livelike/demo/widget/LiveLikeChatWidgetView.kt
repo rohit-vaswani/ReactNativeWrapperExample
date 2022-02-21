@@ -2,6 +2,7 @@ package com.livelike.demo.widget
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -13,7 +14,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -53,6 +56,26 @@ class LiveLikeChatWidgetView(
     var userAvatarUrl = ""
     private var pinMessageAdapter = PinMessageAdapter(ArrayList())
 
+
+    inner class OverlapDecoration : ItemDecoration() {
+
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            super.getItemOffsets(outRect, view, parent, state)
+            val itemPosition: Int = parent.getChildAdapterPosition(view);
+            if (itemPosition == 0) {
+                return;
+            }
+            outRect.set(0, 0, 0, 0);
+        }
+
+    }
+
+
     init {
 
         this.applicationContext.addLifecycleEventListener(this)
@@ -67,6 +90,8 @@ class LiveLikeChatWidgetView(
         val inflater: LayoutInflater = LayoutInflater.from(context)
         chatViewBinding = FcChatViewBinding.bind(inflater.inflate(R.layout.fc_chat_view, null))
         chatViewBinding!!.pinnedMessageList.adapter = pinMessageAdapter
+        chatViewBinding!!.pinnedMessageList.addItemDecoration(OverlapDecoration());
+        chatViewBinding!!.pinnedMessageList.setLayoutManager(LinearLayoutManager(context));
         chatViewBinding?.let {
             chatView = it.chatView
             addView(it.root)

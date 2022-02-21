@@ -47,10 +47,12 @@
         <entry key="app/src/main/res/drawable/ic_chat_message_bubble_rounded_rectangle.xml" value="0.3359375" />
         <entry key="app/src/main/res/drawable/ic_chat_reaction_turner.xml" value="0.30833333333333335" />
         <entry key="app/src/main/res/drawable/ic_play_button.xml" value="0.271875" />
+        <entry key="app/src/main/res/drawable/ic_play_small.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/drawable/ic_volume_off.xml" value="0.271875" />
         <entry key="app/src/main/res/drawable/ic_volume_on.xml" value="0.271875" />
         <entry key="app/src/main/res/drawable/pin_chat_message_background.xml" value="0.28125" />
         <entry key="app/src/main/res/drawable/pin_icon.xml" value="0.28125" />
+        <entry key="app/src/main/res/drawable/pin_video_play_background.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/drawable/splashscreen.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/drawable/user_input_background.xml" value="0.30833333333333335" />
         <entry key="app/src/main/res/drawable/user_input_border.xml" value="0.284375" />
@@ -72,6 +74,7 @@
         <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/pin_chat_message.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/pin_hybrid_message.xml" value="2.0" />
         <entry key="app/src/main/res/layout/pin_message_item.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/pin_video_message.xml" value="0.5064492967708868" />
         <entry key="app/src/main/res/layout/timeline_fragment_layout.xml" value="0.11875" />

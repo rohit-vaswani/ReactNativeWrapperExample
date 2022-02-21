@@ -35,7 +35,7 @@
 
 
     <dimen name="chatUserNameTextSize">12sp</dimen>
-    <dimen name="chatMessageTextSize">14sp</dimen><!-- to set the textsize of message -->
+    <dimen name="chatMessageTextSize">11sp</dimen><!-- to set the textsize of message -->
 
     <dimen name="chatAvatarHeight">28dp</dimen>
     <dimen name="chatAvatarWidth">28dp</dimen>
@@ -45,4 +45,7 @@
 
     <dimen name="livelike_chat_avatar_width">28dp</dimen>
     <dimen name="livelike_chat_avatar_height">28dp</dimen>
+
+    <dimen name="livelike_pin_video_thumbnail_width">72dp</dimen>
+    <dimen name="livelike_pin_video_thumbnail_height">40dp</dimen>
 </resources>

@@ -39,6 +39,7 @@
         <entry key="app/src/main/res/drawable/chat_bubble_background.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/drawable/chat_input_cursor.xml" value="0.2765625" />
         <entry key="app/src/main/res/drawable/chat_input_view_background.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/drawable/chat_video_bubble_background.xml" value="0.24010416666666667" />
         <entry key="app/src/main/res/drawable/close_icon.xml" value="0.26927083333333335" />
         <entry key="app/src/main/res/drawable/fc_ripple_light_border.xml" value="0.2760416666666667" />
         <entry key="app/src/main/res/drawable/ic_ask_influence_question.xml" value="0.2838541666666667" />

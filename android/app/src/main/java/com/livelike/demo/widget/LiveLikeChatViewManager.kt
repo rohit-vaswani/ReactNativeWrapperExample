@@ -156,6 +156,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         map.put(EVENT_ANALYTICS, MapBuilder.of("registrationName", "onEvent"));
         map.put(LiveLikeChatWidgetView.CHAT_MESSAGE_SENT, MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT));
         map.put(LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED));
+        map.put(LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER));
         return map;
     }
 

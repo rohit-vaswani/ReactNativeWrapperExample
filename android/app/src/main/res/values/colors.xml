@@ -34,7 +34,8 @@
   <color name="otherUsernameColor">#121212</color>
   <color name="messageColor">#121212</color>        <!-- update color of message in chat message -->
   <color name="livelike_video_alert_volume_background_color">#000000</color>
-
+  <color name="chatBubbleBackgroundColor">#f6fbff</color>
+  <color name="livelike_default_chat_cell_video_title">#1c2c55</color>
   <array name="default_index_gradient">
     <item>@color/green</item>
     <item>@color/red</item>

@@ -70,7 +70,7 @@ class LiveLikeChatWidgetView(
             if (itemPosition == 0) {
                 return;
             }
-            outRect.set(0, 0, 0, 0);
+            outRect.set(0, 0, 0, -120);
         }
 
     }
@@ -159,7 +159,7 @@ class LiveLikeChatWidgetView(
 
         if (chatSession != null) {
             chatView.allowMediaFromKeyboard = false
-            chatView.isChatInputVisible = true
+            chatView.isChatInputVisible = false
             chatView.setSession(chatSession)
             chatSession.allowDiscardOwnPublishedMessageInSubscription = false
         }
@@ -208,11 +208,14 @@ class LiveLikeChatWidgetView(
                 showChatAvatar: Boolean
             ) {
 
+
+                registerVideoEvents(holder.itemView as FCVideoView)
+
                 chatViewThemeAttributes.apply {
+
                     (holder.itemView as FCVideoView)._binding?.let {
 
                         // Setting nickName
-                        it.chatNickname.setTextColor(chatNickNameColor)
                         it.chatNickname.text = liveLikeChatMessage.nickname
                         it.chatNickname.setTextSize(
                             TypedValue.COMPLEX_UNIT_PX,
@@ -221,39 +224,11 @@ class LiveLikeChatWidgetView(
                         it.chatNickname.isAllCaps = chatUserNameTextAllCaps
 
 
-                        // Handle Chat background
-                        val chatBackgroundLayoutParams =
-                            it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
-                        chatBackgroundLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-                        chatBackgroundLayoutParams.setMargins(
-                            chatMarginLeft,
-                            chatMarginTop + dpToPx(6),
-                            chatMarginRight,
-                            chatMarginBottom
-                        )
-                        it.chatBackground.layoutParams = chatBackgroundLayoutParams
+                        // Setting Video Title
+                        val videoTitle = getCustomDataProp("title", liveLikeChatMessage)
+                        it.videoTitle.text = videoTitle
 
-                        // Handle Chat Bubble background
-                        val chatBubbleLayoutParams: LinearLayout.LayoutParams =
-                            it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
-                        it.chatBubbleBackground.setBackgroundResource(R.drawable.ic_chat_message_bubble_rounded_rectangle)
-                        it.chatBubbleBackground.setPadding(
-                            chatBubblePaddingLeft,
-                            chatBubblePaddingTop,
-                            chatBubblePaddingRight,
-                            dpToPx(0)
-                        )
-                        chatBubbleLayoutParams.setMargins(
-                            chatBubbleMarginLeft - dpToPx(12),
-                            chatBubbleMarginTop,
-                            chatBubbleMarginRight,
-                            chatBubbleMarginBottom
-                        )
-                        chatBubbleLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-                        it.chatBubbleBackground.layoutParams = chatBubbleLayoutParams
-
-
-                        // Handle Avatar
+                        // User Avatar
                         it.imgChatAvatar.visibility = when (showChatAvatar) {
                             true -> View.VISIBLE
                             else -> View.GONE
@@ -262,14 +237,14 @@ class LiveLikeChatWidgetView(
                             chatAvatarWidth,
                             chatAvatarHeight
                         )
-                        avatarLayoutParams.setMargins(
-                            chatAvatarMarginLeft,
-                            chatAvatarMarginTop,
-                            chatAvatarMarginRight,
-                            chatAvatarMarginBottom
-                        )
                         avatarLayoutParams.gravity = chatAvatarGravity
                         it.imgChatAvatar.layoutParams = avatarLayoutParams
+                        avatarLayoutParams.setMargins(
+                            avatarLayoutParams.leftMargin,
+                            avatarLayoutParams.topMargin + dpToPx(8),
+                            avatarLayoutParams.rightMargin,
+                            avatarLayoutParams.bottomMargin
+                        )
                         val options = RequestOptions()
                         if (chatAvatarCircle) {
                             options.optionalCircleCrop()
@@ -280,42 +255,40 @@ class LiveLikeChatWidgetView(
                                 RoundedCorners(chatAvatarRadius)
                             )
                         }
-                        if (liveLikeChatMessage.custom_data.isNullOrEmpty()) {
-                            // load local image
-                            Glide.with(holder.itemView.context.applicationContext)
-                                .load(R.drawable.default_avatar)
-                                //.apply(options)
-                                .placeholder(chatUserPicDrawable)
-                                .into(it.imgChatAvatar)
-                        } else {
+                        val userPic: String? = getCustomDataProp("userPic", liveLikeChatMessage)
+                        Glide.with(holder.itemView.context.applicationContext)
+                            .load(userPic)
+                            .placeholder(chatUserPicDrawable)
+                            .error(chatUserPicDrawable)
+                            .into(it.imgChatAvatar)
 
-                            val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
-                            val userPic = jsonObject.get("userPic").toString()
 
-                            Glide.with(holder.itemView.context.applicationContext)
-                                .load(userPic)
-                                //.apply(options)
-                                .placeholder(chatUserPicDrawable)
-                                .error(chatUserPicDrawable)
-                                .into(it.imgChatAvatar)
-                        }
+                        // Handle Chat background
+                        val chatBackgroundLayoutParams = it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
+                        chatBackgroundLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+                        it.chatBackground.layoutParams = chatBackgroundLayoutParams
 
-                        // Handle VideoView - AN entry to the flow of the Video View.
-                        val jsonObject = JSONObject(liveLikeChatMessage.custom_data)
-                        val url = jsonObject.get("url").toString()
+                        // Chat Bubble background
+                        val chatBubbleLayoutParams: LinearLayout.LayoutParams = it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
+                        it.chatBubbleBackground.setPadding(
+                            chatBubblePaddingLeft,
+                            chatBubblePaddingTop,
+                            chatBubblePaddingRight,
+                            chatBubblePaddingBottom
+                        )
+                        chatBubbleLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+                        it.chatBubbleBackground.layoutParams = chatBubbleLayoutParams
+                        it.chatBubbleBackground.clipToOutline = true
+
+                        // Video Thumbnail
+                        val url: String? = getCustomDataProp("url", liveLikeChatMessage)
                         url?.let {
                             val videoViewHolder = (holder as FCVideoViewHolder)
                             val fcVideoView = videoViewHolder.itemView as FCVideoView
-
-
                             try {
-                                val videoThumbnail = jsonObject.get("videoThumbnail").toString()
-                                videoThumbnail.let {
-                                    fcVideoView.setVideoThumbnail(it)
-                                }
-                            } catch (e: Exception) {
-                            }
-                            videoViewHolder.videoUrl = it
+                                fcVideoView.setVideoThumbnail(getCustomDataProp("videoThumbnail", liveLikeChatMessage))
+                            } catch (e: Exception) { }
+                            fcVideoView.videoUrl = it
                         }
 
                     }
@@ -325,13 +298,35 @@ class LiveLikeChatWidgetView(
 
     }
 
-    class FCVideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var videoUrl: String? = null
-            set(value) {
-                field = value
-                (itemView as FCVideoView).videoUrl = value
+    private fun registerVideoEvents(videoView: FCVideoView) {
+
+        videoView.videoEventHandler = object : FCVideoView.IVideoEventHandler {
+            override fun onAskInfluencer() {
+                sendEvent(EVENT_ASK_INFLUENCER, Arguments.createMap())
             }
+
+            override fun onVideoPlayed(videoUrl: String) {
+                val map = Arguments.createMap()
+                map.putString("videoUrl", videoUrl)
+                sendEvent(EVENT_VIDEO_PLAYED, map)
+            }
+        }
     }
+
+    private fun getCustomDataProp(key: String, messagePayload: LiveLikeChatMessage?): String? {
+
+        try {
+            messagePayload?.custom_data?.let {
+                val jsonObject = JSONObject(it)
+                return jsonObject.get(key).toString()
+            }
+        } catch (e: java.lang.Exception) {
+
+        }
+        return null
+    }
+
+    class FCVideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 
 
     private fun registerMessageListener() {
@@ -366,7 +361,7 @@ class LiveLikeChatWidgetView(
     }
 
     private fun dismissKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(
             chatView.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS
@@ -415,5 +410,6 @@ class LiveLikeChatWidgetView(
     companion object {
         const val CHAT_MESSAGE_SENT = "onChatMessageSent"
         const val EVENT_VIDEO_PLAYED = "onVideoPlayed"
+        const val EVENT_ASK_INFLUENCER = "onAskInfluencer"
     }
 }

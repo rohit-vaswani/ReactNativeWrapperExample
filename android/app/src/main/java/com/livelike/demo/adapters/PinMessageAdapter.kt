@@ -134,6 +134,7 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
             if (isVideoMessage) {
                 getCustomDataProp("url", messageDetails.messagePayload)?.let {
                     pinMessageHandler.onVideoPlayed(it)
+                    removePinMessage(messageId)
                 }
             } else {
                 removePinMessage(messageId)

@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -37,6 +35,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
+            android:paddingLeft="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -44,11 +43,11 @@
                 android:id="@+id/img_chat_avatar"
                 android:layout_width="@dimen/livelike_chat_avatar_width"
                 android:layout_height="@dimen/livelike_chat_avatar_height"
-                android:layout_gravity="bottom"
+                android:layout_gravity="top"
                 android:layout_marginLeft="@dimen/livelike_chat_avatar_margin_left"
-                android:layout_marginTop="@dimen/livelike_chat_avatar_margin_top"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="@dimen/livelike_chat_avatar_margin_bottom"
-                android:layout_marginEnd="0dp"
+                android:layout_marginEnd="8dp"
                 android:contentDescription="@string/user_image"
                 android:visibility="visible"
                 tools:visibility="visible" />
@@ -59,7 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/livelike_chat_bubble_background_margin_top"
                 android:layout_marginRight="@dimen/livelike_chat_bubble_background_margin_right"
+                android:background="@drawable/chat_video_bubble_background"
                 android:layout_marginBottom="@dimen/livelike_chat_bubble_background_margin_bottom"
+                android:layout_marginStart="8dp"
+                android:paddingBottom="4dp"
+                android:paddingHorizontal="8dp"
                 android:animateLayoutChanges="@bool/livelike_chat_component_layout_transition_enabled"
                 android:orientation="vertical">
 
@@ -68,22 +71,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/livelike_default_chat_cell_name_color"
+                    android:textColor="#121212"
                     android:textSize="@dimen/livelike_default_chat_cell_name_size"
                     android:textStyle="bold"
                     app:fontFamily="@font/livelike_chat_nickname_font"
                     tools:ignore="HardcodedText"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="6dp"
                     tools:text="Rohit Vaswani" />
 
+                <TextView
+                    android:id="@+id/video_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/livelike_default_chat_cell_video_title"
+                    android:textSize="@dimen/livelike_default_chat_cell_video_title_size"
+                    android:textStyle="normal"
+                    tools:ignore="HardcodedText"
+                    android:layout_marginTop="4dp"
+                    tools:text="Video title" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/widgetContainer"
                     android:layout_width="@dimen/livelike_video_player_width"
                     android:layout_height="@dimen/livelike_video_player_height"
-                    android:layout_marginLeft="8dp"
                     android:animateLayoutChanges="@bool/livelike_widget_component_layout_transition_enabled"
+                    android:layout_marginTop="4dp"
                     android:background="@drawable/video_view_background">
 
                     <ImageView
@@ -149,11 +161,13 @@
 
                     <ImageView
                         android:id="@+id/ic_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:contentDescription="@string/image"
+                        app:layout_constraintEnd_toEndOf="@id/widgetContainer"
+                        app:layout_constraintTop_toTopOf="@id/widgetContainer"
+                        app:layout_constraintStart_toStartOf="@id/widgetContainer"
                         app:layout_constraintBottom_toBottomOf="@id/widgetContainer"
-                        app:layout_constraintLeft_toLeftOf="@id/widgetContainer"
                         android:layout_marginLeft="12dp"
                         android:layout_marginBottom="12dp"
                         app:srcCompat="@drawable/ic_play_button" />
@@ -199,6 +213,43 @@
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/askInfluencer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    >
+
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/influencer_question"
+                        android:visibility="visible"
+                        android:layout_marginEnd="4dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/rn_frame_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ff5000"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:text="@string/ask_a_question"
+                        android:letterSpacing="0.03"
+                        android:textAllCaps="true"
+
+                        />
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

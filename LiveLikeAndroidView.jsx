@@ -68,6 +68,9 @@ export const LiveLikeAndroidView = () => {
             onVideoPlayed={(event) => {
                 console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
             }}
+            onAskInfluencer={(event) => {
+                console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
+            }}
         />
     )
 

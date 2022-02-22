@@ -48,4 +48,6 @@
 
     <dimen name="livelike_pin_video_thumbnail_width">72dp</dimen>
     <dimen name="livelike_pin_video_thumbnail_height">40dp</dimen>
+    <dimen name="livelike_default_chat_cell_video_title_size">14sp</dimen>
+
 </resources>

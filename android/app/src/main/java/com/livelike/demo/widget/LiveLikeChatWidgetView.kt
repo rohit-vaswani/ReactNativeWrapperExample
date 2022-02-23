@@ -70,7 +70,7 @@ class LiveLikeChatWidgetView(
             if (itemPosition == 0) {
                 return;
             }
-            outRect.set(0, 0, 0, -120);
+            outRect.set(0, 0, 0, dpToPx(-120));
         }
 
     }

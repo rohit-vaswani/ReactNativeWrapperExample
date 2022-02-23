@@ -1,18 +1,22 @@
-import React, {useEffect, useRef} from 'react';
-import {findNodeHandle, NativeModules, requireNativeComponent, UIManager} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {findNodeHandle, NativeModules, requireNativeComponent, UIManager, View} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 
 const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 
-// const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
-// const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
+
+
+
+const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
+const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Video Pinned New
 
 
-const programId = "eabc6bfe-6b8c-44f6-9651-ddd362d89689"    // Production --
-const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb" // TODO: Video Pinned New NEW
+// New Pin Message portal
+// const programId =  "5337f725-f580-49b5-9697-822f69e6d16e"
+// const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb"
 // https://cf-blast.livelikecdn.com/producer/applications/BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml/chat-rooms/1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb/pinned-messages
 
 const {LiveLikeModule} = NativeModules
@@ -38,9 +42,24 @@ const updateNickName = (viewId, nickName) => {
 
 export const LiveLikeAndroidView = () => {
 
+    const [show, setShow] = useState(false)
+
     useEffect(() => {
         LiveLikeModule.initializeSDK(clientId)
     }, [])
+
+
+    useEffect(() => {
+
+        setTimeout(() => {
+            setShow(true)
+        }, 2000)
+
+    }, [])
+
+    useEffect(() => {
+        console.log('Updated', show)
+    }, [show])
 
 
     const ref = useRef(null);
@@ -80,7 +99,7 @@ export const LiveLikeAndroidView = () => {
 /*
 
 
-        <LiveLikeChatWidgetView
+<LiveLikeChatWidgetView
             ref={ref}
             programId={programId}
             chatRoomId={chatRoomId}
@@ -99,6 +118,12 @@ export const LiveLikeAndroidView = () => {
             onChatMessageSent={(event) => {
                 console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
             }}
+            onVideoPlayed={(event) => {
+                console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
+            }}
+            onAskInfluencer={(event) => {
+                console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
+            }}
         />
 
 
@@ -115,6 +140,7 @@ export const LiveLikeAndroidView = () => {
                     programId={programId}
                     showAskWidget={show}
                     style={{flex: 1}}
+                    influencerName={"Harbajan Singh"}
                     onWidgetShown={(event) => {
                         console.log('DEBUG1:', 'widget shown')
                     }}

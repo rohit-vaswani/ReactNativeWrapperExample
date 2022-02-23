@@ -45,6 +45,7 @@ class LiveLikeWidgetView(
     var widgetDetails: LiveLikeWidget? = null
     var fallback: Choreographer.FrameCallback;
     private var renderWidget = false
+    private var influencerNickName: String? = null
 
 
     init {
@@ -155,6 +156,10 @@ class LiveLikeWidgetView(
         }
     }
 
+    fun setInfluencerName(influencerName: String) {
+        this.influencerNickName = influencerName
+    }
+
     fun sendEvent(
         eventName: String,
         params: WritableMap?
@@ -230,6 +235,9 @@ class LiveLikeWidgetView(
             override fun createTextAskWidgetView(imageSliderWidgetModel: TextAskWidgetModel): View? {
                 customAskWidgetView = CustomAskWidgetView(context).apply {
                     askWidgetModel = imageSliderWidgetModel
+                    influencerNickName?.let {
+                        influencerName = influencerNickName as String
+                    }
                 }
                 registerCustomViewListeners()
                 return customAskWidgetView

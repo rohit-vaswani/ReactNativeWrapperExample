@@ -75,6 +75,7 @@
                     android:textSize="@dimen/livelike_default_chat_cell_name_size"
                     android:textStyle="bold"
                     app:fontFamily="@font/livelike_chat_nickname_font"
+                    android:letterSpacing="0.02"
                     tools:ignore="HardcodedText"
                     tools:text="Rohit Vaswani" />
 
@@ -232,6 +233,7 @@
                         app:srcCompat="@drawable/influencer_question"
                         android:visibility="visible"
                         android:layout_marginEnd="4dp"
+                        android:scaleType="centerInside"
                         />
 
                     <TextView
@@ -242,7 +244,7 @@
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:text="@string/ask_a_question"
-                        android:letterSpacing="0.03"
+                        android:letterSpacing="0.05"
                         android:textAllCaps="true"
 
                         />

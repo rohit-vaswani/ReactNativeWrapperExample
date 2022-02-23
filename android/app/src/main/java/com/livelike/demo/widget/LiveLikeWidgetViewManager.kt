@@ -38,6 +38,11 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
         view.updateContentSession(session)
     }
 
+    @ReactProp(name = "influencerName")
+    fun setInfluencerName(view: LiveLikeWidgetView, influencerName: String) {
+        view.setInfluencerName(influencerName)
+    }
+
     @ReactProp(name = "showAskWidget")
     fun showAskWidget(view: LiveLikeWidgetView, showWidget: Boolean) {
         if (showWidget) {

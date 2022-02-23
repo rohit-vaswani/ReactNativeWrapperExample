@@ -17,6 +17,7 @@ class CustomAskWidgetView : LinearLayout {
     var askWidgetModel: TextAskWidgetModel? = null
     private lateinit var binding: FcCustomAskAWidgetBinding
     lateinit var userEventsListener: UserEventsListener
+    var influencerName = "our Expert"
 
     interface UserEventsListener {
         fun closeDialog()
@@ -89,6 +90,7 @@ class CustomAskWidgetView : LinearLayout {
                 binding.askInfluencerContentWrapper.visibility = View.GONE
                 binding.askInfluencerConfirmationWrapper.visibility = View.VISIBLE
                 binding.closeIconBtn.visibility = View.GONE
+                binding.confirmationMessage.text =  "We've shared your message with ${this.influencerName}"
                 Handler().postDelayed({
                     userEventsListener.closeDialog()
                 }, 2500)

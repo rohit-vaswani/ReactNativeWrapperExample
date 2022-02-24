@@ -14,19 +14,16 @@ const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Video Pinned New
 
 
-// New Pin Message portal
+// Messages + Pinned Video
 const programId =  "5337f725-f580-49b5-9697-822f69e6d16e"
 const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb"
 // // https://cf-blast.livelikecdn.com/producer/applications/BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml/chat-rooms/1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb/pinned-messages
 
 
+// Sequencetial pinned messages
 // const programId =  "5337f725-f580-49b5-9697-822f69e6d16e"
 // const chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
 // https://cf-blast.livelikecdn.com/producer/applications/OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI/chat-rooms/65735146-5f90-4b75-bbcc-e1b75eff6014
-
-
-// const programId =  "5337f725-f580-49b5-9697-822f69e6d16e"
-// const chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
 
 
 const {LiveLikeModule} = NativeModules

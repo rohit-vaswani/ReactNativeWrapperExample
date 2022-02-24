@@ -62,7 +62,7 @@
                 android:background="@drawable/chat_video_bubble_background"
                 android:layout_marginBottom="@dimen/livelike_chat_bubble_background_margin_bottom"
                 android:layout_marginStart="8dp"
-                android:paddingBottom="4dp"
+                android:paddingBottom="8dp"
                 android:paddingHorizontal="8dp"
                 android:animateLayoutChanges="@bool/livelike_chat_component_layout_transition_enabled"
                 android:orientation="vertical">

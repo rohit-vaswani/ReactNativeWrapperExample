@@ -103,6 +103,8 @@
             android:layout_marginTop="@dimen/chatMessageMarginTop"
             android:layout_marginEnd="12dp"
             android:text=""
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textAlignment="viewStart"
             android:textColor="@color/messageColor"
             android:textSize="@dimen/chatMessageTextSize"

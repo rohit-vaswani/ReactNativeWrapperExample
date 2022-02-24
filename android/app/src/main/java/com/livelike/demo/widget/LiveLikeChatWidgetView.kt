@@ -275,7 +275,7 @@ class LiveLikeChatWidgetView(
                             chatBubblePaddingLeft,
                             chatBubblePaddingTop,
                             chatBubblePaddingRight,
-                            chatBubblePaddingBottom
+                            chatBubblePaddingBottom + dpToPx(6)
                         )
 //                        chatBubbleLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
                         it.chatBubbleBackground.layoutParams = chatBubbleLayoutParams

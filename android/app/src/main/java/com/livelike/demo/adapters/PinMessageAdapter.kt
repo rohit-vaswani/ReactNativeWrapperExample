@@ -126,7 +126,7 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
         val messageDetails = getDetailedMessageBy(messageId)
         val isVideoMessage = isVideoMessage(messageDetails.messagePayload)
 
-        bindingObject.closeBtnContainer.setOnClickListener {
+        bindingObject.closeIconBtn.setOnClickListener {
             removeAllPinMessages()
         }
 

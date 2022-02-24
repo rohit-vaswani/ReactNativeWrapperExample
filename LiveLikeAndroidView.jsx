@@ -71,6 +71,7 @@ export const LiveLikeAndroidView = () => {
     const ref = useRef(null);
 
     return (
+
         <LiveLikeChatWidgetView
             ref={ref}
             programId={programId}

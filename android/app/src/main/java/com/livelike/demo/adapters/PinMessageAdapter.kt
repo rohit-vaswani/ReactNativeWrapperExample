@@ -247,7 +247,7 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
     }
 
     fun addPinMessage(newMessage: PinMessageInfo) {
-        messageList.add(newMessage)
+        addMessageAtIndex(newMessage)
         notifyDataSetChanged()
     }
 
@@ -264,10 +264,15 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
         return messageList[index]
     }
 
+    private fun addMessageAtIndex(pinMessage: PinMessageInfo) {
+        messageList.add(0, pinMessage)
+    }
+
     fun addPinMessages(pinMessages: ArrayList<PinMessageInfo>) {
         messageList.clear()
-        notifyDataSetChanged()
-        messageList.addAll(pinMessages)
+        for (i in pinMessages.indices) {
+            addMessageAtIndex(pinMessages[i])
+        }
         notifyDataSetChanged()
 
     }

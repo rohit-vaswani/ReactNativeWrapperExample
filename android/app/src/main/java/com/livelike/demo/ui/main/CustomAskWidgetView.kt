@@ -58,15 +58,15 @@ class CustomAskWidgetView : LinearLayout {
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
         binding.closeIconBtn.visibility = View.VISIBLE
         binding.influencerQuestionInput.requestFocus()
+        KeyboardUtils.showKeyboard(context)
         this.influencerName?.let {
             binding.headerTitle.text = "Ask ${it}"
         }
-        KeyboardUtils.showKeyboard(context)
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        KeyboardUtils.dismissKeyboard(context, binding.root.windowToken)
+        closeDialog()
     }
 
 
@@ -120,6 +120,6 @@ class CustomAskWidgetView : LinearLayout {
     private fun closeDialog() {
         binding.influencerQuestionInput.clearFocus()
         userEventsListener.closeDialog()
-
+        KeyboardUtils.dismissKeyboard(context)
     }
 }

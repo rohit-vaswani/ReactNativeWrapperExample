@@ -1,6 +1,5 @@
 package com.livelike.demo.widget
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Handler
@@ -11,10 +10,9 @@ import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.bumptech.glide.Glide
@@ -27,6 +25,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
+import com.livelike.demo.databinding.PinHybridMessageBinding
 import com.livelike.demo.ui.main.FCVideoView
 import com.livelike.demo.utils.KeyboardUtils
 import com.livelike.engagementsdk.LiveLikeContentSession
@@ -55,26 +54,7 @@ class LiveLikeChatWidgetView(
     var chatSession: LiveLikeChatSession? = null
     var chatRoomId = ""
     var userAvatarUrl = ""
-    private var pinMessageAdapter = PinMessageAdapter(ArrayList())
-
-
-    inner class OverlapDecoration : ItemDecoration() {
-
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            super.getItemOffsets(outRect, view, parent, state)
-            val itemPosition: Int = parent.getChildAdapterPosition(view);
-            if (itemPosition == 0) {
-                return;
-            }
-            outRect.set(0, 0, 0, dpToPx(-120));
-        }
-
-    }
+    private var pinMessageAdapter = PinMessageAdapter()
 
 
     init {
@@ -90,9 +70,6 @@ class LiveLikeChatWidgetView(
         Choreographer.getInstance().postFrameCallback(fallback)
         val inflater: LayoutInflater = LayoutInflater.from(context)
         chatViewBinding = FcChatViewBinding.bind(inflater.inflate(R.layout.fc_chat_view, null))
-        chatViewBinding!!.pinnedMessageList.adapter = pinMessageAdapter
-        chatViewBinding!!.pinnedMessageList.addItemDecoration(OverlapDecoration());
-        chatViewBinding!!.pinnedMessageList.setLayoutManager(LinearLayoutManager(context));
         registerPinMessagesHandler()
         chatViewBinding?.let {
             chatView = it.chatView
@@ -124,6 +101,7 @@ class LiveLikeChatWidgetView(
         contentSession.close()
         chatView.clearSession()
         chatSession?.close()
+        pinMessageAdapter.clear()
     }
 
     fun updateContentSession(contentSession: LiveLikeContentSession) {
@@ -265,12 +243,14 @@ class LiveLikeChatWidgetView(
 
 
                         // Handle Chat background
-                        val chatBackgroundLayoutParams = it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
+                        val chatBackgroundLayoutParams =
+                            it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
                         chatBackgroundLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
                         it.chatBackground.layoutParams = chatBackgroundLayoutParams
 
                         // Chat Bubble background
-                        val chatBubbleLayoutParams: LinearLayout.LayoutParams = it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
+                        val chatBubbleLayoutParams: LinearLayout.LayoutParams =
+                            it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
                         it.chatBubbleBackground.setPadding(
                             chatBubblePaddingLeft,
                             chatBubblePaddingTop,
@@ -287,8 +267,14 @@ class LiveLikeChatWidgetView(
                             val videoViewHolder = (holder as FCVideoViewHolder)
                             val fcVideoView = videoViewHolder.itemView as FCVideoView
                             try {
-                                fcVideoView.setVideoThumbnail(getCustomDataProp("videoThumbnail", liveLikeChatMessage))
-                            } catch (e: Exception) { }
+                                fcVideoView.setVideoThumbnail(
+                                    getCustomDataProp(
+                                        "videoThumbnail",
+                                        liveLikeChatMessage
+                                    )
+                                )
+                            } catch (e: Exception) {
+                            }
                             fcVideoView.videoUrl = it
                         }
 
@@ -347,20 +333,17 @@ class LiveLikeChatWidgetView(
 
             override fun onPinMessage(message: PinMessageInfo) {
                 Handler(Looper.getMainLooper()).post(Runnable {
-                    pinMessageAdapter.addPinMessage(message)
+                    pinMessageAdapter.addPinMessage(message, context)
                 })
             }
 
             override fun onUnPinMessage(pinMessageId: String) {
-
                 Handler(Looper.getMainLooper()).post(Runnable {
                     pinMessageAdapter.removePinMessage(pinMessageId)
                 })
-
             }
         })
     }
-
 
 
     fun sendChatMessage(message: String) {
@@ -374,7 +357,7 @@ class LiveLikeChatWidgetView(
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
-                    KeyboardUtils.dismissKeyboard(context, chatView.windowToken)
+                    KeyboardUtils.dismissKeyboard(context)
                     sendEvent(CHAT_MESSAGE_SENT, params)
                 }
             })
@@ -389,7 +372,12 @@ class LiveLikeChatWidgetView(
 
 
     fun handleHistoricalPinMessages(pinnedMessages: List<PinMessageInfo>) {
-        pinMessageAdapter.addPinMessages(pinnedMessages as ArrayList<PinMessageInfo>)
+        chatViewBinding?.pinnedMessageList?.let {
+            pinMessageAdapter.setup(it)
+        }
+        pinnedMessages.forEach {
+            pinMessageAdapter.addPinMessage(it, context)
+        }
     }
 
     fun sendEvent(

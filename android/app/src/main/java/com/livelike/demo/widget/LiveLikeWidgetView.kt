@@ -140,7 +140,6 @@ class LiveLikeWidgetView(
         customAskWidgetView.userEventsListener =
             object : CustomAskWidgetView.UserEventsListener {
                 override fun closeDialog() {
-                    KeyboardUtils.dismissKeyboard(context, widgetView.rootView.windowToken)
                     hideWidget()
                 }
             }

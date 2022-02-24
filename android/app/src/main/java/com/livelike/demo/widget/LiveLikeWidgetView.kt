@@ -13,6 +13,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.LiveLikeManager
 import com.livelike.demo.R
 import com.livelike.demo.ui.main.CustomAskWidgetView
+import com.livelike.demo.utils.KeyboardUtils
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
@@ -139,6 +140,7 @@ class LiveLikeWidgetView(
         customAskWidgetView.userEventsListener =
             object : CustomAskWidgetView.UserEventsListener {
                 override fun closeDialog() {
+                    KeyboardUtils.dismissKeyboard(context, widgetView.rootView.windowToken)
                     hideWidget()
                 }
             }

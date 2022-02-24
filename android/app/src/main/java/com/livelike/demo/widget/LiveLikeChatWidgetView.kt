@@ -28,6 +28,7 @@ import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
 import com.livelike.demo.ui.main.FCVideoView
+import com.livelike.demo.utils.KeyboardUtils
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.MessageListener
 import com.livelike.engagementsdk.chat.ChatView
@@ -360,13 +361,7 @@ class LiveLikeChatWidgetView(
         })
     }
 
-    private fun dismissKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.hideSoftInputFromWindow(
-            chatView.windowToken,
-            InputMethodManager.HIDE_NOT_ALWAYS
-        )
-    }
+
 
     fun sendChatMessage(message: String) {
         chatSession?.sendChatMessage(
@@ -379,7 +374,7 @@ class LiveLikeChatWidgetView(
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
-                    dismissKeyboard()
+                    KeyboardUtils.dismissKeyboard(context, chatView.windowToken)
                     sendEvent(CHAT_MESSAGE_SENT, params)
                 }
             })

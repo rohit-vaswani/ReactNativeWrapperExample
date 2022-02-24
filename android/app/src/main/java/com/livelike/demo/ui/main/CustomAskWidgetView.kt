@@ -6,10 +6,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import com.livelike.demo.R
 import com.livelike.demo.databinding.FcCustomAskAWidgetBinding
 import com.livelike.engagementsdk.widget.widgetModel.TextAskWidgetModel
+import androidx.core.content.ContextCompat.getSystemService
+import com.livelike.demo.utils.KeyboardUtils
 
 
 class CustomAskWidgetView : LinearLayout {
@@ -54,6 +57,8 @@ class CustomAskWidgetView : LinearLayout {
         registerListeners()
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
         binding.closeIconBtn.visibility = View.VISIBLE
+        binding.influencerQuestionInput.requestFocus()
+        KeyboardUtils.showKeyboard(context)
     }
 
 
@@ -92,14 +97,20 @@ class CustomAskWidgetView : LinearLayout {
                 binding.closeIconBtn.visibility = View.GONE
                 binding.confirmationMessage.text =  "We've shared your message with ${this.influencerName}"
                 Handler().postDelayed({
-                    userEventsListener.closeDialog()
+                    closeDialog()
                 }, 2500)
             }
         }
 
 
         binding.closeIconBtn.setOnClickListener {
-            userEventsListener.closeDialog()
+            closeDialog()
         }
+    }
+
+    private fun closeDialog() {
+        binding.influencerQuestionInput.clearFocus()
+        userEventsListener.closeDialog()
+
     }
 }

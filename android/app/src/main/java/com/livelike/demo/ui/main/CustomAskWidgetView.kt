@@ -61,6 +61,11 @@ class CustomAskWidgetView : LinearLayout {
         KeyboardUtils.showKeyboard(context)
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        KeyboardUtils.dismissKeyboard(context, binding.root.windowToken)
+    }
+
 
     private fun registerListeners(): Unit {
 

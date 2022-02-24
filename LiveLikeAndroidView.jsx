@@ -9,14 +9,14 @@ const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 
 
 
-const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
-const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
+// const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
+// const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Video Pinned New
 
 
 // New Pin Message portal
-// const programId =  "5337f725-f580-49b5-9697-822f69e6d16e"
-// const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb"
+const programId =  "5337f725-f580-49b5-9697-822f69e6d16e"
+const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb"
 // https://cf-blast.livelikecdn.com/producer/applications/BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml/chat-rooms/1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb/pinned-messages
 
 const {LiveLikeModule} = NativeModules

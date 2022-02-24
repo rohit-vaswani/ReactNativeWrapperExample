@@ -25,6 +25,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/chat_constraint_box"
         android:layout_width="match_parent"
+        android:layout_marginEnd="38dp"
         android:layout_height="wrap_content">
 
 
@@ -54,7 +55,7 @@
 
             <LinearLayout
                 android:id="@+id/chatBubbleBackground"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/livelike_video_player_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/livelike_chat_bubble_background_margin_top"
                 android:layout_marginRight="@dimen/livelike_chat_bubble_background_margin_right"
@@ -93,7 +94,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/widgetContainer"
-                    android:layout_width="@dimen/livelike_video_player_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/livelike_video_player_height"
                     android:animateLayoutChanges="@bool/livelike_widget_component_layout_transition_enabled"
                     android:layout_marginTop="4dp"
@@ -162,15 +163,14 @@
 
                     <ImageView
                         android:id="@+id/ic_play"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:scaleType="centerCrop"
                         android:contentDescription="@string/image"
                         app:layout_constraintEnd_toEndOf="@id/widgetContainer"
                         app:layout_constraintTop_toTopOf="@id/widgetContainer"
                         app:layout_constraintStart_toStartOf="@id/widgetContainer"
                         app:layout_constraintBottom_toBottomOf="@id/widgetContainer"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginBottom="12dp"
                         app:srcCompat="@drawable/ic_play_button" />
 
                     <LinearLayout
@@ -215,6 +215,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
                 <LinearLayout
                     android:id="@+id/askInfluencer"
                     android:layout_width="wrap_content"
@@ -237,7 +238,6 @@
                         />
 
                     <TextView
-                        android:id="@+id/rn_frame_method"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ff5000"
@@ -246,12 +246,9 @@
                         android:text="@string/ask_a_question"
                         android:letterSpacing="0.05"
                         android:textAllCaps="true"
-
                         />
 
                 </LinearLayout>
-
-
 
             </LinearLayout>
 

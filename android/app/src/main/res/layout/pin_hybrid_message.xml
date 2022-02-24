@@ -114,6 +114,7 @@
             android:textColor="@color/messageColor"
             android:textSize="@dimen/chatMessageTextSize"
             android:layout_marginTop="@dimen/chatMessageMarginTop"
+            android:layout_marginEnd="8dp"
             app:fontFamily="@font/livelike_chat_message_font"
             tools:ignore="HardcodedText"
             tools:text="@tools:sample/lorem[30]" />
@@ -125,7 +126,7 @@
         android:id="@+id/closeIconBtn"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:background="@drawable/close_icon"
         android:padding="20dp" />
 

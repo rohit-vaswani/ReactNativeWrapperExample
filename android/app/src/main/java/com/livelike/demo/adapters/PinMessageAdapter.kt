@@ -1,6 +1,7 @@
 package com.livelike.demo.adapters
 
 import android.content.Context
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -134,11 +135,14 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
             if (isVideoMessage) {
                 getCustomDataProp("url", messageDetails.messagePayload)?.let {
                     pinMessageHandler.onVideoPlayed(it)
-                    removePinMessage(messageId)
                 }
-            } else {
-                removePinMessage(messageId)
             }
+
+            Handler().postDelayed({
+                removePinMessage(messageId)
+            }, 1000)
+
+
         }
 
 

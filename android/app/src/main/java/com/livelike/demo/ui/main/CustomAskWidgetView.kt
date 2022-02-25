@@ -24,6 +24,7 @@ class CustomAskWidgetView : LinearLayout {
 
     interface UserEventsListener {
         fun closeDialog()
+        fun onMessageSent(message: String)
     }
 
     constructor(context: Context) : super(context) {
@@ -105,6 +106,7 @@ class CustomAskWidgetView : LinearLayout {
                 binding.closeIconBtn.visibility = View.GONE
                 val influencerName = if(this.influencerName.isNullOrEmpty()) "our Expert" else this.influencerName
                 binding.confirmationMessage.text =  "We've shared your message with ${influencerName}"
+                userEventsListener.onMessageSent(binding.influencerQuestionInput.text.toString())
                 Handler().postDelayed({
                     closeDialog()
                 }, 2500)
@@ -120,6 +122,6 @@ class CustomAskWidgetView : LinearLayout {
     private fun closeDialog() {
         binding.influencerQuestionInput.clearFocus()
         userEventsListener.closeDialog()
-        KeyboardUtils.dismissKeyboard(context)
+        KeyboardUtils.dismissKeyboard(context, binding.influencerQuestionInput.windowToken)
     }
 }

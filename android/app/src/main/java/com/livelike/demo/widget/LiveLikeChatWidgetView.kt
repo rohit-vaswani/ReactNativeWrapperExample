@@ -46,7 +46,7 @@ class LiveLikeChatWidgetView(
     val applicationContext: ReactApplicationContext
 ) : ConstraintLayout(context), LifecycleEventListener {
 
-    lateinit var contentSession: LiveLikeContentSession
+    var contentSession: LiveLikeContentSession? = null
     private var renderWidget = true
     lateinit var chatView: ChatView;
     private var chatViewBinding: FcChatViewBinding? = null
@@ -55,7 +55,6 @@ class LiveLikeChatWidgetView(
     var chatRoomId = ""
     var userAvatarUrl = ""
     private var pinMessageAdapter = PinMessageAdapter()
-
 
     init {
 
@@ -78,6 +77,11 @@ class LiveLikeChatWidgetView(
 
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        destroyChat()
+    }
+
     private fun registerPinMessagesHandler() {
         pinMessageAdapter.pinMessageHandler = object : PinMessageAdapter.PinMessageActionHandler {
             override fun onVideoPlayed(videoUrl: String) {
@@ -90,15 +94,19 @@ class LiveLikeChatWidgetView(
     }
 
     override fun onHostResume() {
-        contentSession.resume()
+        contentSession?.resume()
     }
 
     override fun onHostPause() {
-        contentSession.pause()
+        contentSession?.pause()
     }
 
     override fun onHostDestroy() {
-        contentSession.close()
+        destroyChat()
+    }
+
+    private fun destroyChat() {
+        contentSession?.close()
         chatView.clearSession()
         chatSession?.close()
         pinMessageAdapter.clear()
@@ -357,7 +365,7 @@ class LiveLikeChatWidgetView(
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
-                    KeyboardUtils.dismissKeyboard(context)
+                    KeyboardUtils.dismissKeyboard(context, chatViewBinding?.chatView?.windowToken)
                     sendEvent(CHAT_MESSAGE_SENT, params)
                 }
             })

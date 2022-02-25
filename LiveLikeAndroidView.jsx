@@ -47,20 +47,20 @@ const updateNickName = (viewId, nickName) => {
 
 export const LiveLikeAndroidView = () => {
 
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         LiveLikeModule.initializeSDK(clientId)
     }, [])
 
 
-    // useEffect(() => {
-    //
-    //     setTimeout(() => {
-    //         setShow(true)
-    //     }, 2000)
-    //
-    // }, [])
+    useEffect(() => {
+
+        setTimeout(() => {
+            setShow(true)
+        }, 3000)
+
+    }, [])
 
     useEffect(() => {
         console.log('Updated', show)
@@ -77,50 +77,31 @@ export const LiveLikeAndroidView = () => {
     }, [show])
 
     return (
-        <>
-            {
-                show ? (
-                    <LiveLikeChatWidgetView
-                        ref={ref}
-                        programId={programId}
-                        chatRoomId={chatRoomId}
-                        userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-                        style={{flex: 1}}
-                        onWidgetShown={(event) => {
-                            LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                            this.setState({widgetHeight: event.nativeEvent.height})
-                        }}
-                        onWidgetHidden={(event) => {
-                            LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                            this.setState({widgetHeight: 0})
-                        }}
-                        onEvent={event => {
-                        }}
-                        onChatMessageSent={(event) => {
-                            console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
-                        }}
-                        onVideoPlayed={(event) => {
-                            console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
-                        }}
-                        onAskInfluencer={(event) => {
-                            console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
-                        }}
-                    />
-                ) : null
-            }
-            <View
-                style={{
-                    height: 50,
-                    width: 50,
-                    left: 0,
-                    bottom: 0,
-                    backgroundColor: 'red'
+        <View style={{
+            marginTop: 12,
+            height: 500,
+            width: '100%',
+            position: 'absolute',
+            left: 0,
+            top: 0
+        }}>
+            <LiveLikeWidgetView
+                programId={programId}
+                showAskWidget={show}
+                style={{flex: 1}}
+                influencerName={"Harbajan Singh"}
+                onWidgetShown={(event) => {
+                    console.log('DEBUG1:', 'widget shown')
                 }}
-                onPress={() => {
-                    setShow(!show)
+                onWidgetHidden={(event) => {
+                    console.log('DEBUG2:', 'widget hidden')
                 }}
+                onInfluencerMessageSent={(event) => {
+                    console.log('DEBUG3:', event.nativeEvent.message)
+                }}
+
             />
-        </>
+        </View>
     )
 
 };
@@ -191,6 +172,10 @@ export const LiveLikeAndroidView = () => {
                     onWidgetHidden={(event) => {
                         console.log('DEBUG2:', 'widget hidden')
                     }}
+                    onInfluencerMessageSent={(event) => {
+                        console.log('DEBUG3:', event.nativeEvent.message)
+                    }}
+
                 />
      </View>
 

@@ -1,7 +1,6 @@
 package com.livelike.demo.widget
 
 import android.util.Log
-import android.widget.Toast
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.common.MapBuilder
@@ -25,7 +24,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     val REACT_CLASS = "LiveLikeChatWidgetView"
     var chatSession: LiveLikeChatSession? = null
     var chatRoomId = ""
-
 
 
     companion object {
@@ -61,7 +59,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
             COMMAND_UPDATE_NICK_NAME -> updateNickName(root, args)
             COMMAND_UPDATE_USER_AVATAR -> updateUserAvatar(root, args)
-            else -> { }
+            else -> {
+            }
         }
     }
 
@@ -82,7 +81,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             view.setAvatar(it)
         }
     }
-
 
 
     private fun scrollToBottom(
@@ -109,15 +107,19 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     @ReactProp(name = "programId")
     fun setProgramId(view: LiveLikeChatWidgetView, programId: String) {
 
-        // content session
-        val contentSession = LiveLikeManager.engagementSDK.createContentSession(programId)
-        view.updateContentSession(contentSession)
+        if (view.chatSession == null) {
 
-        // chat session
-        chatSession = createChatSession()
-        view.updateChatSession(chatSession)
+            // content session
+            val contentSession = LiveLikeManager.engagementSDK.createContentSession(programId)
+            view.updateContentSession(contentSession)
 
-        onConfiguration(view)
+            // chat session
+            chatSession = createChatSession()
+            view.updateChatSession(chatSession)
+
+            onConfiguration(view)
+        }
+
     }
 
     @ReactProp(name = "chatRoomId")
@@ -154,9 +156,18 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         map.put(EVENT_WIDGET_SHOWN, MapBuilder.of("registrationName", "onWidgetShown"));
         map.put(EVENT_WIDGET_HIDDEN, MapBuilder.of("registrationName", "onWidgetHidden"));
         map.put(EVENT_ANALYTICS, MapBuilder.of("registrationName", "onEvent"));
-        map.put(LiveLikeChatWidgetView.CHAT_MESSAGE_SENT, MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT));
-        map.put(LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED));
-        map.put(LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER));
+        map.put(
+            LiveLikeChatWidgetView.CHAT_MESSAGE_SENT,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT)
+        );
+        map.put(
+            LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED)
+        );
+        map.put(
+            LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER)
+        );
         return map;
     }
 
@@ -188,7 +199,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView){
+    private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView) {
 
 
         LiveLikeManager.engagementSDK.chat()?.getPinMessageInfoList(
@@ -196,8 +207,10 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             LiveLikeOrdering.ASC,
             LiveLikePagination.FIRST,
             object : LiveLikeCallback<List<PinMessageInfo>>() {
-                override fun onResponse(result: List<PinMessageInfo>?, error:
-                String?) {
+                override fun onResponse(
+                    result: List<PinMessageInfo>?, error:
+                    String?
+                ) {
                     result?.let {
                         chatView.handleHistoricalPinMessages(result)
                     }

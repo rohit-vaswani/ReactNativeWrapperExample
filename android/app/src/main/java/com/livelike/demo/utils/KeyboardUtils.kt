@@ -9,13 +9,15 @@ class KeyboardUtils {
 
     companion object {
         fun showKeyboard(context: Context) {
-            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-            imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+//            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+//            imm?.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
         }
 
-        fun dismissKeyboard(context: Context) {
-            val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+        fun dismissKeyboard(context: Context, windowToken: IBinder?) {
+//            val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+//            inputMethodManager?.hideSoftInputFromWindow(windowToken, 0)
+//            val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
         }
     }
 

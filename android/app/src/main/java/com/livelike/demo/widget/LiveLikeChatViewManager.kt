@@ -7,6 +7,7 @@ import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
+import com.google.gson.Gson
 import com.livelike.demo.LiveLikeManager
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.EpochTime
@@ -18,13 +19,16 @@ import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import java.util.*
 
+
+data class FCReactData(val programId:String, val chatRoomId: String, val userAvatarUrl:String) {
+
+}
+
 class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     ViewGroupManager<LiveLikeChatWidgetView>() {
 
     val REACT_CLASS = "LiveLikeChatWidgetView"
     var chatSession: LiveLikeChatSession? = null
-    var chatRoomId = ""
-
 
     companion object {
         const val EVENT_WIDGET_SHOWN = "widgetShown"
@@ -53,14 +57,13 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         commandId: String,
         args: ReadableArray?
     ) {
-        super.receiveCommand(root, commandId, args)
+        super.receiveCommand(root, commandId.toInt(), args)
         val commandIdInt = commandId.toInt()
         when (commandIdInt) {
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
             COMMAND_UPDATE_NICK_NAME -> updateNickName(root, args)
             COMMAND_UPDATE_USER_AVATAR -> updateUserAvatar(root, args)
-            else -> {
-            }
+            else -> { }
         }
     }
 
@@ -83,6 +86,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
+
     private fun scrollToBottom(
         view: LiveLikeChatWidgetView,
     ) {
@@ -95,6 +99,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     ) {
         val message = args?.getString(1)
         message?.let {
+            Log.i("DEBUG","1. Inside SendChatMessage "+view.toString())
             view.sendChatMessage(it)
             view.scrollToBottom()
         }
@@ -104,48 +109,59 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         return LiveLikeChatWidgetView(reactContext, applicationContext);
     }
 
-    @ReactProp(name = "programId")
-    fun setProgramId(view: LiveLikeChatWidgetView, programId: String) {
 
-        if (view.chatSession == null) {
+    @ReactProp(name = "data")
+    fun setdata(view: LiveLikeChatWidgetView, data: String) {
+        val gson = Gson()
+        var fcReactData: FCReactData? = gson.fromJson(data, FCReactData::class.java)
 
-            // content session
-            val contentSession = LiveLikeManager.engagementSDK.createContentSession(programId)
-            view.updateContentSession(contentSession)
+        Log.i("DEBUG","1. Inside setdata "+view.toString())
+        fcReactData?.let {
+            if(chatSession == null) {
 
-            // chat session
-            chatSession = createChatSession()
-            view.updateChatSession(chatSession)
 
-            onConfiguration(view)
+                // Chat Session
+                chatSession = createChatSession()
+                Log.i("DEBUG","2. Inside setdata got New Session "+chatSession.toString())
+                view.updateChatSession(chatSession)
+                onConfiguration(view, fcReactData.chatRoomId)
+
+                // user Avatar
+                view.setAvatar(it.userAvatarUrl)
+
+            } else {
+
+                Log.i("DEBUG","1.5 Inside setdata ChatSession is non null "+chatSession.toString())
+                view.updateChatSession(chatSession)
+                onConfiguration(view, it.chatRoomId)
+            }
         }
-
-    }
-
-    @ReactProp(name = "chatRoomId")
-    fun setChatRoomId(view: LiveLikeChatWidgetView, chatRoomId: String) {
-        this.chatRoomId = chatRoomId
-        onConfiguration(view)
     }
 
 
     @ReactProp(name = "userAvatarUrl")
     fun setUserAvatar(view: LiveLikeChatWidgetView, avatarUrl: String) {
+        Log.i("DEBUG","1. Inside setUserAvatar "+view.toString())
         view.setAvatar(avatarUrl)
     }
 
     @ReactProp(name = "userNickName")
     fun setUserNickName(view: LiveLikeChatWidgetView, nickName: String?) {
+        Log.i("DEBUG","1. Inside setUserNickName "+view.toString())
         setNickName(nickName)
     }
 
-
-    private fun onConfiguration(chatView: LiveLikeChatWidgetView) {
+    private fun onConfiguration(chatView: LiveLikeChatWidgetView,chatRoomId: String) {
+        Log.i("DEBUG","3.OnConfiguration ")
         if (isChatConfigurable()) {
-            chatView.configureChatView(chatSession, this.chatRoomId)
-            this.registerPinnedMessageHandler(chatView)
+            Log.i("DEBUG","4 OnConfiguration Configuring for "+chatSession.toString()+"& "+chatRoomId)
+            chatView.configureChatView(chatSession, chatRoomId)
+            this.registerPinnedMessageHandler(chatView, chatRoomId)
+        } else{
+            Log.i("DEBUG","3.5 OnConfiguration Not Configurable Yet")
         }
     }
+
 
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
@@ -156,18 +172,10 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         map.put(EVENT_WIDGET_SHOWN, MapBuilder.of("registrationName", "onWidgetShown"));
         map.put(EVENT_WIDGET_HIDDEN, MapBuilder.of("registrationName", "onWidgetHidden"));
         map.put(EVENT_ANALYTICS, MapBuilder.of("registrationName", "onEvent"));
-        map.put(
-            LiveLikeChatWidgetView.CHAT_MESSAGE_SENT,
-            MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT)
-        );
-        map.put(
-            LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED,
-            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED)
-        );
-        map.put(
-            LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER,
-            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER)
-        );
+        map.put(LiveLikeChatWidgetView.CHAT_MESSAGE_SENT, MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT));
+        map.put(LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED));
+        map.put(LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER));
+        map.put(LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED));
         return map;
     }
 
@@ -199,7 +207,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView) {
+    private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView, chatRoomId: String){
 
 
         LiveLikeManager.engagementSDK.chat()?.getPinMessageInfoList(
@@ -207,21 +215,17 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             LiveLikeOrdering.ASC,
             LiveLikePagination.FIRST,
             object : LiveLikeCallback<List<PinMessageInfo>>() {
-                override fun onResponse(
-                    result: List<PinMessageInfo>?, error:
-                    String?
-                ) {
+                override fun onResponse(result: List<PinMessageInfo>?, error:
+                String?) {
                     result?.let {
                         chatView.handleHistoricalPinMessages(result)
                     }
                 }
             })
-
     }
 
 
     private fun isChatConfigurable(): Boolean {
-        return this.chatRoomId != "" && this.chatSession != null
+        return this.chatSession != null
     }
-
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {NativeModules, requireNativeComponent, UIManager, View} from 'react-native';
+import {findNodeHandle, NativeModules, requireNativeComponent, UIManager} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
@@ -21,18 +21,25 @@ const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 // Sequencetial pinned messages
 const programId = "5337f725-f580-49b5-9697-822f69e6d16e"
 const chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
+
+const data = "{programId: '5337f725-f580-49b5-9697-822f69e6d16e', chatRoomId: '65735146-5f90-4b75-bbcc-e1b75eff6014', userAvatarUrl: 'https://websdk.livelikecdn.com/demo/assets/images/redrobot.png'}"
+///
 // https://cf-blast.livelikecdn.com/producer/applications/OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI/chat-rooms/65735146-5f90-4b75-bbcc-e1b75eff6014
 
 
 const {LiveLikeModule} = NativeModules
 
 
-const sendMessage = (viewId, message) => {
-    UIManager.dispatchViewManagerCommand(
-        viewId,
-        UIManager.LiveLikeChatWidgetView.Commands.sendMessage.toString(),
-        [viewId, message]
-    );
+const sendMessage = (viewId, message, timeOut) => {
+
+    setTimeout(() => {
+        console.log('DEBUG: MESSAGE SENT: ', message)
+        UIManager.dispatchViewManagerCommand(
+            viewId,
+            UIManager.LiveLikeChatWidgetView.Commands.sendMessage.toString(),
+            [viewId, message]
+        );
+    }, timeOut)
 }
 
 
@@ -47,7 +54,7 @@ const updateNickName = (viewId, nickName) => {
 
 export const LiveLikeAndroidView = () => {
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(true)
 
     useEffect(() => {
         LiveLikeModule.initializeSDK(clientId)
@@ -55,15 +62,7 @@ export const LiveLikeAndroidView = () => {
 
 
     useEffect(() => {
-
-        setTimeout(() => {
-            setShow(true)
-        }, 3000)
-
-    }, [])
-
-    useEffect(() => {
-        console.log('Updated', show)
+        console.log('SHOWN: ', show)
     }, [show])
 
 
@@ -73,35 +72,55 @@ export const LiveLikeAndroidView = () => {
     useEffect(() => {
         setTimeout(() => {
             setShow(!show)
-        }, 10000)
+        }, 13000)
+    }, [show])
+
+    useEffect(() => {
+        let viewId = findNodeHandle(ref.current)
+        if (show && viewId) {
+            let message1 = 'Send ' + Math.floor(Math.random() * 100)
+            let message2 = 'Send ' + Math.floor(Math.random() * 100)
+            sendMessage(viewId, message1, 5000)
+            sendMessage(viewId, message2, 8000)
+        }
     }, [show])
 
     return (
-        <View style={{
-            marginTop: 12,
-            height: 500,
-            width: '100%',
-            position: 'absolute',
-            left: 0,
-            top: 0
-        }}>
-            <LiveLikeWidgetView
-                programId={programId}
-                showAskWidget={show}
+        show ? (
+            <LiveLikeChatWidgetView
+                ref={ref}
+                data={JSON.stringify({
+                    programId: '5337f725-f580-49b5-9697-822f69e6d16e',
+                    chatRoomId: '65735146-5f90-4b75-bbcc-e1b75eff6014',
+                    // userAvatarUrl: 'https://websdk.livelikecdn.com/demo/assets/images/yellowrobot.png'
+                })}
                 style={{flex: 1}}
-                influencerName={"Harbajan Singh"}
+                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
                 onWidgetShown={(event) => {
-                    console.log('DEBUG1:', 'widget shown')
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: event.nativeEvent.height})
                 }}
                 onWidgetHidden={(event) => {
-                    console.log('DEBUG2:', 'widget hidden')
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: 0})
                 }}
-                onInfluencerMessageSent={(event) => {
-                    console.log('DEBUG3:', event.nativeEvent.message)
+                onEvent={event => {
                 }}
-
+                onChatMessageSent={(event) => {
+                    console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
+                    console.log('---')
+                }}
+                onVideoPlayed={(event) => {
+                    console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
+                }}
+                onAskInfluencer={(event) => {
+                    console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
+                }}
+                onChatRoomConnected={(event) => {
+                    console.log('DEBUG: Chat Room Connected ')
+                }}
             />
-        </View>
+        ) : null
     )
 
 };
@@ -172,10 +191,6 @@ export const LiveLikeAndroidView = () => {
                     onWidgetHidden={(event) => {
                         console.log('DEBUG2:', 'widget hidden')
                     }}
-                    onInfluencerMessageSent={(event) => {
-                        console.log('DEBUG3:', event.nativeEvent.message)
-                    }}
-
                 />
      </View>
 

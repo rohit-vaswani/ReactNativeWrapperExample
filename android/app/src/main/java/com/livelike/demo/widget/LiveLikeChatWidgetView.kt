@@ -25,10 +25,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
-import com.livelike.demo.databinding.PinHybridMessageBinding
 import com.livelike.demo.ui.main.FCVideoView
-import com.livelike.demo.utils.KeyboardUtils
-import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.MessageListener
 import com.livelike.engagementsdk.chat.ChatView
 import com.livelike.engagementsdk.chat.ChatViewDelegate
@@ -41,20 +38,20 @@ import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
 import org.json.JSONObject
 
 
+
 class LiveLikeChatWidgetView(
     val context: ThemedReactContext,
     val applicationContext: ReactApplicationContext
 ) : ConstraintLayout(context), LifecycleEventListener {
 
-    var contentSession: LiveLikeContentSession? = null
     private var renderWidget = true
     lateinit var chatView: ChatView;
     private var chatViewBinding: FcChatViewBinding? = null
     var fallback: Choreographer.FrameCallback;
     var chatSession: LiveLikeChatSession? = null
-    var chatRoomId = ""
     var userAvatarUrl = ""
     private var pinMessageAdapter = PinMessageAdapter()
+
 
     init {
 
@@ -77,11 +74,6 @@ class LiveLikeChatWidgetView(
 
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        destroyChat()
-    }
-
     private fun registerPinMessagesHandler() {
         pinMessageAdapter.pinMessageHandler = object : PinMessageAdapter.PinMessageActionHandler {
             override fun onVideoPlayed(videoUrl: String) {
@@ -94,29 +86,23 @@ class LiveLikeChatWidgetView(
     }
 
     override fun onHostResume() {
-        contentSession?.resume()
     }
 
     override fun onHostPause() {
-        contentSession?.pause()
     }
 
     override fun onHostDestroy() {
-        destroyChat()
+        if (chatSession != null) {
+//            chatView.clearSession()
+            chatSession?.close()
+            pinMessageAdapter.clear()
+        }
     }
 
-    private fun destroyChat() {
-        contentSession?.close()
-        chatView.clearSession()
-        chatSession?.close()
-        pinMessageAdapter.clear()
-    }
 
-    fun updateContentSession(contentSession: LiveLikeContentSession) {
-        this.contentSession = contentSession;
-    }
 
     fun updateChatSession(chatSession: LiveLikeChatSession?) {
+        Log.i("DEBUG", "2.5. updateChatSession Setting ChatSession " + chatSession.toString())
         this.chatSession = chatSession
     }
 
@@ -137,24 +123,31 @@ class LiveLikeChatWidgetView(
 
 
     fun configureChatView(chatSession: LiveLikeChatSession?, chatRoomId: String) {
-
-        this.chatRoomId = chatRoomId
+        Log.i("DEBUG", "5. configureChatView " + chatSession?.toString())
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
         registerVideoMessageHandler()
 
         if (chatSession != null) {
+            Log.i("DEBUG", "6. configureChatView ChatView " + chatView.toString())
+            Log.i("DEBUG", "7. configureChatView chatSession " + chatSession.toString())
             chatView.allowMediaFromKeyboard = false
-            chatView.isChatInputVisible = true
-            chatView.setSession(chatSession)
+            chatView.isChatInputVisible = false
             chatSession.allowDiscardOwnPublishedMessageInSubscription = false
+            Log.i("DEBUG", "8.Setting Session to ChatView")
+            chatView.setSession(chatSession)
+            Log.i("DEBUG", "9.Done Setting Session")
         }
     }
 
 
-    fun setAvatar(avatarUrl: String) {
-        this.userAvatarUrl = avatarUrl
+    fun setAvatar(avatarUrl: String?) {
+        avatarUrl?.let {
+            this.userAvatarUrl = it
+            chatSession?.shouldDisplayAvatar = true
+            chatSession?.avatarUrl = this.userAvatarUrl
+        }
     }
 
     private fun setUserAvatar() {
@@ -168,18 +161,20 @@ class LiveLikeChatWidgetView(
 
 
     private fun connectToChatRoom(chatRoomId: String) {
+        Log.i("DEBUG", "5.5 Connect to Room " + chatSession.toString())
         chatSession?.connectToChatRoom(
             chatRoomId,
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
-
+                    Log.i("DEBUG", "5.6 Connected to ChatRoom " + chatRoomId)
+                    val params = Arguments.createMap()
+                    sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
                 }
             })
     }
 
 
     private fun registerVideoMessageHandler() {
-
         chatView.chatViewDelegate = object : ChatViewDelegate {
             override fun onCreateViewHolder(
                 parent: ViewGroup,
@@ -336,7 +331,7 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
-
+                Log.i("DEBUG", "OnNewMessage Received")
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
@@ -355,6 +350,7 @@ class LiveLikeChatWidgetView(
 
 
     fun sendChatMessage(message: String) {
+        Log.i("DEBUG", "2. Inside SendChatMessage Success " + chatSession.toString())
         chatSession?.sendChatMessage(
             message,
             null,
@@ -362,10 +358,10 @@ class LiveLikeChatWidgetView(
             null,
             object : LiveLikeCallback<LiveLikeChatMessage>() {
                 override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
+                    Log.i("DEBUG", "3. Inside SendChatMessage Success " + chatSession.toString())
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
-                    KeyboardUtils.dismissKeyboard(context, chatViewBinding?.chatView?.windowToken)
                     sendEvent(CHAT_MESSAGE_SENT, params)
                 }
             })
@@ -392,6 +388,7 @@ class LiveLikeChatWidgetView(
         eventName: String,
         params: WritableMap?
     ) {
+        Log.i("DEBUG", "Sending Event Back " + eventName)
         val reactContext = this.getContext() as ReactContext;
         reactContext.getJSModule(RCTEventEmitter::class.java)
             .receiveEvent(this.getId(), eventName, params)
@@ -402,5 +399,6 @@ class LiveLikeChatWidgetView(
         const val CHAT_MESSAGE_SENT = "onChatMessageSent"
         const val EVENT_VIDEO_PLAYED = "onVideoPlayed"
         const val EVENT_ASK_INFLUENCER = "onAskInfluencer"
+        const val EVENT_CHAT_ROOM_CONNECTED = "onChatRoomConnected"
     }
 }

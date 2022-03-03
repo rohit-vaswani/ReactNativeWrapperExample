@@ -54,4 +54,35 @@
     <dimen name="livelike_snap_live_margin_left">0dp</dimen>
     <dimen name="livelike_snap_live_margin_start">0dp</dimen>
 
+    <dimen name="fcAskWidgetMarginTop">6dp</dimen>
+    <dimen name="fcAskWidgetMarginBottom">16dp</dimen>
+    <dimen name="fcAskWidgetPaddingHorizontal">4dp</dimen>
+    <dimen name="fcAskWidgetMarginHorizontal">16dp</dimen>
+    <dimen name="fcAskWidgetContentMargin">6dp</dimen>
+    <dimen name="fcAskWidgetContentPaddingBottom">6dp</dimen>
+    <dimen name="fcAskWidgetCloseIconHeight">20dp</dimen>
+    <dimen name="fcAskWidgetCloseIconWidth">20dp</dimen>
+    <dimen name="fcAskWidgetCloseIconPadding">20dp</dimen>
+    <dimen name="fcAskWidgetQuestionHeight">32dp</dimen>
+    <dimen name="fcAskWidgetQuestionWidth">32dp</dimen>
+    <dimen name="fcAskWidgetQuestionMarginRight">12dp</dimen>
+    <dimen name="fcAskWidgetTitleTextSize">16sp</dimen>
+    <dimen name="fcAskWidgetInputMarginTop">12dp</dimen>
+    <dimen name="fcAskWidgetInputMinHeight">83dp</dimen>
+    <dimen name="fcAskWidgetInputPaddingHorizontal">12dp</dimen>
+    <dimen name="fcAskWidgetInputPaddingVertical">14dp</dimen>
+    <dimen name="fcAskWidgetInputTextSize">14dp</dimen>
+    <dimen name="fcAskWidgetWordCountMarginTop">12dp</dimen>
+    <dimen name="fcAskWidgetWordCountMarginRight">12dp</dimen>
+    <dimen name="fcAskWidgetWordCountTextSize">11dp</dimen>
+    <dimen name="fcAskWidgetSendBtnWidth">72dp</dimen>
+    <dimen name="fcAskWidgetSendBtnHeight">38dp</dimen>
+    <dimen name="fcAskWidgetSendMarginTop">8dp</dimen>
+    <dimen name="fcAskWidgetSendBtnTextSize">12sp</dimen>
+    <dimen name="fcAskWidgetConfirmationPadding">8dp</dimen>
+    <dimen name="fcAskWidgetConfirmationTickIconWidth">40dp</dimen>
+    <dimen name="fcAskWidgetConfirmationTickIconHeight">40dp</dimen>
+    <dimen name="fcAskWidgetConfirmationMsgMarginTop">8dp</dimen>
+    <dimen name="fcAskWidgetConfirmationMsgTextSize">14sp</dimen>
+
 </resources>

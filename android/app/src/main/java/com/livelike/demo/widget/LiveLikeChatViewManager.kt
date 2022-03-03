@@ -22,7 +22,6 @@ import java.util.*
 class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeChatWidgetView>() {
 
     val REACT_CLASS = "LiveLikeChatWidgetView"
-    var chatSession: LiveLikeChatSession? = null
 
     companion object {
         const val EVENT_WIDGET_SHOWN = "widgetShown"
@@ -108,12 +107,12 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         val gson = Gson()
         var fcReactData: FCReactData? = gson.fromJson(data, FCReactData::class.java)
         fcReactData?.let {
-            if(chatSession == null) {
-                chatSession = createChatSession()
+            if(view.chatSession == null) {
+                val chatSession = createChatSession()
                 view.updateChatSession(chatSession)
                 onConfiguration(view, it.chatRoomId)
             } else {
-                view.updateChatSession(chatSession)
+                view.updateChatSession(view.chatSession)
                 onConfiguration(view, it.chatRoomId)
             }
         }
@@ -126,8 +125,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
     private fun onConfiguration(chatView: LiveLikeChatWidgetView,chatRoomId: String) {
-        if (isChatConfigurable()) {
-            chatView.configureChatView(chatSession, chatRoomId)
+        if (isChatConfigurable(chatView)) {
+            chatView.configureChatView(chatView.chatSession, chatRoomId)
             this.registerPinnedMessageHandler(chatView, chatRoomId)
         }
     }
@@ -135,7 +134,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
         view.destroyChatSession()
-        chatSession = null
+        view.chatSession = null
     }
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
@@ -197,8 +196,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    private fun isChatConfigurable(): Boolean {
-        return this.chatSession != null
+    private fun isChatConfigurable(chatView: LiveLikeChatWidgetView): Boolean {
+        return chatView.chatSession != null
     }
 
 }

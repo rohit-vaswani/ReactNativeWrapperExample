@@ -119,6 +119,7 @@ class LiveLikeChatWidgetView(
 
 
     fun setupChat(chatRoomId: String) {
+        setSessionToChatView()
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
@@ -150,9 +151,9 @@ class LiveLikeChatWidgetView(
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
                     Handler(Looper.getMainLooper()).post(Runnable {
-                        setSessionToChatView()
+                        val params = Arguments.createMap()
+                        sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
                     })
-
                 }
             })
     }
@@ -160,8 +161,6 @@ class LiveLikeChatWidgetView(
     private fun setSessionToChatView() {
         if (chatSession != null) {
             chatView.setSession(chatSession!!)
-            val params = Arguments.createMap()
-            sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
         }
     }
 

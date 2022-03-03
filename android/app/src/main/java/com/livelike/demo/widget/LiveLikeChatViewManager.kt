@@ -113,6 +113,11 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         setNickName(nickName)
     }
 
+    @ReactProp(name = "userAvatarUrl")
+    fun setUserAvatar(view: LiveLikeChatWidgetView, userAvatar: String?) {
+        view.setAvatar(userAvatar)
+    }
+
     private fun onConfiguration(chatView: LiveLikeChatWidgetView, chatRoomId: String) {
         if (isChatConfigurable(chatView)) {
             chatView.setupChat(chatRoomId)

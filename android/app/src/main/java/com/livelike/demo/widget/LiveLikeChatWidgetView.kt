@@ -86,23 +86,18 @@ class LiveLikeChatWidgetView(
     }
 
     override fun onHostResume() {
-        Log.i("DEBUG","* Resuming Session")
         chatSession?.resume()
     }
 
     override fun onHostPause() {
-        Log.i("DEBUG","* Pausing Session")
         chatSession?.pause()
     }
 
     override fun onHostDestroy() {
-        Log.i("DEBUG","* onHostDestroy")
     }
 
     fun updateChatSession(chatSession: LiveLikeChatSession?) {
-        Log.i("DEBUG","2.5. updateChatSession Setting ChatSession "+chatSession.toString())
         this.chatSession = chatSession
-
         this.chatSession?.allowDiscardOwnPublishedMessageInSubscription = false
     }
 
@@ -128,7 +123,6 @@ class LiveLikeChatWidgetView(
 
 
     fun configureChatView(chatSession: LiveLikeChatSession?, chatRoomId: String) {
-        Log.i("DEBUG","5. configureChatView "+chatSession?.toString())
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
@@ -155,12 +149,10 @@ class LiveLikeChatWidgetView(
 
 
     private fun connectToChatRoom(chatRoomId: String) {
-        Log.i("DEBUG","5.5 Connect to Room "+chatSession.toString())
         chatSession?.connectToChatRoom(
             chatRoomId,
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
-                    Log.i("DEBUG","5.6 Connected to ChatRoom "+chatRoomId)
                     Handler(Looper.getMainLooper()).post(Runnable {
                         setSessionToChatView()
                     })
@@ -171,9 +163,7 @@ class LiveLikeChatWidgetView(
 
     private fun setSessionToChatView() {
         if (chatSession != null) {
-            Log.i("DEBUG","6.Setting Session to ChatView")
             chatView.setSession(chatSession!!)
-            Log.i("DEBUG","7.Done Setting Session")
             val params = Arguments.createMap()
             sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
         }
@@ -329,15 +319,15 @@ class LiveLikeChatWidgetView(
 
         chatSession?.setMessageListener(object : MessageListener {
             override fun onDeleteMessage(messageId: String) {
-                Log.i("Delete Message", messageId)
+
             }
 
             override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
-                Log.i("History Message", messages.toString())
+
             }
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
-                Log.i("DEBUG","OnNewMessage Received")
+
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
@@ -356,7 +346,6 @@ class LiveLikeChatWidgetView(
 
 
     fun sendChatMessage(message: String) {
-        Log.i("DEBUG","2. Inside SendChatMessage Success "+chatSession.toString())
         chatSession?.sendChatMessage(
             message,
             null,
@@ -364,7 +353,6 @@ class LiveLikeChatWidgetView(
             null,
             object : LiveLikeCallback<LiveLikeChatMessage>() {
                 override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
-                    Log.i("DEBUG","3. Inside SendChatMessage Success "+chatSession.toString())
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
@@ -394,7 +382,6 @@ class LiveLikeChatWidgetView(
         eventName: String,
         params: WritableMap?
     ) {
-        Log.i("DEBUG","Sending Event Back "+eventName)
         val reactContext = this.getContext() as ReactContext;
         reactContext.getJSModule(RCTEventEmitter::class.java)
             .receiveEvent(this.getId(), eventName, params)
@@ -402,7 +389,6 @@ class LiveLikeChatWidgetView(
 
     fun destroyChatSession() {
         if(chatSession != null) {
-            Log.i("DEBUG","* Destroying Session from View")
             chatView.clearSession()
             chatSession?.close()
             chatSession = null

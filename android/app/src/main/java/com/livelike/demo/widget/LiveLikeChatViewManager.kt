@@ -93,7 +93,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     ) {
         val message = args?.getString(1)
         message?.let {
-            Log.i("DEBUG","1. Inside SendChatMessage "+view.toString())
             view.sendChatMessage(it)
             view.scrollToBottom()
         }
@@ -108,18 +107,13 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     fun setdata(view: LiveLikeChatWidgetView, data: String) {
         val gson = Gson()
         var fcReactData: FCReactData? = gson.fromJson(data, FCReactData::class.java)
-
-        Log.i("DEBUG","1. Inside setdata "+view.toString())
         fcReactData?.let {
             if(chatSession == null) {
                 chatSession = createChatSession()
-                Log.i("DEBUG","2. Inside setdata got New Session "+chatSession.toString())
                 view.updateChatSession(chatSession)
                 onConfiguration(view, fcReactData.chatRoomId)
 
             } else {
-
-                Log.i("DEBUG","1.5 Inside setdata ChatSession is non null "+chatSession.toString())
                 view.updateChatSession(chatSession)
                 onConfiguration(view, fcReactData.chatRoomId)
             }
@@ -129,30 +123,23 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
 
     @ReactProp(name = "userAvatarUrl")
     fun setUserAvatar(view: LiveLikeChatWidgetView, avatarUrl: String) {
-        Log.i("DEBUG","1. Inside setUserAvatar "+view.toString())
         view.setAvatar(avatarUrl)
     }
 
     @ReactProp(name = "userNickName")
     fun setUserNickName(view: LiveLikeChatWidgetView, nickName: String?) {
-        Log.i("DEBUG","1. Inside setUserNickName "+view.toString())
         setNickName(nickName)
     }
 
     private fun onConfiguration(chatView: LiveLikeChatWidgetView,chatRoomId: String) {
-        Log.i("DEBUG","3.OnConfiguration ")
         if (isChatConfigurable()) {
-            Log.i("DEBUG","4 OnConfiguration Configuring for "+chatSession.toString()+"& "+chatRoomId)
             chatView.configureChatView(chatSession, chatRoomId)
             this.registerPinnedMessageHandler(chatView, chatRoomId)
-        } else{
-            Log.i("DEBUG","3.5 OnConfiguration Not Configurable Yet")
         }
     }
 
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
-        Log.i("DEBUG","* Dropping View")
         view.destroyChatSession()
         chatSession = null
     }

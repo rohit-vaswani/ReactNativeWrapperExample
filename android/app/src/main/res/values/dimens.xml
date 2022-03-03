@@ -107,6 +107,23 @@
     <dimen name="fcPinMessageCloseIconHeight">18dp</dimen>
     <dimen name="fcPinMessageCloseIconWidth">18dp</dimen>
 
+    <dimen name="fcVideoMessageMarginEnd">38dp</dimen>
+    <dimen name="fcVideoMessageBubblePaddingLeft">12dp</dimen>
+    <dimen name="fcVideoMessageAvatarMarginTop">8dp</dimen>
+    <dimen name="fcVideoMessageAvatarMarginRight">8dp</dimen>
+    <dimen name="fcVideoMessageBubbleMarginLeft">8dp</dimen>
+    <dimen name="fcVideoMessageBubblePaddingBottom">8dp</dimen>
+    <dimen name="fcVideoMessageBubblePaddingHorizontal">8dp</dimen>
+    <dimen name="fcVideoMessageVideoTitleMarginTop">4dp</dimen>
+    <dimen name="fcVideoMessageThumbnailMarginTop">4dp</dimen>
+    <dimen name="fcVideoMessagePlayIconHeight">40dp</dimen>
+    <dimen name="fcVideoMessagePlayIconWidth">40dp</dimen>
+    <dimen name="fcVideoMessageAskInfluencerMarginTop">8dp</dimen>
+    <dimen name="fcVideoMessageAskInfluencerIconWidth">16dp</dimen>
+    <dimen name="fcVideoMessageAskInfluencerIconHeight">16dp</dimen>
+    <dimen name="fcVideoMessageAskInfluencerMarginRight">4dp</dimen>
+    <dimen name="fcVideoMessageAskInfluencerTextSize">12sp</dimen>
+
 
 
 </resources>

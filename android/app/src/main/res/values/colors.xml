@@ -42,6 +42,8 @@
   <color name="fcAskWidgetWordCountTextColor">#787878</color>
   <color name="fcAskWidgetSendBtnTextColor">#ffffff</color>
   <color name="fcAskWidgetConfirmationMsgTextColor">#000000</color>
+  <color name="fcVideoMessageNickNameTextColor">#121212</color>
+  <color name="fcVideoMessageAskInfluencerTextColor">#ff5000</color>
 
   787878
   <array name="default_index_gradient">

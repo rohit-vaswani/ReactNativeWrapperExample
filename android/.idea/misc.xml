@@ -70,7 +70,7 @@
         <entry key="app/src/main/res/layout/custom_msg_item.xml" value="10.0" />
         <entry key="app/src/main/res/layout/default_chat_cell.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fc_chat_view.xml" value="0.25729166666666664" />
-        <entry key="app/src/main/res/layout/fc_custom_ask_a_widget.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fc_custom_ask_a_widget.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fc_widget_view.xml" value="0.625" />
         <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />

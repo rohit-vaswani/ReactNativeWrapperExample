@@ -31,7 +31,6 @@ const {LiveLikeModule} = NativeModules
 
 
 const sendMessage = (viewId, message, timeOut) => {
-
     setTimeout(() => {
         console.log('DEBUG: MESSAGE SENT: ', message)
         UIManager.dispatchViewManagerCommand(
@@ -51,10 +50,21 @@ const updateNickName = (viewId, nickName) => {
     );
 }
 
+const updateUserAvatar = (viewId, userAvatar) => {
+    UIManager.dispatchViewManagerCommand(
+        viewId,
+        UIManager.LiveLikeChatWidgetView.Commands.updateUserAvatar.toString(),
+        [viewId, userAvatar]
+    );
+}
+
+let redAvatar = "https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"
+let yellowAvatar = "https://websdk.livelikecdn.com/demo/assets/images/yellowrobot.png"
 
 export const LiveLikeAndroidView = () => {
 
     const [show, setShow] = useState(true)
+    const ref = useRef(null);
 
     useEffect(() => {
         LiveLikeModule.initializeSDK(clientId)
@@ -66,7 +76,17 @@ export const LiveLikeAndroidView = () => {
     }, [show])
 
 
-    const ref = useRef(null);
+    // useEffect(() => {
+    //
+    //     let viewId = findNodeHandle(ref.current)
+    //     setTimeout(() => {
+    //         updateUserAvatar(viewId, yellowAvatar)
+    //     }, 5000)
+    //
+    // }, [])
+
+
+
 
 
     useEffect(() => {
@@ -80,6 +100,7 @@ export const LiveLikeAndroidView = () => {
         if (show && viewId) {
             let message1 = 'Send ' + Math.floor(Math.random() * 100)
             let message2 = 'Send ' + Math.floor(Math.random() * 100)
+            updateUserAvatar(viewId, redAvatar)
             sendMessage(viewId, message1, 5000)
             sendMessage(viewId, message2, 8000)
         }
@@ -91,11 +112,9 @@ export const LiveLikeAndroidView = () => {
                 ref={ref}
                 data={JSON.stringify({
                     programId: '5337f725-f580-49b5-9697-822f69e6d16e',
-                    chatRoomId: '65735146-5f90-4b75-bbcc-e1b75eff6014',
-                    // userAvatarUrl: 'https://websdk.livelikecdn.com/demo/assets/images/yellowrobot.png'
+                    chatRoomId: '65735146-5f90-4b75-bbcc-e1b75eff6014'
                 })}
                 style={{flex: 1}}
-                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
                 onWidgetShown={(event) => {
                     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
                     this.setState({widgetHeight: event.nativeEvent.height})

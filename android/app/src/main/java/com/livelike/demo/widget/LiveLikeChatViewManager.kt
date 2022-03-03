@@ -111,20 +111,14 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             if(chatSession == null) {
                 chatSession = createChatSession()
                 view.updateChatSession(chatSession)
-                onConfiguration(view, fcReactData.chatRoomId)
-
+                onConfiguration(view, it.chatRoomId)
             } else {
                 view.updateChatSession(chatSession)
-                onConfiguration(view, fcReactData.chatRoomId)
+                onConfiguration(view, it.chatRoomId)
             }
         }
     }
 
-
-    @ReactProp(name = "userAvatarUrl")
-    fun setUserAvatar(view: LiveLikeChatWidgetView, avatarUrl: String) {
-        view.setAvatar(avatarUrl)
-    }
 
     @ReactProp(name = "userNickName")
     fun setUserNickName(view: LiveLikeChatWidgetView, nickName: String?) {

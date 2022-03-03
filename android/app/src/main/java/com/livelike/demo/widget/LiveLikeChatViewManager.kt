@@ -1,6 +1,5 @@
 package com.livelike.demo.widget
 
-import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.common.MapBuilder
@@ -78,14 +77,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         }
     }
 
-
-
-    private fun scrollToBottom(
-        view: LiveLikeChatWidgetView,
-    ) {
-        view.scrollToBottom()
-    }
-
     private fun sendMessage(
         view: LiveLikeChatWidgetView,
         args: ReadableArray?
@@ -126,7 +117,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
 
     private fun onConfiguration(chatView: LiveLikeChatWidgetView,chatRoomId: String) {
         if (isChatConfigurable(chatView)) {
-            chatView.configureChatView(chatView.chatSession, chatRoomId)
+            chatView.setupChat(chatRoomId)
             this.registerPinnedMessageHandler(chatView, chatRoomId)
         }
     }

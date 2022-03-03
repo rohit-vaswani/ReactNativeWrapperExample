@@ -1,20 +1,16 @@
 package com.livelike.demo.widget
 
 import android.content.res.Resources
-import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.TypedValue
 import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -69,7 +65,7 @@ class LiveLikeChatWidgetView(
         chatViewBinding?.let {
             chatView = it.chatView
             addView(it.root)
-            configureView()
+            configureChatView()
         }
 
     }
@@ -101,7 +97,7 @@ class LiveLikeChatWidgetView(
         this.chatSession?.allowDiscardOwnPublishedMessageInSubscription = false
     }
 
-    private fun configureView() {
+    private fun configureChatView() {
         chatView.isChatInputVisible = false
         chatView.allowMediaFromKeyboard = false
     }
@@ -122,7 +118,7 @@ class LiveLikeChatWidgetView(
     }
 
 
-    fun configureChatView(chatSession: LiveLikeChatSession?, chatRoomId: String) {
+    fun setupChat(chatRoomId: String) {
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
@@ -318,17 +314,11 @@ class LiveLikeChatWidgetView(
     private fun registerMessageListener() {
 
         chatSession?.setMessageListener(object : MessageListener {
-            override fun onDeleteMessage(messageId: String) {
+            override fun onDeleteMessage(messageId: String) {}
 
-            }
+            override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {}
 
-            override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
-
-            }
-
-            override fun onNewMessage(message: LiveLikeChatMessage) {
-
-            }
+            override fun onNewMessage(message: LiveLikeChatMessage) {}
 
             override fun onPinMessage(message: PinMessageInfo) {
                 Handler(Looper.getMainLooper()).post(Runnable {

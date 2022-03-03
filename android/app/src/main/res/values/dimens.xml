@@ -85,4 +85,28 @@
     <dimen name="fcAskWidgetConfirmationMsgMarginTop">8dp</dimen>
     <dimen name="fcAskWidgetConfirmationMsgTextSize">14sp</dimen>
 
+    <dimen name="fcPinMessageHeight">55dp</dimen>
+    <dimen name="fcPinMessageMarginHorizontal">16dp</dimen>
+    <dimen name="fcPinMessageMarginVertical">4dp</dimen>
+    <dimen name="fcPinMessagePadding">8dp</dimen>
+    <dimen name="fcPinMessagePaddingEnd">12dp</dimen>
+    <dimen name="fcPinMessageGraphicContainerMarginEnd">8dp</dimen>
+    <dimen name="fcPinMessageThumbnailHeight">40dp</dimen>
+    <dimen name="fcPinMessageThumbnailWidth">72dp</dimen>
+    <dimen name="fcPinMessagePlayIconHeight">13dp</dimen>
+    <dimen name="fcPinMessagePlayIconWidth">13dp</dimen>
+    <dimen name="fcPinMessagePlayMarginRight">4dp</dimen>
+    <dimen name="fcPinMessagePlayMarginBottom">4dp</dimen>
+    <dimen name="fcPinMessagePlayPaddingBottom">2dp</dimen>
+    <dimen name="fcPinMessagePinIconHeight">14dp</dimen>
+    <dimen name="fcPinMessagePinIconWidth">14dp</dimen>
+    <dimen name="fcPinMessageMarginEnd">12dp</dimen>
+    <dimen name="fcPinMessageCloseIconPaddingRight">3dp</dimen>
+    <dimen name="fcPinMessageCloseIconPaddingLeft">6dp</dimen>
+    <dimen name="fcPinMessageCloseIconPaddingBottom">6dp</dimen>
+    <dimen name="fcPinMessageCloseIconHeight">18dp</dimen>
+    <dimen name="fcPinMessageCloseIconWidth">18dp</dimen>
+
+
+
 </resources>

@@ -19,13 +19,7 @@ import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import java.util.*
 
-
-data class FCReactData(val programId:String, val chatRoomId: String, val userAvatarUrl:String) {
-
-}
-
-class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
-    ViewGroupManager<LiveLikeChatWidgetView>() {
+class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeChatWidgetView>() {
 
     val REACT_CLASS = "LiveLikeChatWidgetView"
     var chatSession: LiveLikeChatSession? = null
@@ -57,7 +51,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         commandId: String,
         args: ReadableArray?
     ) {
-        super.receiveCommand(root, commandId.toInt(), args)
+        super.receiveCommand(root, commandId, args)
         val commandIdInt = commandId.toInt()
         when (commandIdInt) {
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
@@ -118,22 +112,16 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         Log.i("DEBUG","1. Inside setdata "+view.toString())
         fcReactData?.let {
             if(chatSession == null) {
-
-
-                // Chat Session
                 chatSession = createChatSession()
                 Log.i("DEBUG","2. Inside setdata got New Session "+chatSession.toString())
                 view.updateChatSession(chatSession)
                 onConfiguration(view, fcReactData.chatRoomId)
 
-                // user Avatar
-                view.setAvatar(it.userAvatarUrl)
-
             } else {
 
                 Log.i("DEBUG","1.5 Inside setdata ChatSession is non null "+chatSession.toString())
                 view.updateChatSession(chatSession)
-                onConfiguration(view, it.chatRoomId)
+                onConfiguration(view, fcReactData.chatRoomId)
             }
         }
     }
@@ -162,9 +150,11 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         }
     }
 
-
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
+        Log.i("DEBUG","* Dropping View")
+        view.destroyChatSession()
+        chatSession = null
     }
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
@@ -222,10 +212,12 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
                     }
                 }
             })
+
     }
 
 
     private fun isChatConfigurable(): Boolean {
         return this.chatSession != null
     }
+
 }

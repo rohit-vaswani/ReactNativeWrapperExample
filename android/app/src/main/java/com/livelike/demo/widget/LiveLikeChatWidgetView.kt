@@ -38,7 +38,6 @@ import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
 import org.json.JSONObject
 
 
-
 class LiveLikeChatWidgetView(
     val context: ThemedReactContext,
     val applicationContext: ReactApplicationContext
@@ -70,6 +69,7 @@ class LiveLikeChatWidgetView(
         chatViewBinding?.let {
             chatView = it.chatView
             addView(it.root)
+            configureView()
         }
 
     }
@@ -86,31 +86,36 @@ class LiveLikeChatWidgetView(
     }
 
     override fun onHostResume() {
+        Log.i("DEBUG","* Resuming Session")
+        chatSession?.resume()
     }
 
     override fun onHostPause() {
+        Log.i("DEBUG","* Pausing Session")
+        chatSession?.pause()
     }
 
     override fun onHostDestroy() {
-        if (chatSession != null) {
-//            chatView.clearSession()
-            chatSession?.close()
-            pinMessageAdapter.clear()
-        }
+        Log.i("DEBUG","* onHostDestroy")
     }
 
-
-
     fun updateChatSession(chatSession: LiveLikeChatSession?) {
-        Log.i("DEBUG", "2.5. updateChatSession Setting ChatSession " + chatSession.toString())
+        Log.i("DEBUG","2.5. updateChatSession Setting ChatSession "+chatSession.toString())
         this.chatSession = chatSession
+
+        this.chatSession?.allowDiscardOwnPublishedMessageInSubscription = false
+    }
+
+    private fun configureView() {
+        chatView.isChatInputVisible = false
+        chatView.allowMediaFromKeyboard = false
     }
 
     fun scrollToBottom() {
         chatView.scrollChatToBottom()
     }
 
-    fun manuallyLayoutChildren() {
+    private fun manuallyLayoutChildren() {
         for (i in 0 until getChildCount()) {
             var child = getChildAt(i);
             child.measure(
@@ -123,22 +128,11 @@ class LiveLikeChatWidgetView(
 
 
     fun configureChatView(chatSession: LiveLikeChatSession?, chatRoomId: String) {
-        Log.i("DEBUG", "5. configureChatView " + chatSession?.toString())
+        Log.i("DEBUG","5. configureChatView "+chatSession?.toString())
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
         registerVideoMessageHandler()
-
-        if (chatSession != null) {
-            Log.i("DEBUG", "6. configureChatView ChatView " + chatView.toString())
-            Log.i("DEBUG", "7. configureChatView chatSession " + chatSession.toString())
-            chatView.allowMediaFromKeyboard = false
-            chatView.isChatInputVisible = false
-            chatSession.allowDiscardOwnPublishedMessageInSubscription = false
-            Log.i("DEBUG", "8.Setting Session to ChatView")
-            chatView.setSession(chatSession)
-            Log.i("DEBUG", "9.Done Setting Session")
-        }
     }
 
 
@@ -146,7 +140,7 @@ class LiveLikeChatWidgetView(
         avatarUrl?.let {
             this.userAvatarUrl = it
             chatSession?.shouldDisplayAvatar = true
-            chatSession?.avatarUrl = this.userAvatarUrl
+            chatSession?.avatarUrl = it
         }
     }
 
@@ -161,16 +155,28 @@ class LiveLikeChatWidgetView(
 
 
     private fun connectToChatRoom(chatRoomId: String) {
-        Log.i("DEBUG", "5.5 Connect to Room " + chatSession.toString())
+        Log.i("DEBUG","5.5 Connect to Room "+chatSession.toString())
         chatSession?.connectToChatRoom(
             chatRoomId,
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
-                    Log.i("DEBUG", "5.6 Connected to ChatRoom " + chatRoomId)
-                    val params = Arguments.createMap()
-                    sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
+                    Log.i("DEBUG","5.6 Connected to ChatRoom "+chatRoomId)
+                    Handler(Looper.getMainLooper()).post(Runnable {
+                        setSessionToChatView()
+                    })
+
                 }
             })
+    }
+
+    private fun setSessionToChatView() {
+        if (chatSession != null) {
+            Log.i("DEBUG","6.Setting Session to ChatView")
+            chatView.setSession(chatSession!!)
+            Log.i("DEBUG","7.Done Setting Session")
+            val params = Arguments.createMap()
+            sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
+        }
     }
 
 
@@ -331,7 +337,7 @@ class LiveLikeChatWidgetView(
             }
 
             override fun onNewMessage(message: LiveLikeChatMessage) {
-                Log.i("DEBUG", "OnNewMessage Received")
+                Log.i("DEBUG","OnNewMessage Received")
             }
 
             override fun onPinMessage(message: PinMessageInfo) {
@@ -350,7 +356,7 @@ class LiveLikeChatWidgetView(
 
 
     fun sendChatMessage(message: String) {
-        Log.i("DEBUG", "2. Inside SendChatMessage Success " + chatSession.toString())
+        Log.i("DEBUG","2. Inside SendChatMessage Success "+chatSession.toString())
         chatSession?.sendChatMessage(
             message,
             null,
@@ -358,7 +364,7 @@ class LiveLikeChatWidgetView(
             null,
             object : LiveLikeCallback<LiveLikeChatMessage>() {
                 override fun onResponse(result: LiveLikeChatMessage?, error: String?) {
-                    Log.i("DEBUG", "3. Inside SendChatMessage Success " + chatSession.toString())
+                    Log.i("DEBUG","3. Inside SendChatMessage Success "+chatSession.toString())
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
@@ -388,10 +394,20 @@ class LiveLikeChatWidgetView(
         eventName: String,
         params: WritableMap?
     ) {
-        Log.i("DEBUG", "Sending Event Back " + eventName)
+        Log.i("DEBUG","Sending Event Back "+eventName)
         val reactContext = this.getContext() as ReactContext;
         reactContext.getJSModule(RCTEventEmitter::class.java)
             .receiveEvent(this.getId(), eventName, params)
+    }
+
+    fun destroyChatSession() {
+        if(chatSession != null) {
+            Log.i("DEBUG","* Destroying Session from View")
+            chatView.clearSession()
+            chatSession?.close()
+            chatSession = null
+            pinMessageAdapter.clear()
+        }
     }
 
 

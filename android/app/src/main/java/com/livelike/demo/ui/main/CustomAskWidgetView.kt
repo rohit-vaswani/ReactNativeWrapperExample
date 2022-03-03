@@ -6,13 +6,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import com.livelike.demo.R
 import com.livelike.demo.databinding.FcCustomAskAWidgetBinding
 import com.livelike.engagementsdk.widget.widgetModel.TextAskWidgetModel
-import androidx.core.content.ContextCompat.getSystemService
-import com.livelike.demo.utils.KeyboardUtils
 
 
 class CustomAskWidgetView : LinearLayout {
@@ -59,7 +56,6 @@ class CustomAskWidgetView : LinearLayout {
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
         binding.closeIconBtn.visibility = View.VISIBLE
         binding.influencerQuestionInput.requestFocus()
-        KeyboardUtils.showKeyboard(context)
         this.influencerName?.let {
             binding.headerTitle.text = "Ask ${it}"
         }
@@ -122,6 +118,5 @@ class CustomAskWidgetView : LinearLayout {
     private fun closeDialog() {
         binding.influencerQuestionInput.clearFocus()
         userEventsListener.closeDialog()
-        KeyboardUtils.dismissKeyboard(context, binding.influencerQuestionInput.windowToken)
     }
 }

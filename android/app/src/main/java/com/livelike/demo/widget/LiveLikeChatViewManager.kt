@@ -1,6 +1,5 @@
 package com.livelike.demo.widget
 
-import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.common.MapBuilder
@@ -19,10 +18,10 @@ import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import java.util.*
 
-class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeChatWidgetView>() {
+class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
+    ViewGroupManager<LiveLikeChatWidgetView>() {
 
     val REACT_CLASS = "LiveLikeChatWidgetView"
-    var chatSession: LiveLikeChatSession? = null
 
     companion object {
         const val EVENT_WIDGET_SHOWN = "widgetShown"
@@ -57,7 +56,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
             COMMAND_UPDATE_NICK_NAME -> updateNickName(root, args)
             COMMAND_UPDATE_USER_AVATAR -> updateUserAvatar(root, args)
-            else -> { }
+            else -> {
+            }
         }
     }
 
@@ -77,14 +77,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         userAvatar?.let {
             view.setAvatar(it)
         }
-    }
-
-
-
-    private fun scrollToBottom(
-        view: LiveLikeChatWidgetView,
-    ) {
-        view.scrollToBottom()
     }
 
     private fun sendMessage(
@@ -108,32 +100,26 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         val gson = Gson()
         var fcReactData: FCReactData? = gson.fromJson(data, FCReactData::class.java)
         fcReactData?.let {
-            if(chatSession == null) {
-                chatSession = createChatSession()
-                view.updateChatSession(chatSession)
-                onConfiguration(view, fcReactData.chatRoomId)
-
-            } else {
-                view.updateChatSession(chatSession)
-                onConfiguration(view, fcReactData.chatRoomId)
-            }
+            val chatSession = createChatSession()
+            view.updateChatSession(chatSession)
+            onConfiguration(view, it.chatRoomId)
         }
     }
 
-
-    @ReactProp(name = "userAvatarUrl")
-    fun setUserAvatar(view: LiveLikeChatWidgetView, avatarUrl: String) {
-        view.setAvatar(avatarUrl)
-    }
 
     @ReactProp(name = "userNickName")
     fun setUserNickName(view: LiveLikeChatWidgetView, nickName: String?) {
         setNickName(nickName)
     }
 
-    private fun onConfiguration(chatView: LiveLikeChatWidgetView,chatRoomId: String) {
-        if (isChatConfigurable()) {
-            chatView.configureChatView(chatSession, chatRoomId)
+    @ReactProp(name = "userAvatarUrl")
+    fun setUserAvatar(view: LiveLikeChatWidgetView, userAvatar: String?) {
+        view.setAvatar(userAvatar)
+    }
+
+    private fun onConfiguration(chatView: LiveLikeChatWidgetView, chatRoomId: String) {
+        if (isChatConfigurable(chatView)) {
+            chatView.setupChat(chatRoomId)
             this.registerPinnedMessageHandler(chatView, chatRoomId)
         }
     }
@@ -141,7 +127,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
         view.destroyChatSession()
-        chatSession = null
+        view.chatSession = null
     }
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
@@ -149,10 +135,22 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         map.put(EVENT_WIDGET_SHOWN, MapBuilder.of("registrationName", "onWidgetShown"));
         map.put(EVENT_WIDGET_HIDDEN, MapBuilder.of("registrationName", "onWidgetHidden"));
         map.put(EVENT_ANALYTICS, MapBuilder.of("registrationName", "onEvent"));
-        map.put(LiveLikeChatWidgetView.CHAT_MESSAGE_SENT, MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT));
-        map.put(LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED));
-        map.put(LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER));
-        map.put(LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED, MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED));
+        map.put(
+            LiveLikeChatWidgetView.CHAT_MESSAGE_SENT,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.CHAT_MESSAGE_SENT)
+        );
+        map.put(
+            LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_VIDEO_PLAYED)
+        );
+        map.put(
+            LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER)
+        );
+        map.put(
+            LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED)
+        );
         return map;
     }
 
@@ -184,7 +182,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView, chatRoomId: String){
+    private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView, chatRoomId: String) {
 
 
         LiveLikeManager.engagementSDK.chat()?.getPinMessageInfoList(
@@ -192,8 +190,10 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             LiveLikeOrdering.ASC,
             LiveLikePagination.FIRST,
             object : LiveLikeCallback<List<PinMessageInfo>>() {
-                override fun onResponse(result: List<PinMessageInfo>?, error:
-                String?) {
+                override fun onResponse(
+                    result: List<PinMessageInfo>?, error:
+                    String?
+                ) {
                     result?.let {
                         chatView.handleHistoricalPinMessages(result)
                     }
@@ -203,8 +203,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    private fun isChatConfigurable(): Boolean {
-        return this.chatSession != null
+    private fun isChatConfigurable(chatView: LiveLikeChatWidgetView): Boolean {
+        return chatView.chatSession != null
     }
 
 }

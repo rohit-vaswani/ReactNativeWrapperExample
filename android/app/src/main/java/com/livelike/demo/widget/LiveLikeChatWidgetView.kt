@@ -1,22 +1,16 @@
 package com.livelike.demo.widget
 
-import android.content.Context
 import android.content.res.Resources
-import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.TypedValue
 import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -28,7 +22,6 @@ import com.livelike.demo.R
 import com.livelike.demo.adapters.PinMessageAdapter
 import com.livelike.demo.databinding.FcChatViewBinding
 import com.livelike.demo.ui.main.FCVideoView
-import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.MessageListener
 import com.livelike.engagementsdk.chat.ChatView
 import com.livelike.engagementsdk.chat.ChatViewDelegate
@@ -46,34 +39,13 @@ class LiveLikeChatWidgetView(
     val applicationContext: ReactApplicationContext
 ) : ConstraintLayout(context), LifecycleEventListener {
 
-    lateinit var contentSession: LiveLikeContentSession
     private var renderWidget = true
     lateinit var chatView: ChatView;
     private var chatViewBinding: FcChatViewBinding? = null
     var fallback: Choreographer.FrameCallback;
     var chatSession: LiveLikeChatSession? = null
-    var chatRoomId = ""
     var userAvatarUrl = ""
-    private var pinMessageAdapter = PinMessageAdapter(ArrayList())
-
-
-    inner class OverlapDecoration : ItemDecoration() {
-
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            super.getItemOffsets(outRect, view, parent, state)
-            val itemPosition: Int = parent.getChildAdapterPosition(view);
-            if (itemPosition == 0) {
-                return;
-            }
-            outRect.set(0, 0, 0, dpToPx(-120));
-        }
-
-    }
+    private var pinMessageAdapter = PinMessageAdapter()
 
 
     init {
@@ -89,13 +61,11 @@ class LiveLikeChatWidgetView(
         Choreographer.getInstance().postFrameCallback(fallback)
         val inflater: LayoutInflater = LayoutInflater.from(context)
         chatViewBinding = FcChatViewBinding.bind(inflater.inflate(R.layout.fc_chat_view, null))
-        chatViewBinding!!.pinnedMessageList.adapter = pinMessageAdapter
-        chatViewBinding!!.pinnedMessageList.addItemDecoration(OverlapDecoration());
-        chatViewBinding!!.pinnedMessageList.setLayoutManager(LinearLayoutManager(context));
         registerPinMessagesHandler()
         chatViewBinding?.let {
             chatView = it.chatView
             addView(it.root)
+            configureChatView()
         }
 
     }
@@ -112,32 +82,31 @@ class LiveLikeChatWidgetView(
     }
 
     override fun onHostResume() {
-        contentSession.resume()
+        chatSession?.resume()
     }
 
     override fun onHostPause() {
-        contentSession.pause()
+        chatSession?.pause()
     }
 
     override fun onHostDestroy() {
-        contentSession.close()
-        chatView.clearSession()
-        chatSession?.close()
-    }
-
-    fun updateContentSession(contentSession: LiveLikeContentSession) {
-        this.contentSession = contentSession;
     }
 
     fun updateChatSession(chatSession: LiveLikeChatSession?) {
         this.chatSession = chatSession
+        this.chatSession?.allowDiscardOwnPublishedMessageInSubscription = false
+    }
+
+    private fun configureChatView() {
+        chatView.isChatInputVisible = false
+        chatView.allowMediaFromKeyboard = false
     }
 
     fun scrollToBottom() {
         chatView.scrollChatToBottom()
     }
 
-    fun manuallyLayoutChildren() {
+    private fun manuallyLayoutChildren() {
         for (i in 0 until getChildCount()) {
             var child = getChildAt(i);
             child.measure(
@@ -149,25 +118,21 @@ class LiveLikeChatWidgetView(
     }
 
 
-    fun configureChatView(chatSession: LiveLikeChatSession?, chatRoomId: String) {
-
-        this.chatRoomId = chatRoomId
+    fun setupChat(chatRoomId: String) {
+        setSessionToChatView()
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
         registerVideoMessageHandler()
-
-        if (chatSession != null) {
-            chatView.allowMediaFromKeyboard = false
-            chatView.isChatInputVisible = false
-            chatView.setSession(chatSession)
-            chatSession.allowDiscardOwnPublishedMessageInSubscription = false
-        }
     }
 
 
-    fun setAvatar(avatarUrl: String) {
-        this.userAvatarUrl = avatarUrl
+    fun setAvatar(avatarUrl: String?) {
+        avatarUrl?.let {
+            this.userAvatarUrl = it
+            chatSession?.shouldDisplayAvatar = true
+            chatSession?.avatarUrl = it
+        }
     }
 
     private fun setUserAvatar() {
@@ -185,14 +150,22 @@ class LiveLikeChatWidgetView(
             chatRoomId,
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
-
+                    Handler(Looper.getMainLooper()).post(Runnable {
+                        val params = Arguments.createMap()
+                        sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
+                    })
                 }
             })
     }
 
+    private fun setSessionToChatView() {
+        if (chatSession != null) {
+            chatView.setSession(chatSession!!)
+        }
+    }
+
 
     private fun registerVideoMessageHandler() {
-
         chatView.chatViewDelegate = object : ChatViewDelegate {
             override fun onCreateViewHolder(
                 parent: ViewGroup,
@@ -264,17 +237,19 @@ class LiveLikeChatWidgetView(
 
 
                         // Handle Chat background
-                        val chatBackgroundLayoutParams = it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
+                        val chatBackgroundLayoutParams =
+                            it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
                         chatBackgroundLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
                         it.chatBackground.layoutParams = chatBackgroundLayoutParams
 
                         // Chat Bubble background
-                        val chatBubbleLayoutParams: LinearLayout.LayoutParams = it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
+                        val chatBubbleLayoutParams: LinearLayout.LayoutParams =
+                            it.chatBubbleBackground.layoutParams as LinearLayout.LayoutParams
                         it.chatBubbleBackground.setPadding(
                             chatBubblePaddingLeft,
                             chatBubblePaddingTop,
                             chatBubblePaddingRight,
-                            chatBubblePaddingBottom
+                            chatBubblePaddingBottom + dpToPx(6)
                         )
 //                        chatBubbleLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
                         it.chatBubbleBackground.layoutParams = chatBubbleLayoutParams
@@ -286,8 +261,14 @@ class LiveLikeChatWidgetView(
                             val videoViewHolder = (holder as FCVideoViewHolder)
                             val fcVideoView = videoViewHolder.itemView as FCVideoView
                             try {
-                                fcVideoView.setVideoThumbnail(getCustomDataProp("videoThumbnail", liveLikeChatMessage))
-                            } catch (e: Exception) { }
+                                fcVideoView.setVideoThumbnail(
+                                    getCustomDataProp(
+                                        "videoThumbnail",
+                                        liveLikeChatMessage
+                                    )
+                                )
+                            } catch (e: Exception) {
+                            }
                             fcVideoView.videoUrl = it
                         }
 
@@ -332,41 +313,26 @@ class LiveLikeChatWidgetView(
     private fun registerMessageListener() {
 
         chatSession?.setMessageListener(object : MessageListener {
-            override fun onDeleteMessage(messageId: String) {
-                Log.i("Delete Message", messageId)
-            }
+            override fun onDeleteMessage(messageId: String) {}
 
-            override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {
-                Log.i("History Message", messages.toString())
-            }
+            override fun onHistoryMessage(messages: List<LiveLikeChatMessage>) {}
 
-            override fun onNewMessage(message: LiveLikeChatMessage) {
-
-            }
+            override fun onNewMessage(message: LiveLikeChatMessage) {}
 
             override fun onPinMessage(message: PinMessageInfo) {
                 Handler(Looper.getMainLooper()).post(Runnable {
-                    pinMessageAdapter.addPinMessage(message)
+                    pinMessageAdapter.addPinMessage(message, context)
                 })
             }
 
             override fun onUnPinMessage(pinMessageId: String) {
-
                 Handler(Looper.getMainLooper()).post(Runnable {
                     pinMessageAdapter.removePinMessage(pinMessageId)
                 })
-
             }
         })
     }
 
-    private fun dismissKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.hideSoftInputFromWindow(
-            chatView.windowToken,
-            InputMethodManager.HIDE_NOT_ALWAYS
-        )
-    }
 
     fun sendChatMessage(message: String) {
         chatSession?.sendChatMessage(
@@ -379,7 +345,6 @@ class LiveLikeChatWidgetView(
                     val params = Arguments.createMap()
                     params.putString("message", message)
                     params.putBoolean("isSuccess", error.isNullOrEmpty())
-                    dismissKeyboard()
                     sendEvent(CHAT_MESSAGE_SENT, params)
                 }
             })
@@ -394,7 +359,12 @@ class LiveLikeChatWidgetView(
 
 
     fun handleHistoricalPinMessages(pinnedMessages: List<PinMessageInfo>) {
-        pinMessageAdapter.addPinMessages(pinnedMessages as ArrayList<PinMessageInfo>)
+        chatViewBinding?.pinnedMessageList?.let {
+            pinMessageAdapter.setup(it)
+        }
+        pinnedMessages.forEach {
+            pinMessageAdapter.addPinMessage(it, context)
+        }
     }
 
     fun sendEvent(
@@ -406,10 +376,20 @@ class LiveLikeChatWidgetView(
             .receiveEvent(this.getId(), eventName, params)
     }
 
+    fun destroyChatSession() {
+        if(chatSession != null) {
+            chatView.clearSession()
+            chatSession?.close()
+            chatSession = null
+            pinMessageAdapter.clear()
+        }
+    }
+
 
     companion object {
         const val CHAT_MESSAGE_SENT = "onChatMessageSent"
         const val EVENT_VIDEO_PLAYED = "onVideoPlayed"
         const val EVENT_ASK_INFLUENCER = "onAskInfluencer"
+        const val EVENT_CHAT_ROOM_CONNECTED = "onChatRoomConnected"
     }
 }

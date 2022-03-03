@@ -17,10 +17,11 @@ class CustomAskWidgetView : LinearLayout {
     var askWidgetModel: TextAskWidgetModel? = null
     private lateinit var binding: FcCustomAskAWidgetBinding
     lateinit var userEventsListener: UserEventsListener
-    var influencerName = "our Expert"
+    var influencerName: String? = null
 
     interface UserEventsListener {
         fun closeDialog()
+        fun onMessageSent(message: String)
     }
 
     constructor(context: Context) : super(context) {
@@ -54,6 +55,15 @@ class CustomAskWidgetView : LinearLayout {
         registerListeners()
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
         binding.closeIconBtn.visibility = View.VISIBLE
+        binding.influencerQuestionInput.requestFocus()
+        this.influencerName?.let {
+            binding.headerTitle.text = "Ask ${it}"
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        closeDialog()
     }
 
 
@@ -90,16 +100,23 @@ class CustomAskWidgetView : LinearLayout {
                 binding.askInfluencerContentWrapper.visibility = View.GONE
                 binding.askInfluencerConfirmationWrapper.visibility = View.VISIBLE
                 binding.closeIconBtn.visibility = View.GONE
-                binding.confirmationMessage.text =  "We've shared your message with ${this.influencerName}"
+                val influencerName = if(this.influencerName.isNullOrEmpty()) "our Expert" else this.influencerName
+                binding.confirmationMessage.text =  "We've shared your message with ${influencerName}"
+                userEventsListener.onMessageSent(binding.influencerQuestionInput.text.toString())
                 Handler().postDelayed({
-                    userEventsListener.closeDialog()
+                    closeDialog()
                 }, 2500)
             }
         }
 
 
         binding.closeIconBtn.setOnClickListener {
-            userEventsListener.closeDialog()
+            closeDialog()
         }
+    }
+
+    private fun closeDialog() {
+        binding.influencerQuestionInput.clearFocus()
+        userEventsListener.closeDialog()
     }
 }

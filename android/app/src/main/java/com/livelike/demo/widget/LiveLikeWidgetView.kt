@@ -4,10 +4,7 @@ import android.view.Choreographer
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import com.facebook.react.bridge.LifecycleEventListener
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.bridge.WritableMap
+import com.facebook.react.bridge.*
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.livelike.demo.LiveLikeManager
@@ -141,6 +138,12 @@ class LiveLikeWidgetView(
                 override fun closeDialog() {
                     hideWidget()
                 }
+
+                override fun onMessageSent(message: String) {
+                    val map = Arguments.createMap()
+                    map.putString("message", message)
+                    sendEvent(EVENT_INFLUENCER_MESSAGE_SENT, map)
+                }
             }
     }
 
@@ -247,5 +250,10 @@ class LiveLikeWidgetView(
                 return null
             }
         }
+    }
+
+
+    companion object {
+        const val EVENT_INFLUENCER_MESSAGE_SENT = "onInfluencerMessageSent"
     }
 }

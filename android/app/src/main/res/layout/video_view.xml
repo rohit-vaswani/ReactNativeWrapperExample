@@ -25,7 +25,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/chat_constraint_box"
         android:layout_width="match_parent"
-        android:layout_marginEnd="38dp"
+        android:layout_marginEnd="@dimen/fcVideoMessageMarginEnd"
         android:layout_height="wrap_content">
 
 
@@ -36,7 +36,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            android:paddingLeft="12dp"
+            android:paddingLeft="@dimen/fcVideoMessageBubblePaddingLeft"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -46,9 +46,9 @@
                 android:layout_height="@dimen/livelike_chat_avatar_height"
                 android:layout_gravity="top"
                 android:layout_marginLeft="@dimen/livelike_chat_avatar_margin_left"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/fcVideoMessageAvatarMarginTop"
                 android:layout_marginBottom="@dimen/livelike_chat_avatar_margin_bottom"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/fcVideoMessageAvatarMarginRight"
                 android:contentDescription="@string/user_image"
                 android:visibility="visible"
                 tools:visibility="visible" />
@@ -61,9 +61,9 @@
                 android:layout_marginRight="@dimen/livelike_chat_bubble_background_margin_right"
                 android:background="@drawable/chat_video_bubble_background"
                 android:layout_marginBottom="@dimen/livelike_chat_bubble_background_margin_bottom"
-                android:layout_marginStart="8dp"
-                android:paddingBottom="4dp"
-                android:paddingHorizontal="8dp"
+                android:layout_marginStart="@dimen/fcVideoMessageBubbleMarginLeft"
+                android:paddingBottom="@dimen/fcVideoMessageBubblePaddingBottom"
+                android:paddingHorizontal="@dimen/fcVideoMessageBubblePaddingHorizontal"
                 android:animateLayoutChanges="@bool/livelike_chat_component_layout_transition_enabled"
                 android:orientation="vertical">
 
@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#121212"
+                    android:textColor="@color/fcVideoMessageNickNameTextColor"
                     android:textSize="@dimen/livelike_default_chat_cell_name_size"
                     android:textStyle="bold"
                     app:fontFamily="@font/livelike_chat_nickname_font"
@@ -89,7 +89,7 @@
                     android:textSize="@dimen/livelike_default_chat_cell_video_title_size"
                     android:textStyle="normal"
                     tools:ignore="HardcodedText"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/fcVideoMessageVideoTitleMarginTop"
                     tools:text="Video title" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/livelike_video_player_height"
                     android:animateLayoutChanges="@bool/livelike_widget_component_layout_transition_enabled"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/fcVideoMessageThumbnailMarginTop"
                     android:background="@drawable/video_view_background">
 
                     <ImageView
@@ -163,8 +163,8 @@
 
                     <ImageView
                         android:id="@+id/ic_play"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/fcVideoMessagePlayIconWidth"
+                        android:layout_height="@dimen/fcVideoMessagePlayIconHeight"
                         android:scaleType="centerCrop"
                         android:contentDescription="@string/image"
                         app:layout_constraintEnd_toEndOf="@id/widgetContainer"
@@ -223,25 +223,25 @@
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/fcVideoMessageAskInfluencerMarginTop"
                     >
 
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="@dimen/fcVideoMessageAskInfluencerIconWidth"
+                        android:layout_height="@dimen/fcVideoMessageAskInfluencerIconHeight"
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/influencer_question"
                         android:visibility="visible"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginEnd="@dimen/fcVideoMessageAskInfluencerMarginRight"
                         android:scaleType="centerInside"
                         />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#ff5000"
-                        android:textSize="12sp"
+                        android:textColor="@color/fcVideoMessageAskInfluencerTextColor"
+                        android:textSize="@dimen/fcVideoMessageAskInfluencerTextSize"
                         android:textStyle="bold"
                         android:text="@string/ask_a_question"
                         android:letterSpacing="0.05"

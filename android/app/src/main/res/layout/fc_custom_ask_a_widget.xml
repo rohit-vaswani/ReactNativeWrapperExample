@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="6dp"
-    android:layout_marginBottom="16dp"
+    android:layout_marginHorizontal="@dimen/fcAskWidgetMarginHorizontal"
+    android:layout_marginTop="@dimen/fcAskWidgetMarginTop"
+    android:layout_marginBottom="@dimen/fcAskWidgetMarginBottom"
     android:background="@drawable/ask_a_influencer_background"
     android:orientation="vertical"
-    android:paddingHorizontal="4dp">
+    android:paddingHorizontal="@dimen/fcAskWidgetPaddingHorizontal">
 
     <LinearLayout
         android:id="@+id/askInfluencerContentWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:paddingBottom="6dp"
+        android:layout_margin="@dimen/fcAskWidgetContentMargin"
+        android:paddingBottom="@dimen/fcAskWidgetContentPaddingBottom"
         android:orientation="vertical"
         android:visibility="visible">
 
         <ImageButton
             android:id="@+id/closeIconBtn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/fcAskWidgetCloseIconHeight"
+            android:layout_height="@dimen/fcAskWidgetCloseIconWidth"
             android:layout_gravity="end"
             android:background="@drawable/close_icon"
-            android:padding="20dp" />
+            android:padding="@dimen/fcAskWidgetCloseIconPadding" />
 
 
         <LinearLayout
@@ -36,18 +36,19 @@
 
             <ImageView
                 android:id="@+id/influencer_question_image"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginRight="12dp"
+                android:layout_width="@dimen/fcAskWidgetQuestionWidth"
+                android:layout_height="@dimen/fcAskWidgetQuestionHeight"
+                android:layout_marginRight="@dimen/fcAskWidgetQuestionMarginRight"
                 app:srcCompat="@drawable/ic_ask_influencer_question" />
 
             <TextView
+                android:id="@+id/header_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.01"
                 android:text="@string/ask_influencer_title"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textColor="@color/fcAskWidgetTitleTextColor"
+                android:textSize="@dimen/fcAskWidgetTitleTextSize" />
 
         </LinearLayout>
 
@@ -61,12 +62,12 @@
             android:gravity="top|start"
             android:hint="@string/influencer_input_hint"
             android:maxLength="@integer/ask_influencer_input_word_limit"
-            android:minHeight="83dp"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="14dp"
-            android:textColor="#000000"
-            android:textColorHint="#787878"
-            android:textSize="14sp" />
+            android:minHeight="@dimen/fcAskWidgetInputMinHeight"
+            android:paddingHorizontal="@dimen/fcAskWidgetInputPaddingHorizontal"
+            android:paddingVertical="@dimen/fcAskWidgetInputPaddingVertical"
+            android:textColor="@color/fcAskWidgetInputTextColor"
+            android:textColorHint="@color/fcAskWidgetInputHintTextColor"
+            android:textSize="@dimen/fcAskWidgetInputTextSize" />
 
 
         <TextView
@@ -74,25 +75,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginTop="@dimen/fcAskWidgetWordCountMarginTop"
+            android:layout_marginRight="@dimen/fcAskWidgetWordCountMarginRight"
             android:hint="0/240"
             android:letterSpacing="0.08"
-            android:textColor="#787878"
-            android:textSize="11sp" />
+            android:textColor="@color/fcAskWidgetWordCountTextColor"
+            android:textSize="@dimen/fcAskWidgetWordCountTextSize" />
 
         <Button
             android:id="@+id/sendBtn"
-            android:layout_width="72dp"
-            android:layout_height="38dp"
+            android:layout_width="@dimen/fcAskWidgetSendBtnWidth"
+            android:layout_height="@dimen/fcAskWidgetSendBtnHeight"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/fcAskWidgetSendMarginTop"
             android:background="@drawable/ask_a_widget_send_btn_selector"
             android:enabled="false"
             android:text="@string/ask_a_widget_send_btn"
             android:textAllCaps="true"
-            android:textColor="#fff"
-            android:textSize="12sp"
+            android:textColor="@color/fcAskWidgetSendBtnTextColor"
+            android:textSize="@dimen/fcAskWidgetSendBtnTextSize"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -104,23 +105,24 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:padding="8dp"
+        android:padding="@dimen/fcAskWidgetConfirmationPadding"
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/fcAskWidgetConfirmationTickIconWidth"
+            android:layout_height="@dimen/fcAskWidgetConfirmationTickIconHeight"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ask_influencer_check_icon" />
 
         <TextView
+            android:id="@+id/confirmation_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/fcAskWidgetConfirmationMsgMarginTop"
             android:gravity="center"
             android:text="@string/ask_influencer_confirmation_message"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:textColor="@color/fcAskWidgetConfirmationMsgTextColor"
+            android:textSize="@dimen/fcAskWidgetConfirmationMsgTextSize" />
 
     </LinearLayout>
 </LinearLayout>

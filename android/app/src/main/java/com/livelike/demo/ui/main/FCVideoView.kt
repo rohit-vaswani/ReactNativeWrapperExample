@@ -31,11 +31,22 @@ class FCVideoView @JvmOverloads constructor(
     private var stopPosition: Int = 0
     var _binding: VideoViewBinding? = null
     var thumbnailUrl: String? = null
+    lateinit var videoEventHandler: IVideoEventHandler
 
-    fun setVideoThumbnail(url: String?){
+    interface IVideoEventHandler {
+        fun onAskInfluencer()
+        fun onVideoPlayed(videoUrl: String)
+    }
+
+    init {
+        inflate(context)
+    }
+
+    fun setVideoThumbnail(url: String?) {
         url?.let {
             this.thumbnailUrl = url
         }
+
     }
 
     var videoUrl: String? = null
@@ -54,7 +65,6 @@ class FCVideoView @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        inflate(context)
     }
 
     override fun onDetachedFromWindow() {
@@ -80,33 +90,23 @@ class FCVideoView @JvmOverloads constructor(
             videoUrl?.let {
                 setFrameThumbnail(videoUrl!!)
             }
-
         }
         setOnClickListeners()
     }
 
 
-    /** sets the listeners */
     private fun setOnClickListeners() {
         _binding?.let {
-            it.soundView.setOnClickListener {
-                if (isMuted) {
-                    unMute()
-                } else {
-                    mute()
+
+
+            it.widgetContainer.setOnClickListener { view ->
+                videoUrl?.let {
+                    videoEventHandler.onVideoPlayed(it)
                 }
             }
 
-            it.widgetContainer.setOnClickListener { view ->
-                if (it.playerView?.isPlaying) {
-                    pause()
-                } else {
-                    if (stopPosition > 0) { // already running
-                        resume()
-                    } else {
-                        play()
-                    }
-                }
+            it.askInfluencer.setOnClickListener {
+                videoEventHandler.onAskInfluencer()
             }
         }
     }
@@ -159,7 +159,7 @@ class FCVideoView @JvmOverloads constructor(
     }
 
 
-    private fun showVideoControls(){
+    private fun showVideoControls() {
         _binding?.let {
             it.icPlay.setImageResource(R.drawable.ic_play_button)
             it.icPlay.visibility = VISIBLE
@@ -285,7 +285,7 @@ class FCVideoView @JvmOverloads constructor(
                     .into(it.thumbnailView)
             }
 
-            if(thumbnailUrl != null) {
+            if (thumbnailUrl != null) {
                 Glide.with(context.applicationContext)
                     .load(thumbnailUrl)
                     .apply(requestOptions)

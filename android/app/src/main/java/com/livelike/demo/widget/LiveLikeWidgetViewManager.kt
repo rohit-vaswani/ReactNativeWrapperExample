@@ -38,6 +38,11 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
         view.updateContentSession(session)
     }
 
+    @ReactProp(name = "influencerName")
+    fun setInfluencerName(view: LiveLikeWidgetView, influencerName: String) {
+        view.setInfluencerName(influencerName)
+    }
+
     @ReactProp(name = "showAskWidget")
     fun showAskWidget(view: LiveLikeWidgetView, showWidget: Boolean) {
         if (showWidget) {
@@ -53,6 +58,7 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
         var map = HashMap<String, Any>()
         map.put(EVENT_WIDGET_SHOWN, MapBuilder.of("registrationName", "onWidgetShown"));
         map.put(EVENT_WIDGET_HIDDEN, MapBuilder.of("registrationName", "onWidgetHidden"));
+        map.put(LiveLikeWidgetView.EVENT_INFLUENCER_MESSAGE_SENT, MapBuilder.of("registrationName", LiveLikeWidgetView.EVENT_INFLUENCER_MESSAGE_SENT));
         map.put(EVENT_ANALYTICS, MapBuilder.of("registrationName", "onEvent"));
         return map;
     }

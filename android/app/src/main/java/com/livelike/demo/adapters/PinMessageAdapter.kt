@@ -1,124 +1,161 @@
 package com.livelike.demo.adapters
 
+import android.content.Context
+import android.os.Handler
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import androidx.core.view.children
+import androidx.core.view.forEach
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.BaseRequestOptions
+import com.bumptech.glide.request.RequestOptions
+import com.facebook.react.uimanager.ThemedReactContext
 import com.livelike.demo.R
-import com.livelike.demo.databinding.PinChatMessageBinding
-import com.livelike.demo.ui.main.PinVideoMessageView
-import com.livelike.demo.viewHolders.PinnedTextMessageHolder
-import com.livelike.demo.viewHolders.PinnedVideoMsgHolder
+import com.livelike.demo.databinding.PinHybridMessageBinding
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
 import org.json.JSONObject
 
 
-class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PinMessageAdapter() {
+
+    private val messageList: ArrayList<PinMessageInfo> = arrayListOf()
+    var parentView: RelativeLayout? = null
+    lateinit var pinMessageHandler: PinMessageActionHandler
+
+    interface PinMessageActionHandler {
+        fun onVideoPlayed(videoUrl: String)
+    }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == MSG_TYPE_TEXT) {
-            val inflater = LayoutInflater.from(parent.context)
-            val bindingObject: PinChatMessageBinding = PinChatMessageBinding.bind(
-                inflater.inflate(
-                    R.layout.pin_chat_message,
-                    parent,
-                    false
-                )
+    private fun bindHybridMessage(
+        bindingObject: PinHybridMessageBinding,
+        pinMessage: PinMessageInfo
+    ) {
+
+        val messagePayload = pinMessage.messagePayload
+        val isChatMessage: Boolean = isVideoMessage(messagePayload).not()
+        val pinView = bindingObject.root
+        bindingObject.container.clipToOutline = true
+
+        // Avatar + Video Thumbnail
+        bindingObject.imgChatAvatar.visibility = when (isChatMessage) {
+            true -> View.VISIBLE
+            else -> View.GONE
+        }
+        bindingObject.imgVideoThumbnailContainer.clipToOutline = true
+        bindingObject.imgVideoThumbnail.clipToOutline = true
+        bindingObject.imgVideoThumbnailContainer.visibility = when (isChatMessage) {
+            true -> View.GONE
+            else -> View.VISIBLE
+        }
+
+        // Text message
+        var message: String? = ""
+        try {
+            message = if (isChatMessage) messagePayload?.message else getCustomDataProp(
+                "title",
+                messagePayload,
             )
-            return PinnedTextMessageHolder(bindingObject)
+        } catch (e: java.lang.Exception) {
+        }
+        bindingObject.chatMessage.text = message
+
+
+        val appContext: Context = pinView.context.applicationContext
+        if (isChatMessage) {
+            updateImageResource(
+                appContext,
+                bindingObject.imgChatAvatar,
+                messagePayload?.userPic,
+                R.drawable.default_avatar,
+                getAvatarOptions()
+            )
         } else {
-            val videoView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.pin_video_message, parent, false) as PinVideoMessageView
-            videoView.initViews()
-            return PinnedVideoMsgHolder(videoView)
+            updateImageResource(
+                appContext,
+                bindingObject.imgVideoThumbnail,
+                getCustomDataProp("videoThumbnail", messagePayload),
+                R.drawable.default_video_thumbnail,
+                RequestOptions()
+            )
+        }
+
+        pinMessage.id?.let {
+            registerListener(bindingObject, it)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        if (getItemViewType(position) == MSG_TYPE_TEXT) {
-            val textViewHolder = holder as PinnedTextMessageHolder
-            val messagePayload = messageList[position].messagePayload
-            bindTextMessage(textViewHolder, messagePayload)
-        } else {
-            val videoViewHolder = holder as PinnedVideoMsgHolder
-            val messagePayload = messageList[position].messagePayload
-            bindVideoMessage(videoViewHolder, messagePayload)
-        }
+    private fun getAvatarOptions(): BaseRequestOptions<RequestOptions> {
+        val options = RequestOptions()
+        options.optionalCircleCrop()
+        options.transform(
+            CenterCrop(),
+            RoundedCorners(10)
+        )
+        return options
 
     }
 
-    private fun bindTextMessage(
-        textViewHolder: PinnedTextMessageHolder,
-        messagePayload: LiveLikeChatMessage?
-    ) {
+    private fun registerListener(bindingObject: PinHybridMessageBinding, messageId: String) {
 
-        textViewHolder.bindingObject.container.clipToOutline = true
-        messagePayload?.let {
-            textViewHolder.bindingObject.chatMessage.text = it.message
-            textViewHolder.bindingObject.chatNickname.text = it.nickname
-            it.userPic?.let {
-                Glide.with(textViewHolder.itemView.context.applicationContext)
-                    .load(it)
-                    .placeholder(R.drawable.default_avatar)
-                    .error(R.drawable.default_avatar)
-                    .into(textViewHolder.bindingObject.imgChatAvatar)
-            }
+        val messageDetails = getDetailedMessageBy(messageId)
+        val isVideoMessage = isVideoMessage(messageDetails.messagePayload)
+
+        bindingObject.closeBtnContainer.setOnClickListener {
+            removeAllPinMessages()
         }
-    }
 
-    private fun bindVideoMessage(
-        videoViewHolder: PinnedVideoMsgHolder,
-        messagePayload: LiveLikeChatMessage?
-    ) {
-
-        val videoMessageView = videoViewHolder.itemView as PinVideoMessageView
-        val imgChatAvatar = videoMessageView.imgChatAvatar
-
-
-        messagePayload?.custom_data?.let {
-
-
-
-            val jsonObject = JSONObject(it)
-            val url = jsonObject.get("url").toString()
-            val nickName = jsonObject.get("nickName").toString()
-            val userPic = jsonObject.get("userPic").toString()
-
-
-            try{
-                val videoThumbnail = jsonObject.get("videoThumbnail").toString()
-                videoThumbnail.let {
-                    videoMessageView.setVideoThumbnail(it)
+        bindingObject.container.setOnClickListener {
+            if (isVideoMessage) {
+                getCustomDataProp("url", messageDetails.messagePayload)?.let {
+                    pinMessageHandler.onVideoPlayed(it)
                 }
-            }catch (e: Exception) {}
-
-
-            url?.let {
-                videoMessageView.videoUrl = it
-            }
-            nickName?.let {
-                videoMessageView.chatNickname.text = it
             }
 
-            // Set Avatar
-            imgChatAvatar?.let {
-                Glide.with(videoViewHolder.itemView.context.applicationContext)
-                    .load(userPic)
-                    .placeholder(R.drawable.default_avatar)
-                    .error(R.drawable.default_avatar)
-                    .into(it)
-            }
+            Handler().postDelayed({
+                removePinMessage(messageId)
+            }, 1000)
+
         }
 
     }
 
-    override fun getItemCount(): Int {
-        return messageList.size
+    private fun getCustomDataProp(key: String, messagePayload: LiveLikeChatMessage?): String? {
+
+        try {
+            messagePayload?.custom_data?.let {
+                val jsonObject = JSONObject(it)
+                return jsonObject.get(key).toString()
+            }
+        } catch (e: java.lang.Exception) {
+
+        }
+        return null
     }
+
+    private fun updateImageResource(
+        appContext: Context,
+        targetNode: ImageView,
+        targetSource: String?,
+        defaultSource: Int,
+        options: BaseRequestOptions<RequestOptions>
+    ) {
+        targetSource?.let {
+            Glide.with(appContext)
+                .load(it)
+                .apply(options)
+                .placeholder(defaultSource)
+                .error(defaultSource)
+                .into(targetNode)
+        }
+    }
+
 
     private fun isVideoMessage(messagePayload: LiveLikeChatMessage?): Boolean {
 
@@ -136,40 +173,55 @@ class PinMessageAdapter(private val messageList: ArrayList<PinMessageInfo>) :
 
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when (isVideoMessage(messageList[position].messagePayload)) {
-            true -> MSG_TYPE_VIDEO
-            false -> MSG_TYPE_TEXT
-        }
+    fun setup(view: RelativeLayout) {
+        this.parentView = view
     }
 
-    fun addPinMessage(newMessage: PinMessageInfo) {
-        messageList.add(newMessage)
-        notifyDataSetChanged()
+    fun clear() {
+        this.messageList.clear()
+        this.parentView = null
+
     }
 
-    fun removePinMessage(messageId: String) {
+    fun addPinMessage(
+        pinMessage: PinMessageInfo,
+        parentContext: ThemedReactContext
+    ) {
+
+        val pinnedBindingObject = PinHybridMessageBinding.bind(
+            LayoutInflater.from(parentContext)
+                .inflate(R.layout.pin_hybrid_message, parentView, false)
+        )
+        val pinnedView = pinnedBindingObject.root
+        pinnedView.setTag(pinMessage.id)
+        messageList.add(pinMessage)
+        parentView?.addView(pinnedView)
+        bindHybridMessage(pinnedBindingObject, pinMessage)
+
+    }
+
+
+    fun removePinMessage(messageId: String?) {
         val index = messageList.indexOfFirst { it.id == messageId }
         if (index != -1) {
             messageList.removeAt(index)
-            notifyDataSetChanged()
         }
-
+        parentView?.children?.forEach {
+            val thisMessageId = it.tag as String
+            if(thisMessageId == messageId) {
+                parentView?.removeView(it)
+            }
+        }
     }
 
-    fun addPinMessages(pinMessages: ArrayList<PinMessageInfo>) {
-        messageList.clear()
-        notifyDataSetChanged()
-        messageList.addAll(pinMessages)
-        notifyDataSetChanged()
-
+    private fun getDetailedMessageBy(messageId: String): PinMessageInfo {
+        val index = messageList.indexOfFirst { it.id == messageId }
+        return messageList[index]
     }
 
-
-    companion object {
-        private val MSG_TYPE_TEXT = 0
-        private val MSG_TYPE_VIDEO = 1
+    private fun removeAllPinMessages() {
+        this.messageList.clear()
+        this.parentView?.removeAllViews()
     }
-
 
 }

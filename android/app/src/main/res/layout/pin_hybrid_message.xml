@@ -1,0 +1,137 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/fcPinMessageHeight"
+    android:layout_marginHorizontal="@dimen/fcPinMessageMarginHorizontal"
+    android:layout_marginVertical="@dimen/fcPinMessageMarginVertical"
+    android:background="@drawable/pin_chat_message_background"
+    android:orientation="horizontal"
+    android:padding="@dimen/fcPinMessagePadding"
+    android:paddingEnd="@dimen/fcPinMessagePaddingEnd">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/fcPinMessageGraphicContainerMarginEnd"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_chat_avatar"
+            android:layout_width="@dimen/chatAvatarHeight"
+            android:layout_height="@dimen/chatAvatarHeight"
+            android:layout_gravity="top"
+            android:contentDescription="@string/user_image"
+            android:visibility="gone"
+            app:srcCompat="@drawable/default_avatar" />
+
+
+        <RelativeLayout
+            android:id="@+id/img_video_thumbnail_container"
+            android:layout_width="@dimen/fcPinMessageThumbnailWidth"
+            android:layout_height="@dimen/fcPinMessageThumbnailHeight">
+
+            <ImageView
+                android:id="@+id/img_video_thumbnail"
+                android:layout_width="@dimen/livelike_pin_video_thumbnail_width"
+                android:layout_height="@dimen/livelike_pin_video_thumbnail_height"
+                android:background="@drawable/video_view_background"
+                android:contentDescription="@string/image"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/default_video_thumbnail" />
+
+            <ImageView
+                android:id="@+id/ic_play_small"
+                android:layout_width="@dimen/fcPinMessagePlayIconWidth"
+                android:layout_height="@dimen/fcPinMessagePlayIconHeight"
+                android:layout_alignRight="@id/img_video_thumbnail"
+                android:layout_alignBottom="@id/img_video_thumbnail"
+                android:layout_marginRight="@dimen/fcPinMessagePlayMarginRight"
+                android:layout_marginBottom="@dimen/fcPinMessagePlayMarginBottom"
+                android:background="@drawable/pin_video_play_background"
+                android:contentDescription="@string/image"
+                android:paddingBottom="@dimen/fcPinMessagePlayPaddingBottom"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_play_small" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/pinIcon"
+                android:layout_width="@dimen/fcPinMessagePinIconWidth"
+                android:layout_height="@dimen/fcPinMessagePinIconHeight"
+                android:layout_gravity="end"
+                android:background="@drawable/pin_icon"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/chat_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.90"
+                android:text=""
+                android:textColor="@color/otherUsernameColor"
+                android:textSize="@dimen/chatUserNameTextSize"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:fontFamily="@font/livelike_chat_nickname_font"
+                tools:text="Rohit Vaswani" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/chat_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/chatMessageMarginTop"
+            android:layout_marginEnd="@dimen/fcPinMessageMarginEnd"
+            android:text=""
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textAlignment="viewStart"
+            android:textColor="@color/messageColor"
+            android:textSize="@dimen/chatMessageTextSize"
+            app:fontFamily="@font/livelike_chat_message_font"
+            tools:ignore="HardcodedText"
+            tools:text="@tools:sample/lorem[30]" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/closeBtnContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingEnd="@dimen/fcPinMessageCloseIconPaddingRight"
+        android:paddingStart="@dimen/fcPinMessageCloseIconPaddingLeft"
+        android:paddingBottom="@dimen/fcPinMessageCloseIconPaddingBottom"
+        >
+
+        <ImageButton
+            android:id="@+id/closeIconBtn"
+            android:layout_width="@dimen/fcPinMessageCloseIconHeight"
+            android:layout_height="@dimen/fcPinMessageCloseIconWidth"
+            android:layout_gravity="start"
+            android:background="@drawable/close_icon" />
+    </LinearLayout>
+
+
+</LinearLayout>

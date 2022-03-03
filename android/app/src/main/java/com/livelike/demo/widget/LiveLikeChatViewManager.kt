@@ -1,6 +1,5 @@
 package com.livelike.demo.widget
 
-import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.common.MapBuilder

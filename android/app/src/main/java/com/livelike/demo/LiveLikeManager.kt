@@ -6,6 +6,8 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactMethod
 import com.livelike.demo.ui.main.PageViewModel.Companion.PREF_USER_ACCESS_TOKEN
 import com.livelike.engagementsdk.EngagementSDK
+import com.livelike.engagementsdk.LiveLikeContentSession
+import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.core.AccessTokenDelegate
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
@@ -15,6 +17,7 @@ object LiveLikeManager {
 
     lateinit var engagementSDK: EngagementSDK;
     var userAccessToken: String? = null;
+    var contentSession: LiveLikeContentSession? = null
 
 
     @ReactMethod
@@ -29,6 +32,44 @@ object LiveLikeManager {
     fun unSubscribeUserStream() {
         engagementSDK.userStream.subscribe("invalid-key") {}
     }
+
+
+    private fun createContentSession(programId: String): LiveLikeContentSession {
+        return engagementSDK.createContentSession(programId)
+    }
+
+    fun getChatSession(programId: String): LiveLikeChatSession? {
+
+        if(isValidContentSession(programId)) {
+            return this.contentSession?.chatSession
+        }
+
+        destroyContentSession()
+        return createContentSession(programId)?.chatSession
+
+    }
+
+    fun getContentSession(programId: String): LiveLikeContentSession? {
+
+        if(isValidContentSession(programId)) {
+            return this.contentSession
+        }
+
+        destroyContentSession()
+        return createContentSession(programId)
+
+    }
+
+    @ReactMethod
+    fun destroyContentSession() {
+        this.contentSession?.close()
+        this.contentSession = null
+    }
+
+    private fun isValidContentSession(programId: String): Boolean {
+        return this.contentSession?.contentSessionId() == programId
+    }
+
 
     @ReactMethod
     fun initializeSDK(applicationContext: Context, clientId: String) {

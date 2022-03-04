@@ -82,15 +82,14 @@ class LiveLikeChatWidgetView(
     }
 
     override fun onHostResume() {
-        chatSession?.resume()
+//        chatSession?.resume()
     }
 
     override fun onHostPause() {
-        chatSession?.pause()
+//        chatSession?.pause()
     }
 
-    override fun onHostDestroy() {
-    }
+    override fun onHostDestroy() {}
 
     fun updateChatSession(chatSession: LiveLikeChatSession?) {
         this.chatSession = chatSession
@@ -379,7 +378,7 @@ class LiveLikeChatWidgetView(
     fun destroyChatSession() {
         if(chatSession != null) {
             chatView.clearSession()
-            chatSession?.close()
+//            chatSession?.close()
             chatSession = null
             pinMessageAdapter.clear()
         }

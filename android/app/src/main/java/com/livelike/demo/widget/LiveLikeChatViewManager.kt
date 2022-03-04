@@ -8,18 +8,14 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.google.gson.Gson
 import com.livelike.demo.LiveLikeManager
-import com.livelike.engagementsdk.EngagementSDK
-import com.livelike.engagementsdk.EpochTime
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.chat.data.remote.LiveLikeOrdering
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
-import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import java.util.*
 
-class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
-    ViewGroupManager<LiveLikeChatWidgetView>() {
+class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeChatWidgetView>() {
 
     val REACT_CLASS = "LiveLikeChatWidgetView"
 
@@ -56,8 +52,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
             COMMAND_UPDATE_NICK_NAME -> updateNickName(root, args)
             COMMAND_UPDATE_USER_AVATAR -> updateUserAvatar(root, args)
-            else -> {
-            }
+            else -> {}
         }
     }
 
@@ -100,7 +95,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         val gson = Gson()
         var fcReactData: FCReactData? = gson.fromJson(data, FCReactData::class.java)
         fcReactData?.let {
-            val chatSession = createChatSession()
+            val chatSession = LiveLikeManager.getChatSession(it.programId)
             view.updateChatSession(chatSession)
             onConfiguration(view, it.chatRoomId)
         }
@@ -166,22 +161,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     }
 
 
-    private fun createChatSession(): LiveLikeChatSession? {
-
-        return LiveLikeManager.engagementSDK.createChatSession(object :
-            EngagementSDK.TimecodeGetter {
-            override fun getTimecode(): EpochTime {
-                return EpochTime(0)
-            }
-
-        }, errorDelegate = object : ErrorDelegate() {
-            override fun onError(error: String) {
-
-            }
-        })
-    }
-
-
     private fun registerPinnedMessageHandler(chatView: LiveLikeChatWidgetView, chatRoomId: String) {
 
 
@@ -206,5 +185,4 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     private fun isChatConfigurable(chatView: LiveLikeChatWidgetView): Boolean {
         return chatView.chatSession != null
     }
-
 }

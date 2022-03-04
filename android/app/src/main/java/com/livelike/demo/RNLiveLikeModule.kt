@@ -57,4 +57,10 @@ class RNLiveLikeModule(
             }
         })
     }
+
+    @ReactMethod
+    fun destroyContentSession(promise: Promise) {
+        LiveLikeManager.destroyContentSession()
+        promise.resolve(true)
+    }
 }

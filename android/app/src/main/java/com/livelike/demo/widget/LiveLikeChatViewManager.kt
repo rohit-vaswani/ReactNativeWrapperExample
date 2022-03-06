@@ -15,6 +15,7 @@ import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import java.util.*
 
+
 class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeChatWidgetView>() {
 
     val REACT_CLASS = "LiveLikeChatWidgetView"
@@ -122,7 +123,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
         view.destroyChatSession()
-        view.chatSession = null
+        //view.chatSession = null
     }
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
@@ -186,3 +187,4 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         return chatView.chatSession != null
     }
 }
+

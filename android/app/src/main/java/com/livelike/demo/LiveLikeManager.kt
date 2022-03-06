@@ -33,14 +33,20 @@ object LiveLikeManager {
         engagementSDK.userStream.subscribe("invalid-key") {}
     }
 
-
     private fun createContentSession(programId: String): LiveLikeContentSession {
-        return engagementSDK.createContentSession(programId)
+        Log.i("DEBUG","Creating session for "+programId)
+        this.contentSession = engagementSDK.createContentSession(programId)
+        Log.i("DEBUG","Created session  "+this.contentSession.toString())
+        Log.i("DEBUG","Created Chat session "+this.contentSession?.chatSession.toString())
+        return this.contentSession!!
+
     }
 
     fun getChatSession(programId: String): LiveLikeChatSession? {
-
+        Log.i("DEBUG","Get Chat/ContentSession for "+programId)
         if(isValidContentSession(programId)) {
+            Log.i("DEBUG","Found Valid Session "+this.contentSession.toString())
+            Log.i("DEBUG","Found Valid Chat Session "+this.contentSession?.chatSession.toString())
             return this.contentSession?.chatSession
         }
 
@@ -51,7 +57,9 @@ object LiveLikeManager {
 
     fun getContentSession(programId: String): LiveLikeContentSession? {
 
+        Log.i("DEBUG","Get ContentSession for "+programId)
         if(isValidContentSession(programId)) {
+            Log.i("DEBUG","Found Sesssion for "+programId+" "+this.contentSession.toString())
             return this.contentSession
         }
 
@@ -62,11 +70,13 @@ object LiveLikeManager {
 
     @ReactMethod
     fun destroyContentSession() {
+        Log.i("DEBUG","Destroying session "+this.contentSession.toString())
         this.contentSession?.close()
         this.contentSession = null
     }
 
     private fun isValidContentSession(programId: String): Boolean {
+        Log.i("DEBUG","isValidSession "+this.contentSession?.contentSessionId())
         return this.contentSession?.contentSessionId() == programId
     }
 
@@ -116,6 +126,5 @@ object LiveLikeManager {
                     }
                 })
         }!!
-
     }
 }

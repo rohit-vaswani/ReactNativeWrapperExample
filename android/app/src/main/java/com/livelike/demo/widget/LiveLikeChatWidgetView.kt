@@ -3,6 +3,7 @@ package com.livelike.demo.widget
 import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.TypedValue
 import android.view.Choreographer
 import android.view.LayoutInflater
@@ -118,6 +119,7 @@ class LiveLikeChatWidgetView(
 
 
     fun setupChat(chatRoomId: String) {
+        Log.i("DEBUG","Setup ChatRoom for "+chatRoomId)
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
@@ -144,11 +146,13 @@ class LiveLikeChatWidgetView(
 
 
     private fun connectToChatRoom(chatRoomId: String) {
+        Log.i("DEBUG","Connect to ChatRoom "+chatSession.toString())
         chatSession?.connectToChatRoom(
             chatRoomId,
             callback = object : LiveLikeCallback<Unit>() {
                 override fun onResponse(result: Unit?, error: String?) {
                     Handler(Looper.getMainLooper()).post(Runnable {
+                        Log.i("DEBUG","Set Session success ")
                         setSessionToChatView()
                         val params = Arguments.createMap()
                         sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
@@ -159,6 +163,7 @@ class LiveLikeChatWidgetView(
 
     private fun setSessionToChatView() {
         if (chatSession != null) {
+            Log.i("DEBUG","Set Session "+chatSession.toString())
             chatView.setSession(chatSession!!)
         }
     }

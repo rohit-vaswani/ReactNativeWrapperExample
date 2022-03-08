@@ -10,7 +10,6 @@ import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.core.AccessTokenDelegate
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
-import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 
 object LiveLikeManager {
 
@@ -33,7 +32,8 @@ object LiveLikeManager {
         engagementSDK.userStream.subscribe("invalid-key") {}
     }
 
-    private fun createContentSession(programId: String): LiveLikeContentSession {
+
+    @Synchronized private fun createContentSession(programId: String): LiveLikeContentSession {
         Log.i("DEBUG","Creating session for "+programId)
         this.contentSession = engagementSDK.createContentSession(programId)
         Log.i("DEBUG","Created session  "+this.contentSession.toString())
@@ -42,7 +42,7 @@ object LiveLikeManager {
 
     }
 
-    fun getChatSession(programId: String): LiveLikeChatSession? {
+    @Synchronized fun getChatSession(programId: String): LiveLikeChatSession? {
         Log.i("DEBUG","Get Chat/ContentSession for "+programId)
         if(isValidContentSession(programId)) {
             Log.i("DEBUG","Found Valid Session "+this.contentSession.toString())
@@ -55,7 +55,7 @@ object LiveLikeManager {
 
     }
 
-    fun getContentSession(programId: String): LiveLikeContentSession? {
+    @Synchronized fun getContentSession(programId: String): LiveLikeContentSession? {
 
         Log.i("DEBUG","Get ContentSession for "+programId)
         if(isValidContentSession(programId)) {
@@ -69,13 +69,13 @@ object LiveLikeManager {
     }
 
     @ReactMethod
-    fun destroyContentSession() {
+    @Synchronized fun destroyContentSession() {
         Log.i("DEBUG","Destroying session "+this.contentSession.toString())
         this.contentSession?.close()
         this.contentSession = null
     }
 
-    private fun isValidContentSession(programId: String): Boolean {
+    @Synchronized private fun isValidContentSession(programId: String): Boolean {
         Log.i("DEBUG","isValidSession "+this.contentSession?.contentSessionId())
         return this.contentSession?.contentSessionId() == programId
     }

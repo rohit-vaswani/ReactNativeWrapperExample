@@ -34,7 +34,6 @@ import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
 import org.json.JSONObject
 
-
 class LiveLikeChatWidgetView(
     val context: ThemedReactContext,
     val applicationContext: ReactApplicationContext
@@ -120,10 +119,12 @@ class LiveLikeChatWidgetView(
 
     fun setupChat(chatRoomId: String) {
         Log.i("DEBUG","Setup ChatRoom for "+chatRoomId)
+        setSessionToChatView()
         connectToChatRoom(chatRoomId)
         setUserAvatar()
         registerMessageListener()
         registerVideoMessageHandler()
+        Choreographer.getInstance().postFrameCallback(fallback)
     }
 
 
@@ -153,9 +154,9 @@ class LiveLikeChatWidgetView(
                 override fun onResponse(result: Unit?, error: String?) {
                     Handler(Looper.getMainLooper()).post(Runnable {
                         Log.i("DEBUG","Set Session success ")
-                        setSessionToChatView()
                         val params = Arguments.createMap()
                         sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
+                        Choreographer.getInstance().postFrameCallback(fallback)
                     })
                 }
             })
@@ -382,7 +383,7 @@ class LiveLikeChatWidgetView(
 
     fun destroyChatSession() {
         if(chatSession != null) {
-            chatView.clearSession()
+            //chatView.clearSession()
 //            chatSession?.close()
             chatSession = null
             pinMessageAdapter.clear()

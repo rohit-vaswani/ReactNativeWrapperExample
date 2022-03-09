@@ -55,7 +55,6 @@ class CustomAskWidgetView : LinearLayout {
         registerListeners()
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
         binding.closeIconBtn.visibility = View.VISIBLE
-        binding.influencerQuestionInput.requestFocus()
         this.influencerName?.let {
             binding.headerTitle.text = "Ask ${it}"
         }

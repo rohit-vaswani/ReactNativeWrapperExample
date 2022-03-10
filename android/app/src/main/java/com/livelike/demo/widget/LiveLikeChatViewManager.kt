@@ -47,7 +47,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         commandId: String,
         args: ReadableArray?
     ) {
-        super.receiveCommand(root, commandId, args)
+        super.receiveCommand(root, commandId.toInt(), args)
         val commandIdInt = commandId.toInt()
         when (commandIdInt) {
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
@@ -113,6 +113,11 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         view.setAvatar(userAvatar)
     }
 
+    @ReactProp(name = "influencerName")
+    fun setInfluencerName(view: LiveLikeChatWidgetView, influencerName: String) {
+        view.setInfluencerName(influencerName)
+    }
+
     private fun onConfiguration(chatView: LiveLikeChatWidgetView, chatRoomId: String) {
         if (isChatConfigurable(chatView)) {
             chatView.setupChat(chatRoomId)
@@ -123,7 +128,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
         view.destroyChatSession()
-        //view.chatSession = null
     }
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
@@ -144,8 +148,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER)
         );
         map.put(
-            LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED,
-            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED)
+            LiveLikeChatWidgetView.EVENT_REMOVE_ALL_PIN_MESSAGES,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_REMOVE_ALL_PIN_MESSAGES)
         );
         return map;
     }
@@ -187,4 +191,3 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         return chatView.chatSession != null
     }
 }
-

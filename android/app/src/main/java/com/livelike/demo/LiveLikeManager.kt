@@ -9,6 +9,8 @@ import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.core.AccessTokenDelegate
+import com.livelike.engagementsdk.core.utils.LogLevel
+import com.livelike.engagementsdk.core.utils.minimumLogLevel
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
 
 object LiveLikeManager {
@@ -17,6 +19,7 @@ object LiveLikeManager {
     lateinit var engagementSDK: EngagementSDK;
     var userAccessToken: String? = null;
     var contentSession: LiveLikeContentSession? = null
+    const val PREF_USER_ACCESS_TOKEN = "user_access_token"
 
 
     @ReactMethod
@@ -34,19 +37,13 @@ object LiveLikeManager {
 
 
     @Synchronized private fun createContentSession(programId: String): LiveLikeContentSession {
-        Log.i("DEBUG","Creating session for "+programId)
-        this.contentSession = engagementSDK.createContentSession(programId)
-        Log.i("DEBUG","Created session  "+this.contentSession.toString())
-        Log.i("DEBUG","Created Chat session "+this.contentSession?.chatSession.toString())
+        this.contentSession = engagementSDK.createContentSession(programId,  null, false)
         return this.contentSession!!
 
     }
 
     @Synchronized fun getChatSession(programId: String): LiveLikeChatSession? {
-        Log.i("DEBUG","Get Chat/ContentSession for "+programId)
         if(isValidContentSession(programId)) {
-            Log.i("DEBUG","Found Valid Session "+this.contentSession.toString())
-            Log.i("DEBUG","Found Valid Chat Session "+this.contentSession?.chatSession.toString())
             return this.contentSession?.chatSession
         }
 
@@ -57,9 +54,7 @@ object LiveLikeManager {
 
     @Synchronized fun getContentSession(programId: String): LiveLikeContentSession? {
 
-        Log.i("DEBUG","Get ContentSession for "+programId)
         if(isValidContentSession(programId)) {
-            Log.i("DEBUG","Found Sesssion for "+programId+" "+this.contentSession.toString())
             return this.contentSession
         }
 
@@ -70,26 +65,20 @@ object LiveLikeManager {
 
     @ReactMethod
     @Synchronized fun destroyContentSession() {
-        Log.i("DEBUG","Destroying session "+this.contentSession.toString())
+        this.contentSession?.chatSession?.close()
         this.contentSession?.close()
         this.contentSession = null
     }
 
     @Synchronized private fun isValidContentSession(programId: String): Boolean {
-        Log.i("DEBUG","isValidSession "+this.contentSession?.contentSessionId())
         return this.contentSession?.contentSessionId() == programId
     }
 
 
     @ReactMethod
-    fun initializeSDK(applicationContext: Context, clientId: String) {
+    fun initializeSDK(applicationContext: Context, clientId: String,  promise: Promise) {
 
-
-        // TODO: See if this is already present
-//        val sharedPreferences = applicationContext.getSharedPreferences(
-//            MainActivity.ID_SHARED_PREFS,
-//            Context.MODE_PRIVATE
-//        )
+        minimumLogLevel = LogLevel.Verbose
 
         engagementSDK = clientId?.let {
             EngagementSDK(
@@ -97,7 +86,7 @@ object LiveLikeManager {
                 applicationContext,
                 object : ErrorDelegate() {
                     override fun onError(error: String) {
-                        println("LiveLikeApplication.onError--->$error")
+                        promise.reject(Throwable(error))
                     }
                 }, accessTokenDelegate = object : AccessTokenDelegate {
                     override fun getAccessToken(): String? {
@@ -107,13 +96,12 @@ object LiveLikeManager {
                         ).getString(
                             PREF_USER_ACCESS_TOKEN,
                             null
-                        ).apply {
-                            println("Token:$this")
-                        }
+                        ).apply {}
                     }
 
                     override fun storeAccessToken(accessToken: String?) {
 
+                        promise.resolve(accessToken)
                         userAccessToken = accessToken
 
                         applicationContext.getSharedPreferences(

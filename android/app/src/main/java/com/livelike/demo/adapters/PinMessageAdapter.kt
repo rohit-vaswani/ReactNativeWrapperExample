@@ -30,6 +30,7 @@ class PinMessageAdapter() {
 
     interface PinMessageActionHandler {
         fun onVideoPlayed(videoUrl: String)
+        fun onRemoveAllPinMessages()
     }
 
 
@@ -109,6 +110,7 @@ class PinMessageAdapter() {
 
         bindingObject.closeBtnContainer.setOnClickListener {
             removeAllPinMessages()
+            pinMessageHandler.onRemoveAllPinMessages()
         }
 
         bindingObject.container.setOnClickListener {

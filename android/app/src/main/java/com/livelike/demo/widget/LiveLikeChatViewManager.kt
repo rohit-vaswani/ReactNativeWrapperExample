@@ -8,18 +8,15 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.google.gson.Gson
 import com.livelike.demo.LiveLikeManager
-import com.livelike.engagementsdk.EngagementSDK
-import com.livelike.engagementsdk.EpochTime
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
 import com.livelike.engagementsdk.chat.data.remote.LiveLikeOrdering
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
 import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
-import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import java.util.*
 
-class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
-    ViewGroupManager<LiveLikeChatWidgetView>() {
+
+class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) : ViewGroupManager<LiveLikeChatWidgetView>() {
 
     val REACT_CLASS = "LiveLikeChatWidgetView"
 
@@ -50,14 +47,13 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         commandId: String,
         args: ReadableArray?
     ) {
-        super.receiveCommand(root, commandId, args)
+        super.receiveCommand(root, commandId.toInt(), args)
         val commandIdInt = commandId.toInt()
         when (commandIdInt) {
             COMMAND_SEND_MESSAGE -> sendMessage(root, args)
             COMMAND_UPDATE_NICK_NAME -> updateNickName(root, args)
             COMMAND_UPDATE_USER_AVATAR -> updateUserAvatar(root, args)
-            else -> {
-            }
+            else -> {}
         }
     }
 
@@ -100,7 +96,7 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         val gson = Gson()
         var fcReactData: FCReactData? = gson.fromJson(data, FCReactData::class.java)
         fcReactData?.let {
-            val chatSession = createChatSession()
+            val chatSession = LiveLikeManager.getChatSession(it.programId)
             view.updateChatSession(chatSession)
             onConfiguration(view, it.chatRoomId)
         }
@@ -117,6 +113,11 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         view.setAvatar(userAvatar)
     }
 
+    @ReactProp(name = "influencerName")
+    fun setInfluencerName(view: LiveLikeChatWidgetView, influencerName: String) {
+        view.setInfluencerName(influencerName)
+    }
+
     private fun onConfiguration(chatView: LiveLikeChatWidgetView, chatRoomId: String) {
         if (isChatConfigurable(chatView)) {
             chatView.setupChat(chatRoomId)
@@ -127,7 +128,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     override fun onDropViewInstance(view: LiveLikeChatWidgetView) {
         super.onDropViewInstance(view)
         view.destroyChatSession()
-        view.chatSession = null
     }
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
@@ -148,8 +148,8 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER)
         );
         map.put(
-            LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED,
-            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_CHAT_ROOM_CONNECTED)
+            LiveLikeChatWidgetView.EVENT_REMOVE_ALL_PIN_MESSAGES,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_REMOVE_ALL_PIN_MESSAGES)
         );
         return map;
     }
@@ -163,22 +163,6 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
         }
 
         LiveLikeManager.engagementSDK.updateChatNickname(nickName)
-    }
-
-
-    private fun createChatSession(): LiveLikeChatSession? {
-
-        return LiveLikeManager.engagementSDK.createChatSession(object :
-            EngagementSDK.TimecodeGetter {
-            override fun getTimecode(): EpochTime {
-                return EpochTime(0)
-            }
-
-        }, errorDelegate = object : ErrorDelegate() {
-            override fun onError(error: String) {
-
-            }
-        })
     }
 
 
@@ -206,5 +190,4 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
     private fun isChatConfigurable(chatView: LiveLikeChatWidgetView): Boolean {
         return chatView.chatSession != null
     }
-
 }

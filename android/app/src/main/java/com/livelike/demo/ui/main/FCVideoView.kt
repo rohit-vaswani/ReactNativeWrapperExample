@@ -32,6 +32,7 @@ class FCVideoView @JvmOverloads constructor(
     var _binding: VideoViewBinding? = null
     var thumbnailUrl: String? = null
     lateinit var videoEventHandler: IVideoEventHandler
+    var influencerName: String? = null
 
     interface IVideoEventHandler {
         fun onAskInfluencer()
@@ -46,8 +47,14 @@ class FCVideoView @JvmOverloads constructor(
         url?.let {
             this.thumbnailUrl = url
         }
-
     }
+
+    fun setInfluencerNickName(nickName: String?) {
+        nickName?.let {
+            this.influencerName = it
+        }
+    }
+
 
     var videoUrl: String? = null
         set(value) {
@@ -267,6 +274,11 @@ class FCVideoView @JvmOverloads constructor(
 
     /** extract thumbnail from the video url */
     private fun setFrameThumbnail(videoUrl: String) {
+
+        influencerName?.let {
+            _binding?.askInfluencerCTA?.text = "ASK ${it}"
+        }
+
         _binding?.let {
             it.thumbnailView.visibility = VISIBLE
             showVideoControls()
@@ -274,6 +286,7 @@ class FCVideoView @JvmOverloads constructor(
             it.playbackErrorView.visibility = GONE
             it.playerView.visibility = INVISIBLE
             var requestOptions = RequestOptions()
+
 
             if (videoUrl.isNotEmpty()) {
                 Glide.with(context.applicationContext)

@@ -19,8 +19,8 @@ class RNLiveLikeModule(
     }
 
     @ReactMethod
-    fun initializeSDK(clientId: String) {
-        LiveLikeManager.initializeSDK(application, clientId)
+    fun initializeSDK(clientId: String, promise: Promise) {
+        LiveLikeManager.initializeSDK(application, clientId, promise)
     }
 
     @ReactMethod
@@ -56,5 +56,11 @@ class RNLiveLikeModule(
                 }
             }
         })
+    }
+
+    @ReactMethod
+    fun destroyContentSession(promise: Promise) {
+        LiveLikeManager.destroyContentSession()
+        promise.resolve(true)
     }
 }

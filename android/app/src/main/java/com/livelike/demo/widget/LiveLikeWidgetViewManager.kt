@@ -12,9 +12,6 @@ import java.util.*
 class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext) :
     ViewGroupManager<LiveLikeWidgetView>() {
 
-
-
-
     val REACT_CLASS = "LiveLikeWidgetView"
 
     companion object {
@@ -34,8 +31,11 @@ class LiveLikeWidgetViewManager(val applicationContext: ReactApplicationContext)
 
     @ReactProp(name = "programId")
     fun setProgramId(view: LiveLikeWidgetView, programId: String) {
-        val session = LiveLikeManager.engagementSDK.createContentSession(programId)
-        view.updateContentSession(session)
+        val session = LiveLikeManager.getContentSession(programId)
+        session?.let {
+            view.updateContentSession(it)
+        }
+
     }
 
     @ReactProp(name = "influencerName")

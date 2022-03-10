@@ -3,6 +3,7 @@ package com.livelike.demo.widget
 import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.TypedValue
 import android.view.Choreographer
 import android.view.LayoutInflater
@@ -46,6 +47,7 @@ class LiveLikeChatWidgetView(
     var chatSession: LiveLikeChatSession? = null
     var userAvatarUrl = ""
     private var pinMessageAdapter = PinMessageAdapter()
+    var influencerNickName: String? = null
 
 
     init {
@@ -75,22 +77,22 @@ class LiveLikeChatWidgetView(
             override fun onVideoPlayed(videoUrl: String) {
                 val params = Arguments.createMap()
                 params.putString("videoUrl", videoUrl)
+                params.putString("source", "pinned")
                 sendEvent(EVENT_VIDEO_PLAYED, params)
             }
 
+            override fun onRemoveAllPinMessages() {
+                val params = Arguments.createMap()
+                sendEvent(EVENT_REMOVE_ALL_PIN_MESSAGES, params)
+            }
         }
     }
 
-    override fun onHostResume() {
-        chatSession?.resume()
-    }
+    override fun onHostResume() {}
 
-    override fun onHostPause() {
-        chatSession?.pause()
-    }
+    override fun onHostPause() {}
 
-    override fun onHostDestroy() {
-    }
+    override fun onHostDestroy() {}
 
     fun updateChatSession(chatSession: LiveLikeChatSession?) {
         this.chatSession = chatSession
@@ -146,16 +148,20 @@ class LiveLikeChatWidgetView(
 
 
     private fun connectToChatRoom(chatRoomId: String) {
-        chatSession?.connectToChatRoom(
-            chatRoomId,
-            callback = object : LiveLikeCallback<Unit>() {
-                override fun onResponse(result: Unit?, error: String?) {
-                    Handler(Looper.getMainLooper()).post(Runnable {
-                        val params = Arguments.createMap()
-                        sendEvent(EVENT_CHAT_ROOM_CONNECTED, params)
-                    })
-                }
-            })
+        var connectedChatRoomId: String? = null
+        chatSession?.getCurrentChatRoom?.let {
+            connectedChatRoomId = it()
+        }
+
+        if(connectedChatRoomId.isNullOrEmpty() || connectedChatRoomId != chatRoomId){
+            chatSession?.connectToChatRoom(
+                chatRoomId,
+                callback = object : LiveLikeCallback<Unit>() {
+                    override fun onResponse(result: Unit?, error: String?) {
+                    }
+                })
+        }
+
     }
 
     private fun setSessionToChatView() {
@@ -237,8 +243,7 @@ class LiveLikeChatWidgetView(
 
 
                         // Handle Chat background
-                        val chatBackgroundLayoutParams =
-                            it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
+                        val chatBackgroundLayoutParams = it.chatBackground.layoutParams as ConstraintLayout.LayoutParams
                         chatBackgroundLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
                         it.chatBackground.layoutParams = chatBackgroundLayoutParams
 
@@ -251,9 +256,9 @@ class LiveLikeChatWidgetView(
                             chatBubblePaddingRight,
                             chatBubblePaddingBottom + dpToPx(6)
                         )
-//                        chatBubbleLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
                         it.chatBubbleBackground.layoutParams = chatBubbleLayoutParams
                         it.chatBubbleBackground.clipToOutline = true
+
 
                         // Video Thumbnail
                         val url: String? = getCustomDataProp("url", liveLikeChatMessage)
@@ -267,6 +272,7 @@ class LiveLikeChatWidgetView(
                                         liveLikeChatMessage
                                     )
                                 )
+                                fcVideoView.setInfluencerNickName(influencerNickName)
                             } catch (e: Exception) {
                             }
                             fcVideoView.videoUrl = it
@@ -289,6 +295,7 @@ class LiveLikeChatWidgetView(
             override fun onVideoPlayed(videoUrl: String) {
                 val map = Arguments.createMap()
                 map.putString("videoUrl", videoUrl)
+                map.putString("source", "chat")
                 sendEvent(EVENT_VIDEO_PLAYED, map)
             }
         }
@@ -367,6 +374,10 @@ class LiveLikeChatWidgetView(
         }
     }
 
+    fun setInfluencerName(influencerName: String) {
+        this.influencerNickName = influencerName
+    }
+
     fun sendEvent(
         eventName: String,
         params: WritableMap?
@@ -379,7 +390,6 @@ class LiveLikeChatWidgetView(
     fun destroyChatSession() {
         if(chatSession != null) {
             chatView.clearSession()
-            chatSession?.close()
             chatSession = null
             pinMessageAdapter.clear()
         }
@@ -390,6 +400,6 @@ class LiveLikeChatWidgetView(
         const val CHAT_MESSAGE_SENT = "onChatMessageSent"
         const val EVENT_VIDEO_PLAYED = "onVideoPlayed"
         const val EVENT_ASK_INFLUENCER = "onAskInfluencer"
-        const val EVENT_CHAT_ROOM_CONNECTED = "onChatRoomConnected"
+        const val EVENT_REMOVE_ALL_PIN_MESSAGES = "onRemoveAllPinMessages"
     }
 }

@@ -147,6 +147,10 @@ class LiveLikeChatViewManager(val applicationContext: ReactApplicationContext) :
             LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER,
             MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_ASK_INFLUENCER)
         );
+        map.put(
+            LiveLikeChatWidgetView.EVENT_REMOVE_ALL_PIN_MESSAGES,
+            MapBuilder.of("registrationName", LiveLikeChatWidgetView.EVENT_REMOVE_ALL_PIN_MESSAGES)
+        );
         return map;
     }
 

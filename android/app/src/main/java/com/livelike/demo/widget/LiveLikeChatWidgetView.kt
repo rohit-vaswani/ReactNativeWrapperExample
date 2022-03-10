@@ -77,9 +77,14 @@ class LiveLikeChatWidgetView(
             override fun onVideoPlayed(videoUrl: String) {
                 val params = Arguments.createMap()
                 params.putString("videoUrl", videoUrl)
+                params.putString("source", "pinned")
                 sendEvent(EVENT_VIDEO_PLAYED, params)
             }
 
+            override fun onRemoveAllPinMessages() {
+                val params = Arguments.createMap()
+                sendEvent(EVENT_REMOVE_ALL_PIN_MESSAGES, params)
+            }
         }
     }
 
@@ -290,6 +295,7 @@ class LiveLikeChatWidgetView(
             override fun onVideoPlayed(videoUrl: String) {
                 val map = Arguments.createMap()
                 map.putString("videoUrl", videoUrl)
+                map.putString("source", "chat")
                 sendEvent(EVENT_VIDEO_PLAYED, map)
             }
         }
@@ -394,5 +400,6 @@ class LiveLikeChatWidgetView(
         const val CHAT_MESSAGE_SENT = "onChatMessageSent"
         const val EVENT_VIDEO_PLAYED = "onVideoPlayed"
         const val EVENT_ASK_INFLUENCER = "onAskInfluencer"
+        const val EVENT_REMOVE_ALL_PIN_MESSAGES = "onRemoveAllPinMessages"
     }
 }

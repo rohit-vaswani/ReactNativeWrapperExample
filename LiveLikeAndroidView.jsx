@@ -93,28 +93,28 @@ export const LiveLikeAndroidView = () => {
     //     }, 5000)
     // }, [])
 
-    useEffect(() => {
-        setTimeout(() => {
-            setShowAskWidget(true)
-        }, 5000)
-    }, [])
-
-
-    useEffect(() => {
-        setTimeout(() => {
-            setShow(!show)
-        }, TIME_DELAY)
-    }, [show])
-
-    useEffect(() => {
-        let viewId = findNodeHandle(ref.current)
-        if (show && viewId) {
-            let message1 = 'Send ' + Math.floor(Math.random() * 100)
-            let message2 = 'Send ' + Math.floor(Math.random() * 100)
-            sendMessage(viewId, message1, 5000)
-            sendMessage(viewId, message2, 8000)
-        }
-    }, [show])
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setShowAskWidget(true)
+    //     }, 5000)
+    // }, [])
+    //
+    //
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setShow(!show)
+    //     }, TIME_DELAY)
+    // }, [show])
+    //
+    // useEffect(() => {
+    //     let viewId = findNodeHandle(ref.current)
+    //     if (show && viewId) {
+    //         let message1 = 'Send ' + Math.floor(Math.random() * 100)
+    //         let message2 = 'Send ' + Math.floor(Math.random() * 100)
+    //         sendMessage(viewId, message1, 5000)
+    //         sendMessage(viewId, message2, 8000)
+    //     }
+    // }, [show])
 
 
     // useEffect(() => {
@@ -148,10 +148,13 @@ export const LiveLikeAndroidView = () => {
                 console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
             }}
             onVideoPlayed={(event) => {
-                console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
+                console.log('DEBUG: ON Video message Clicked', event.nativeEvent)
             }}
             onAskInfluencer={(event) => {
                 console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
+            }}
+            onRemoveAllPinMessages={(event) => {
+                console.log('DEBUG: ON REMOVE ALL PIN MESSAGES', event.nativeEvent)
             }}
         />
     )

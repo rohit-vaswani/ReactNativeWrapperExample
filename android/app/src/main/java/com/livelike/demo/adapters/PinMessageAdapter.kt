@@ -30,7 +30,7 @@ class PinMessageAdapter() {
 
     interface PinMessageActionHandler {
         fun onVideoPlayed(videoUrl: String)
-        fun onRemoveAllPinMessages()
+        fun onDismissPinMessage(message: String?)
     }
 
 
@@ -110,10 +110,25 @@ class PinMessageAdapter() {
 
         bindingObject.closeBtnContainer.setOnClickListener {
             removeAllPinMessages()
-            pinMessageHandler.onRemoveAllPinMessages()
         }
 
         bindingObject.container.setOnClickListener {
+
+
+
+            try {
+                val messagePayload = messageDetails.messagePayload
+                val message = if (!isVideoMessage) messagePayload?.message else getCustomDataProp(
+                    "title",
+                    messagePayload,
+                )
+                pinMessageHandler.onDismissPinMessage(message)
+            }catch (e: Exception) {}
+
+
+
+
+
             if (isVideoMessage) {
                 getCustomDataProp("url", messageDetails.messagePayload)?.let {
                     pinMessageHandler.onVideoPlayed(it)

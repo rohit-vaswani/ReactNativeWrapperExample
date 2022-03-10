@@ -153,7 +153,7 @@ export const LiveLikeAndroidView = () => {
             onAskInfluencer={(event) => {
                 console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
             }}
-            onRemoveAllPinMessages={(event) => {
+            onPinnedMessageDismissed={(event) => {
                 console.log('DEBUG: ON REMOVE ALL PIN MESSAGES', event.nativeEvent)
             }}
         />

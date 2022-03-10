@@ -7,8 +7,9 @@ export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 
 
-const programId = "5337f725-f580-49b5-9697-822f69e6d16e"
-const chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
+// ClientID = BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml
+// let programId = "5337f725-f580-49b5-9697-822f69e6d16e"
+// let chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
 
 // const programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
@@ -16,8 +17,8 @@ const chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
 
 
 // Messages + Pinned Video
-// const programId = "5337f725-f580-49b5-9697-822f69e6d16e"
-// const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb"
+const programId = "5337f725-f580-49b5-9697-822f69e6d16e"
+const chatRoomId = "1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb"
 // // https://cf-blast.livelikecdn.com/producer/applications/BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml/chat-rooms/1ad3b3ae-c25f-4f3b-8873-727b1bf7ebbb/pinned-messages
 
 
@@ -25,7 +26,6 @@ const chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
 // const programId = "5337f725-f580-49b5-9697-822f69e6d16e"
 // const chatRoomId = "65735146-5f90-4b75-bbcc-e1b75eff6014"
 // const data = "{programId: '5337f725-f580-49b5-9697-822f69e6d16e', chatRoomId: '65735146-5f90-4b75-bbcc-e1b75eff6014', userAvatarUrl: 'https://websdk.livelikecdn.com/demo/assets/images/redrobot.png'}"
-///
 // https://cf-blast.livelikecdn.com/producer/applications/OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI/chat-rooms/65735146-5f90-4b75-bbcc-e1b75eff6014
 
 
@@ -63,9 +63,13 @@ const updateUserAvatar = (viewId, userAvatar) => {
 let redAvatar = "https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"
 let yellowAvatar = "https://websdk.livelikecdn.com/demo/assets/images/yellowrobot.png"
 
+
+const TIME_DELAY = 13000
+
 export const LiveLikeAndroidView = () => {
 
     const [show, setShow] = useState(true)
+    const [showAskWidget, setShowAskWidget] = useState(false)
     const ref = useRef(null);
 
     useEffect(() => {
@@ -74,35 +78,53 @@ export const LiveLikeAndroidView = () => {
 
 
     useEffect(() => {
-        console.log('SHOWN: ', show)
-    }, [show])
-
-
-    useEffect(() => {
-        let viewId = findNodeHandle(ref.current)
-        setTimeout(() => {
-            updateUserAvatar(viewId, yellowAvatar)
-        }, 5000)
-    }, [])
-
-
-    useEffect(() => {
-        setTimeout(() => {
-            setShow(!show)
-        }, 13000)
+        console.log('SHOW CHAT: ', show)
     }, [show])
 
     useEffect(() => {
-        let viewId = findNodeHandle(ref.current)
-        if (show && viewId) {
-            let message1 = 'Send ' + Math.floor(Math.random() * 100)
-            let message2 = 'Send ' + Math.floor(Math.random() * 100)
-            sendMessage(viewId, message1, 5000)
-            sendMessage(viewId, message2, 8000)
-        }
-    }, [show])
+        console.log('SHOW ASK: ', showAskWidget)
+    }, [showAskWidget])
 
-    return show ? (
+
+    // useEffect(() => {
+    //     let viewId = findNodeHandle(ref.current)
+    //     setTimeout(() => {
+    //         updateUserAvatar(viewId, yellowAvatar)
+    //     }, 5000)
+    // }, [])
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setShowAskWidget(true)
+    //     }, 5000)
+    // }, [])
+    //
+    //
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setShow(!show)
+    //     }, TIME_DELAY)
+    // }, [show])
+    //
+    // useEffect(() => {
+    //     let viewId = findNodeHandle(ref.current)
+    //     if (show && viewId) {
+    //         let message1 = 'Send ' + Math.floor(Math.random() * 100)
+    //         let message2 = 'Send ' + Math.floor(Math.random() * 100)
+    //         sendMessage(viewId, message1, 5000)
+    //         sendMessage(viewId, message2, 8000)
+    //     }
+    // }, [show])
+
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         programId = "08c5c27e-952d-4392-bd2a-c042db036ac5"
+    //         chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71"
+    //     }, TIME_DELAY * 1.5)
+    // }, [])
+
+    return (
         <LiveLikeChatWidgetView
             ref={ref}
             data={JSON.stringify({
@@ -110,6 +132,7 @@ export const LiveLikeAndroidView = () => {
                 chatRoomId
             })}
             userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+            // influencerName={"Harbajan Singh"}
             style={{flex: 1}}
             onWidgetShown={(event) => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
@@ -125,15 +148,51 @@ export const LiveLikeAndroidView = () => {
                 console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
             }}
             onVideoPlayed={(event) => {
-                console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
+                console.log('DEBUG: ON Video message Clicked', event.nativeEvent)
             }}
             onAskInfluencer={(event) => {
                 console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
             }}
+            onRemoveAllPinMessages={(event) => {
+                console.log('DEBUG: ON REMOVE ALL PIN MESSAGES', event.nativeEvent)
+            }}
         />
-    ) : null
+    )
 };
 
+
+/*
+
+            <LiveLikeChatWidgetView
+                ref={ref}
+                data={JSON.stringify({
+                    programId,
+                    chatRoomId
+                })}
+                userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+                style={{flex: 1}}
+                onWidgetShown={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: event.nativeEvent.height})
+                }}
+                onWidgetHidden={(event) => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                    this.setState({widgetHeight: 0})
+                }}
+                onEvent={event => {
+                }}
+                onChatMessageSent={(event) => {
+                    console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
+                }}
+                onVideoPlayed={(event) => {
+                    console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
+                }}
+                onAskInfluencer={(event) => {
+                    console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
+                }}
+            />
+
+ */
 
 /*
 

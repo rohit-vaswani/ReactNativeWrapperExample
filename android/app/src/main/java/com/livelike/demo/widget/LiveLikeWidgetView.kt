@@ -66,7 +66,7 @@ class LiveLikeWidgetView(
                 override fun onResponse(result: List<LiveLikeWidget>?, error: String?) {
 
                     if(result?.size!! > 0) {
-                        result?.last()?.let {
+                        result?.first()?.let {
                             widgetDetails = it
                         }
                     }
@@ -113,15 +113,16 @@ class LiveLikeWidgetView(
     }
 
     override fun onHostResume() {
-        contentSession?.resume()
+//        contentSession?.resume()
     }
 
     override fun onHostPause() {
-        contentSession?.pause()
+//        contentSession?.pause()
     }
 
     override fun onHostDestroy() {
-        contentSession?.close()
+//        contentSession?.close()
+        this.contentSession = null
     }
 
     fun updateContentSession(contentSession: LiveLikeContentSession) {

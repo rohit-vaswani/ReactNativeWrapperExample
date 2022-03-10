@@ -55,7 +55,6 @@ class CustomAskWidgetView : LinearLayout {
         registerListeners()
         askWidgetModel?.widgetData?.let { liveLikeWidget -> }
         binding.closeIconBtn.visibility = View.VISIBLE
-        binding.influencerQuestionInput.requestFocus()
         this.influencerName?.let {
             binding.headerTitle.text = "Ask ${it}"
         }
@@ -69,12 +68,16 @@ class CustomAskWidgetView : LinearLayout {
 
     private fun registerListeners(): Unit {
 
+
         binding.influencerQuestionInput.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(arg0: Editable) {
 
                 // Updating Send Button
-                binding.sendBtn.isEnabled = binding.influencerQuestionInput.text?.length!! > 0
+                val isEnabled = binding.influencerQuestionInput.text?.length!! > 0
+
+                // Updating Send Button
+                binding.sendBtn.isEnabled = isEnabled
 
                 // Updating Word Count
                 val maxWordCount = resources.getInteger(R.integer.ask_influencer_input_word_limit)

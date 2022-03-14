@@ -54,10 +54,10 @@
     <dimen name="livelike_snap_live_margin_left">0dp</dimen>
     <dimen name="livelike_snap_live_margin_start">0dp</dimen>
 
-    <dimen name="fcAskWidgetMarginTop">6dp</dimen>
+    <dimen name="fcAskWidgetMarginTop">0dp</dimen>
     <dimen name="fcAskWidgetMarginBottom">16dp</dimen>
     <dimen name="fcAskWidgetPaddingHorizontal">4dp</dimen>
-    <dimen name="fcAskWidgetMarginHorizontal">16dp</dimen>
+    <dimen name="fcAskWidgetMarginHorizontal">14dp</dimen>
     <dimen name="fcAskWidgetContentMargin">6dp</dimen>
     <dimen name="fcAskWidgetContentPaddingBottom">6dp</dimen>
     <dimen name="fcAskWidgetCloseIconHeight">20dp</dimen>

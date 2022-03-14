@@ -31,6 +31,7 @@
         <entry key="../../../../../.gradle/caches/transforms-3/4283a3e7433bcf0a2f9621939ac52fe4/transformed/jetified-android-engagement-sdk-2.43.1/res/layout/video_widget.xml" value="0.31145833333333334" />
         <entry key="../../../../../Library/Android/sdk/platforms/android-30/data/res/drawable/btn_star.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/drawable-hdpi/white_separator.xml" value="0.13489583333333333" />
+        <entry key="app/src/main/res/drawable/ask_a_influencer_background.xml" value="0.1715" />
         <entry key="app/src/main/res/drawable/ask_a_widget_background.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/drawable/ask_a_widget_selector.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/drawable/ask_a_widget_send_btn_selector.xml" value="0.2635416666666667" />
@@ -70,7 +71,7 @@
         <entry key="app/src/main/res/layout/custom_msg_item.xml" value="10.0" />
         <entry key="app/src/main/res/layout/default_chat_cell.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fc_chat_view.xml" value="0.25729166666666664" />
-        <entry key="app/src/main/res/layout/fc_custom_ask_a_widget.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fc_custom_ask_a_widget.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fc_widget_view.xml" value="0.625" />
         <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />

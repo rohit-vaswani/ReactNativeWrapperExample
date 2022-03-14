@@ -76,7 +76,7 @@
         <entry key="app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/pin_chat_message.xml" value="0.45" />
-        <entry key="app/src/main/res/layout/pin_hybrid_message.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/pin_hybrid_message.xml" value="0.8567031860351563" />
         <entry key="app/src/main/res/layout/pin_message_item.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/pin_video_message.xml" value="0.5064492967708868" />
         <entry key="app/src/main/res/layout/timeline_fragment_layout.xml" value="0.11875" />

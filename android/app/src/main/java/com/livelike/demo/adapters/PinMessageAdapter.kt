@@ -21,8 +21,7 @@ import com.livelike.engagementsdk.chat.data.remote.PinMessageInfo
 import com.livelike.engagementsdk.publicapis.LiveLikeChatMessage
 import org.json.JSONObject
 
-
-class PinMessageAdapter() {
+class PinMessageAdapter {
 
     private val messageList: ArrayList<PinMessageInfo> = arrayListOf()
     var parentView: RelativeLayout? = null
@@ -30,7 +29,7 @@ class PinMessageAdapter() {
 
     interface PinMessageActionHandler {
         fun onVideoPlayed(videoUrl: String)
-        fun onRemoveAllPinMessages()
+        fun onDismissPinMessage(message: String?)
     }
 
 
@@ -49,12 +48,13 @@ class PinMessageAdapter() {
             true -> View.VISIBLE
             else -> View.GONE
         }
-        bindingObject.imgVideoThumbnailContainer.clipToOutline = true
         bindingObject.imgVideoThumbnail.clipToOutline = true
-        bindingObject.imgVideoThumbnailContainer.visibility = when (isChatMessage) {
+        val videoThumbVisibility = when (isChatMessage) {
             true -> View.GONE
             else -> View.VISIBLE
         }
+        bindingObject.imgVideoThumbnail.visibility = videoThumbVisibility
+        bindingObject.icPlaySmall.visibility = videoThumbVisibility
 
         // Text message
         var message: String? = ""
@@ -65,7 +65,7 @@ class PinMessageAdapter() {
             )
         } catch (e: java.lang.Exception) {
         }
-        bindingObject.chatMessage.text = message
+        bindingObject.chatMessage.text = message?.trim()
 
 
         val appContext: Context = pinView.context.applicationContext
@@ -108,12 +108,27 @@ class PinMessageAdapter() {
         val messageDetails = getDetailedMessageBy(messageId)
         val isVideoMessage = isVideoMessage(messageDetails.messagePayload)
 
-        bindingObject.closeBtnContainer.setOnClickListener {
+        bindingObject.closeIconBtn.setOnClickListener {
             removeAllPinMessages()
-            pinMessageHandler.onRemoveAllPinMessages()
         }
 
         bindingObject.container.setOnClickListener {
+
+
+
+            try {
+                val messagePayload = messageDetails.messagePayload
+                val message = if (!isVideoMessage) messagePayload?.message else getCustomDataProp(
+                    "title",
+                    messagePayload,
+                )
+                pinMessageHandler.onDismissPinMessage(message)
+            }catch (e: Exception) {}
+
+
+
+
+
             if (isVideoMessage) {
                 getCustomDataProp("url", messageDetails.messagePayload)?.let {
                     pinMessageHandler.onVideoPlayed(it)

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {findNodeHandle, NativeModules, requireNativeComponent, UIManager} from 'react-native';
+import {findNodeHandle, NativeModules, requireNativeComponent, UIManager, View} from 'react-native';
 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
@@ -15,6 +15,8 @@ const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Pinned Message
 // const chatRoomId = "bda23d2a-da84-4fc1-bd39-7e9ddba73d71" // TODO: Video Pinned New
 
+
+// const programId = "2b0cf59b-42cd-4190-9109-05c85f9fe142"
 
 // Messages + Pinned Video
 const programId = "5337f725-f580-49b5-9697-822f69e6d16e"
@@ -93,11 +95,11 @@ export const LiveLikeAndroidView = () => {
     //     }, 5000)
     // }, [])
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setShowAskWidget(true)
-    //     }, 5000)
-    // }, [])
+    useEffect(() => {
+        setTimeout(() => {
+            setShowAskWidget(true)
+        }, 2000)
+    }, [])
     //
     //
     // useEffect(() => {
@@ -132,8 +134,8 @@ export const LiveLikeAndroidView = () => {
                 chatRoomId
             })}
             userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
-            // influencerName={"Harbajan Singh"}
             style={{flex: 1}}
+            influencerName={"Harbajan Singh"}
             onWidgetShown={(event) => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
                 this.setState({widgetHeight: event.nativeEvent.height})
@@ -148,12 +150,12 @@ export const LiveLikeAndroidView = () => {
                 console.log('DEBUG: ON CHAT MESSAGE SUCCESS', event.nativeEvent.message)
             }}
             onVideoPlayed={(event) => {
-                console.log('DEBUG: ON Video message Clicked', event.nativeEvent)
+                console.log('DEBUG: ON Video message Clicked', event.nativeEvent.videoUrl)
             }}
             onAskInfluencer={(event) => {
                 console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
             }}
-            onRemoveAllPinMessages={(event) => {
+            onPinnedMessageDismissed={(event) => {
                 console.log('DEBUG: ON REMOVE ALL PIN MESSAGES', event.nativeEvent)
             }}
         />
@@ -170,6 +172,7 @@ export const LiveLikeAndroidView = () => {
                     chatRoomId
                 })}
                 userAvatarUrl={"https://websdk.livelikecdn.com/demo/assets/images/redrobot.png"}
+                influencerName={"Harbajan Singh"}
                 style={{flex: 1}}
                 onWidgetShown={(event) => {
                     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
@@ -189,6 +192,9 @@ export const LiveLikeAndroidView = () => {
                 }}
                 onAskInfluencer={(event) => {
                     console.log('DEBUG: ON ASK INFLUENCER', event.nativeEvent)
+                }}
+                onPinnedMessageDismissed={(event) => {
+                    console.log('DEBUG: ON REMOVE ALL PIN MESSAGES', event.nativeEvent)
                 }}
             />
 

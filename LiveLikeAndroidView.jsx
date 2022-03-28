@@ -4,8 +4,12 @@ import {findNodeHandle, NativeModules, requireNativeComponent, UIManager, View} 
 export const LiveLikeChatWidgetView = requireNativeComponent('LiveLikeChatWidgetView');
 export const LiveLikeWidgetView = requireNativeComponent('LiveLikeWidgetView');
 
-const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
+// const clientId = "OPba08mrr8gLZ2UMQ3uWMBOLiGhfovgIeQAEfqgI"
 
+
+// const programId = "f52d1bf6-87b7-4ef9-9f5a-ed147f52e321"
+const clientId = "BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml"
+// const chatRoomId = "89895ea8-1a18-4da5-aaba-fe54cb60b0f7"
 
 // ClientID = BJSFlQAxraN9F99EcVOzpva7G8ohtJdGKpRdx3Ml
 // let programId = "5337f725-f580-49b5-9697-822f69e6d16e"
@@ -95,11 +99,11 @@ export const LiveLikeAndroidView = () => {
     //     }, 5000)
     // }, [])
 
-    useEffect(() => {
-        setTimeout(() => {
-            setShowAskWidget(true)
-        }, 2000)
-    }, [])
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setShowAskWidget(true)
+    //     }, 2000)
+    // }, [])
     //
     //
     // useEffect(() => {

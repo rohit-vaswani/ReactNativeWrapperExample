@@ -370,8 +370,10 @@ class LiveLikeChatWidgetView(
         chatViewBinding?.pinnedMessageList?.let {
             pinMessageAdapter.setup(it)
         }
-        pinnedMessages.forEach {
-            pinMessageAdapter.addPinMessage(it, context)
+
+
+        for (n in pinnedMessages.size - 1 downTo 0) {
+            pinMessageAdapter.addPinMessage(pinnedMessages[n], context)
         }
     }
 
